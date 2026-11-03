@@ -82,9 +82,16 @@ h1 span{font-family:"Newsreader",serif;font-weight:700;letter-spacing:0}
 .choice.correct{border-color:var(--green);background:var(--green-bg)}
 .choice.wrong{border-color:var(--red);background:var(--red-bg)}
 .choice:disabled{cursor:default;opacity:1}
+.choice.dontknow{text-align:center;border-style:dashed;color:var(--muted);font-weight:700;background:transparent;width:100%;margin-top:10px}
+.choice.dontknow:hover{border-color:var(--muted);color:var(--ink)}
+.btn.dontknow{background:transparent;color:var(--muted);border:1.5px dashed var(--line);margin-top:10px}
+.btn.dontknow:hover{color:var(--ink);border-color:var(--muted)}
+.btn.dontknow:disabled{opacity:.5;cursor:not-allowed}
 .feedback{margin-top:16px;border-radius:12px;padding:14px 16px;font-size:14px;display:none}
 .feedback.ok{display:block;background:var(--green-bg);border:1px solid #bbf7d0}
 .feedback.ng{display:block;background:var(--red-bg);border:1px solid #fecaca}
+.feedback.unknown{display:block;background:var(--amber-bg);border:1px solid #fde68a}
+@media(prefers-color-scheme:dark){.feedback.unknown{border-color:#92400e}}
 .feedback strong{font-size:15px}
 .actions{display:flex;gap:10px;margin-top:16px}
 .actions .btn{margin-top:0}
@@ -106,7 +113,6 @@ h1 span{font-family:"Newsreader",serif;font-weight:700;letter-spacing:0}
         <span class="pill">収録 <b>64語・表現</b></span>
         <span class="pill">単語 <b>48</b> ／ 熟語 <b>16</b></span>
         <span class="pill">形式 <b>4択 ＋ タイピング</b></span>
-        <span class="pill">福岡受験ドリルとは <b>別ページ・別記録</b></span>
       </div>
       <div class="note">💡 まずはタイピング10問から。スペルまで覚えると、ライティングでもそのまま使えます。間違えた問題はこの回の中で「苦手だけ」でもう一度出せるようになります。</div>
     </div>
@@ -344,7 +350,8 @@ function renderQ(){
       <input class="input" id="ans" placeholder="英語で入力してください" autocomplete="off" autocapitalize="off" spellcheck="false">
       <div class="feedback" id="fb"></div>
       <div class="actions"><button class="btn" id="btn-check" onclick="checkTyping()">答え合わせ</button><button class="btn secondary" id="btn-next" onclick="nextQ()" disabled>次へ →</button></div>
-      <p style="font-size:12px;color:var(--muted);margin-top:10px">Enterキーでも答え合わせできます。大文字・小文字は区別しません。</p>
+      <button class="btn dontknow" id="btn-dontknow" onclick="answerDontKnow()">わからない</button>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Enterキーでも答え合わせできます。大文字・小文字は区別しません。分からないときは「わからない」を押すと答えを確認できます（苦手として記録されます）。</p>
     `;
     const inp=document.getElementById('ans'); inp.focus();
     inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ if(!quiz.answered) checkTyping(); else nextQ(); }});
@@ -361,20 +368,44 @@ function renderQ(){
       <p class="sentence" style="margin:10px 0 4px">${sentenceHtml}</p>
       <p class="hint">${v.exJa}</p>
       <div class="choices">${quiz.choices.map((c,i)=>`<button class="choice" onclick="checkChoice(this,'${c.replace(/'/g,"\\'")}')">${String.fromCharCode(65+i)}. &nbsp;${c}</button>`).join('')}</div>
+      <button class="choice dontknow" id="btn-dontknow-choice" onclick="answerDontKnow()">わからない</button>
       <div class="feedback" id="fb"></div>
       <div class="actions"><button class="btn" id="btn-next" onclick="nextQ()" disabled>次へ →</button></div>
     `;
   }
 }
-function showFeedback(ok, v){
+function showFeedback(ok, v, isUnknown){
   const fb=document.getElementById('fb');
   const full=v.ex.replace('___', v.stem||v.w);
-  fb.className='feedback '+(ok?'ok':'ng');
-  fb.innerHTML= ok
-    ? `<strong>⭕ 正解！</strong>　<b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>`
-    : `<strong>❌ 不正解</strong>　正解は <b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>${v.note?'<br><span style="font-size:12px">'+v.note+'</span>':''}`;
+  fb.className='feedback '+(ok?'ok':(isUnknown?'unknown':'ng'));
+  if(ok){
+    fb.innerHTML=`<strong>⭕ 正解！</strong>　<b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>`;
+  } else if(isUnknown){
+    fb.innerHTML=`<strong>わからないと回答</strong>　正解は <b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span><br><span style="font-size:12.5px">この語は「苦手」として記録しました。例文ごと覚えて、次は答えられるようにしましょう。</span>${v.note?'<br><span style="font-size:12px">'+v.note+'</span>':''}`;
+  } else {
+    fb.innerHTML=`<strong>❌ 不正解</strong>　正解は <b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>${v.note?'<br><span style="font-size:12px">'+v.note+'</span>':''}`;
+  }
   const next=document.getElementById('btn-next'); if(next) next.disabled=false;
   const chk=document.getElementById('btn-check'); if(chk) chk.disabled=true;
+  const dk=document.getElementById('btn-dontknow'); if(dk) dk.disabled=true;
+  const dkc=document.getElementById('btn-dontknow-choice'); if(dkc) dkc.disabled=true;
+}
+function answerDontKnow(){
+  if(quiz.answered) return;
+  const v=quiz.list[quiz.idx];
+  quiz.answered=true;
+  quiz.missed.push(v);
+  if(quiz.mode==='choice'){
+    document.querySelectorAll('.choice').forEach(b=>{
+      b.disabled=true;
+      const label=b.textContent.replace(/^[A-D]\.\s*/,'').trim();
+      if(normalize(label)===normalize(quiz.correct)) b.classList.add('correct');
+    });
+  } else {
+    const inp=document.getElementById('ans'); if(inp) inp.disabled=true;
+  }
+  showFeedback(false, v, true);
+  document.getElementById('q-count').textContent=(quiz.idx+1)+' / '+quiz.list.length+'　・　正解 '+quiz.score;
 }
 function checkTyping(){
   if(quiz.answered) return;
