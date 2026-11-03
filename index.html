@@ -197,6 +197,7 @@
         padding: 12px 14px; cursor: pointer; color: var(--ink);
       }
       .choice-btn .key { font-weight: 900; color: var(--primary); margin-right: 8px; }
+      .choices.long .choice-btn { font-size: 14.5px; line-height: 1.65; padding: 11px 12px; }
       .choice-btn.selected { border-color: var(--primary); background: var(--primary-soft); }
       .choice-btn:disabled { cursor: default; opacity: 0.85; }
       .order-picked { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; min-height: 40px; }
@@ -281,7 +282,7 @@
       <!-- ホーム -->
       <section id="screen-home" class="screen active">
         <h1>福岡受験ドリル</h1>
-        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術／歴史・横断問題 ／ 理科・化学）</p>
+        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術／歴史・横断問題／時期特定・誤文選択 ／ 理科・化学）</p>
 
         <div class="shuffle-row">
           <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
@@ -312,7 +313,7 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>社会 ・ 歴史（文化芸術・横断問題）</h2><span>全84問</span></div>
+          <div class="subject-head"><h2>社会 ・ 歴史（文化芸術・横断問題・時期特定・誤文選択）</h2><span>全106問</span></div>
           <div class="set-list" id="history-sets"></div>
         </div>
 
@@ -321,7 +322,7 @@
           <div class="set-list" id="science-sets"></div>
         </div>
 
-        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。時期特定は、年表の区切り（ア〜エ）のどこで出来事が起きたかを選ぶ問題です。誤文選択は、4つの説明文から正しいもの（または誤っているもの）を1つ選ぶ問題で、問題文の指示をよく読んでください。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
       </section>
 
       <!-- クイズ -->
@@ -542,6 +543,125 @@
       ];
 
       var HISTORY_CROSS = HISTORY_CROSS_ORDER.concat(HISTORY_CROSS_QA);
+
+      /* ===== 歴史・時期特定 =====
+         年表をア〜エの時期に区切り、「この出来事が起きたのはどの時期か」を
+         選ぶ形式。福岡の公立入試で並べ替えと並ぶ看板形式。
+         時期の区切り（年号）は各問の選択肢に示し、問われる出来事の年号は
+         問題文には出さず、解説で確認できるようにしている。 */
+      var HISTORY_PERIOD = [
+        { n: "時期1", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】菅原道真の提案で、遣唐使が廃止された。", a: "ア 1185年より前", correct: "ア", choices: [
+          { key: "ア", label: "1185年より前" }, { key: "イ", label: "1185年〜1336年" }, { key: "ウ", label: "1336年〜1603年" }, { key: "エ", label: "1603年〜" }
+        ], ex: "遣唐使の廃止は894年。鎌倉幕府が成立する1185年より前の、平安時代の出来事です。このあと日本風の国風文化が発達しました。" },
+        { n: "時期2", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】保元の乱が起こり、武士が政治の表舞台に姿を現した。", a: "ウ 1086年〜1185年", correct: "ウ", choices: [
+          { key: "ア", label: "794年より前" }, { key: "イ", label: "794年〜1086年" }, { key: "ウ", label: "1086年〜1185年" }, { key: "エ", label: "1185年〜" }
+        ], ex: "保元の乱は1156年。白河上皇が院政を始めた1086年から、源頼朝が征夷大将軍になる1185年までの間です。院政の頃に武士の力が伸びました。" },
+        { n: "時期3", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】北条泰時が、武士社会で最初の法律である御成敗式目を定めた。", a: "イ 1185年〜1333年", correct: "イ", choices: [
+          { key: "ア", label: "1185年より前" }, { key: "イ", label: "1185年〜1333年" }, { key: "ウ", label: "1333年〜1573年" }, { key: "エ", label: "1573年〜" }
+        ], ex: "御成敗式目（貞永式目）は1232年。鎌倉幕府が成立した1185年から、幕府が滅ぶ1333年までの間（鎌倉時代）です。" },
+        { n: "時期4", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】足利義満が京都の室町に邸を構え、南北朝を合一した。", a: "エ 1336年〜", correct: "エ", choices: [
+          { key: "ア", label: "1185年より前" }, { key: "イ", label: "1185年〜1274年" }, { key: "ウ", label: "1274年〜1336年" }, { key: "エ", label: "1336年〜" }
+        ], ex: "南北朝の合一は1392年。室町幕府が成立した1336年よりあとの出来事です。区切りは鎌倉幕府の成立（1185年）、元寇の始まり（1274年）、室町幕府の成立（1336年）です。金閣を建てた義満の北山文化もこの時期です。" },
+        { n: "時期5", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】ポルトガル人が種子島に漂着し、鉄砲が伝えられた。", a: "ウ 1467年〜1573年", correct: "ウ", choices: [
+          { key: "ア", label: "1336年より前" }, { key: "イ", label: "1336年〜1467年" }, { key: "ウ", label: "1467年〜1573年" }, { key: "エ", label: "1573年〜" }
+        ], ex: "鉄砲伝来は1543年。応仁の乱（1467年）から織田信長が足利義昭を追放する1573年までの間、つまり戦国時代です。このあとキリスト教も伝わりました。" },
+        { n: "時期6", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】豊臣秀吉が全国で太閤検地を進め、刀狩を行った。", a: "エ 1573年〜", correct: "エ", choices: [
+          { key: "ア", label: "1467年より前" }, { key: "イ", label: "1467年〜1543年" }, { key: "ウ", label: "1543年〜1573年" }, { key: "エ", label: "1573年〜" }
+        ], ex: "太閤検地は1582年ごろから、刀狩は1588年。織田信長が室町幕府を滅ぼした1573年よりあと、江戸幕府が成立する1603年までの間（安土桃山時代）です。検地と刀狩で兵農分離が進みました。" },
+        { n: "時期7", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】徳川綱吉が、生類憐みの令を出した。", a: "イ 1603年〜1716年", correct: "イ", choices: [
+          { key: "ア", label: "1603年より前" }, { key: "イ", label: "1603年〜1716年" }, { key: "ウ", label: "1716年〜1868年" }, { key: "エ", label: "1868年〜" }
+        ], ex: "生類憐みの令は1685年ごろから。江戸幕府が成立した1603年から、徳川吉宗が将軍になる1716年までの間です。元禄文化が栄えたのもこの頃です。" },
+        { n: "時期8", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】日本とアメリカの間で、日米和親条約が結ばれた。", a: "エ 1853年〜", correct: "エ", choices: [
+          { key: "ア", label: "1603年より前" }, { key: "イ", label: "1603年〜1716年" }, { key: "ウ", label: "1716年〜1853年" }, { key: "エ", label: "1853年〜" }
+        ], ex: "日米和親条約は1854年。ペリーが来航した1853年よりあとの出来事です。下田と函館が開かれ、約200年の鎖国が終わりました。このあと1868年に明治維新が起こります。" },
+        { n: "時期9", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】板垣退助らが、民撰議院設立建白書を政府に提出した。", a: "ア 1889年より前", correct: "ア", choices: [
+          { key: "ア", label: "1889年より前" }, { key: "イ", label: "1889年〜1912年" }, { key: "ウ", label: "1912年〜1945年" }, { key: "エ", label: "1945年〜" }
+        ], ex: "民撰議院設立建白書は1874年。大日本帝国憲法が発布される1889年より前で、明治維新（1868年）のあとです。自由民権運動の出発点になりました。" },
+        { n: "時期10", type: "period", q: "次の出来事が起きた時期を、年表の区切りア〜エから選べ。\n\n【出来事】普通選挙法が成立し、満25歳以上のすべての男子に選挙権が与えられた。", a: "ウ 1912年〜1945年", correct: "ウ", choices: [
+          { key: "ア", label: "1889年より前" }, { key: "イ", label: "1889年〜1912年" }, { key: "ウ", label: "1912年〜1945年" }, { key: "エ", label: "1945年〜" }
+        ], ex: "普通選挙法は1925年。明治時代が終わる1912年から、第二次世界大戦が終わる1945年までの間（大正時代）の出来事です。納税額による制限がなくなり、有権者は大きく増えました。女性に参政権が認められるのは戦後の1945年です。" }
+      ];
+
+      /* ===== 歴史・誤文選択 =====
+         4つの説明文から、正しいもの（または誤っているもの）を1つ選ぶ形式。
+         問題文の指示が「正しい」か「誤っている」かで答えが逆になるので、
+         指示をよく読むことがポイント。解説では誤りの箇所を正しく直す。 */
+      var HISTORY_STATEMENT = [
+        { n: "誤1", type: "statement", q: "律令制のもとでの土地と税について、正しいものを1つ選べ。", a: "ア 班田収授法では、戸籍に登録された人々に口分田が分け与えられた", correct: "ア", choices: [
+          { key: "ア", label: "班田収授法では、戸籍に登録された人々に口分田が分け与えられた" },
+          { key: "イ", label: "租庸調の「庸」は、労役のかわりに米を納めることであった" },
+          { key: "ウ", label: "口分田は、受け取った人が自由に売り買いできた" },
+          { key: "エ", label: "荘園は、律令制が始まった奈良時代の初めから全国に広がっていた" }
+        ], ex: "正しいのはア。イの「庸」は布（麻布）を納めるもの、ウの口分田は売買が禁止され死ぬと国に返しました。エの荘園が広がるのは、墾田永年私財法が出た平安時代以降です。" },
+        { n: "誤2", type: "statement", q: "平安時代の政治について、誤っているものを1つ選べ。", a: "エ 平等院鳳凰堂は、平清盛が建てたものである", correct: "エ", choices: [
+          { key: "ア", label: "藤原氏は、娘を天皇の后とし、摂政・関白として権力を握った" },
+          { key: "イ", label: "平清盛は、武士として初めて太政大臣になり、日宋貿易を進めた" },
+          { key: "ウ", label: "院政では、退位した天皇が上皇（院）として政治の実権を握った" },
+          { key: "エ", label: "平等院鳳凰堂は、平清盛が建てたものである" }
+        ], ex: "誤りはエ。平等院鳳凰堂を建てたのは藤原頼通で、平清盛ではありません。浄土信仰を表す平安時代（国風文化）の建物です。ア・イ・ウはいずれも正しい説明です。" },
+        { n: "誤3", type: "statement", q: "鎌倉幕府のしくみについて、正しいものを1つ選べ。", a: "ウ 御成敗式目は、北条泰時が定めた武士社会で最初の法律である", correct: "ウ", choices: [
+          { key: "ア", label: "守護は荘園や公領ごとに、地頭は国ごとに置かれた" },
+          { key: "イ", label: "承久の乱では、鎌倉幕府が朝廷の軍に敗れた" },
+          { key: "ウ", label: "御成敗式目は、北条泰時が定めた武士社会で最初の法律である" },
+          { key: "エ", label: "元寇のあと、幕府は戦った御家人に十分な恩賞を与えることができた" }
+        ], ex: "正しいのはウ。アは逆で、守護は国ごと、地頭は荘園・公領ごとに置かれました。イの承久の乱では幕府が朝廷に勝ちました。エは、元寇では新たに得た土地がなく恩賞が不足し、御家人の不満が高まりました。" },
+        { n: "誤4", type: "statement", q: "室町時代について、誤っているものを1つ選べ。", a: "エ 銀閣（慈照寺）は、足利義満が建てたものである", correct: "エ", choices: [
+          { key: "ア", label: "足利義満は、南北朝を合一し、日明貿易（勘合貿易）を始めた" },
+          { key: "イ", label: "勘合貿易では、正式な貿易船であることを示す勘合が使われた" },
+          { key: "ウ", label: "応仁の乱のあと、各地に戦国大名が現れるようになった" },
+          { key: "エ", label: "銀閣（慈照寺）は、足利義満が建てたものである" }
+        ], ex: "誤りはエ。銀閣を建てたのは足利義政で、東山文化を代表します。義満は金閣（北山文化）です。金閣＝義満、銀閣＝義政の組み合わせは頻出です。" },
+        { n: "誤5", type: "statement", q: "戦国時代から安土桃山時代について、正しいものを1つ選べ。", a: "イ 豊臣秀吉は、太閤検地と刀狩によって兵農分離を進めた", correct: "イ", choices: [
+          { key: "ア", label: "織田信長は、商工業を統制するために楽市・楽座を廃止した" },
+          { key: "イ", label: "豊臣秀吉は、太閤検地と刀狩によって兵農分離を進めた" },
+          { key: "ウ", label: "鉄砲は、南蛮貿易によって中国から伝えられた" },
+          { key: "エ", label: "豊臣秀吉はバテレン追放令を出し、南蛮貿易も完全に禁止した" }
+        ], ex: "正しいのはイ。アの楽市・楽座は信長が市場を自由化するために行った政策です。ウの鉄砲はポルトガル人によって種子島に伝えられました。エの秀吉は宣教師を追放しましたが、貿易自体は続けました。" },
+        { n: "誤6", type: "statement", q: "江戸幕府の対外関係について、誤っているものを1つ選べ。", a: "ウ 朱印船貿易は、鎖国が完成したあとも長く続けられた", correct: "ウ", choices: [
+          { key: "ア", label: "江戸幕府は、武家諸法度によって大名を統制した" },
+          { key: "イ", label: "参勤交代では、大名が江戸と自分の領地を1年交代で往復した" },
+          { key: "ウ", label: "朱印船貿易は、鎖国が完成したあとも長く続けられた" },
+          { key: "エ", label: "鎖国のもとでも、長崎では中国やオランダとの貿易が行われた" }
+        ], ex: "誤りはウ。朱印船貿易は1635年に日本人の海外渡航が禁止されると終わりました。鎖国が完成した1639年以降も、長崎（中国・オランダ）、対馬（朝鮮）、薩摩（琉球）、松前（アイヌ）との交流は残りました。" },
+        { n: "誤7", type: "statement", q: "江戸時代の文化について、正しいものを1つ選べ。", a: "イ 井原西鶴は、浮世草子で町人の生活を描いた", correct: "イ", choices: [
+          { key: "ア", label: "元禄文化は、江戸を中心に栄えた武士の文化である" },
+          { key: "イ", label: "井原西鶴は、浮世草子で町人の生活を描いた" },
+          { key: "ウ", label: "松尾芭蕉は、軍記物語『平家物語』の作者である" },
+          { key: "エ", label: "葛飾北斎は、元禄文化を代表する浮世絵師である" }
+        ], ex: "正しいのはイ。アの元禄文化の中心は上方（大阪・京都）で、担い手は町人です。ウの『平家物語』は鎌倉時代の軍記物語で、芭蕉は『奥の細道』です。エの北斎は化政文化（江戸）の浮世絵師です。" },
+        { n: "誤8", type: "statement", q: "開国と条約改正について、誤っているものを1つ選べ。", a: "エ 関税自主権が完全に回復したのは、領事裁判権が撤廃されたのと同じ1894年である", correct: "エ", choices: [
+          { key: "ア", label: "ペリーは浦賀に来航し、日本に開国を求めた" },
+          { key: "イ", label: "日米和親条約によって、下田と函館が開かれた" },
+          { key: "ウ", label: "日米修好通商条約では、日本は領事裁判権を認め、関税自主権がなかった" },
+          { key: "エ", label: "関税自主権が完全に回復したのは、領事裁判権が撤廃されたのと同じ1894年である" }
+        ], ex: "誤りはエ。1894年に撤廃されたのは領事裁判権で、関税自主権が完全に回復したのは1911年です。条約改正の順番（和親条約→修好通商条約→領事裁判権撤廃→関税自主権回復）は横断問題の並べ替えでも出てきます。" },
+        { n: "誤9", type: "statement", q: "明治政府の改革について、正しいものを1つ選べ。", a: "ウ 地租改正では、土地の所有者が地価の3％を現金で納めた", correct: "ウ", choices: [
+          { key: "ア", label: "徴兵令では、武士の家に生まれた者だけが兵役についた" },
+          { key: "イ", label: "明治政府は、富国強兵を掲げ、殖産興業には力を入れなかった" },
+          { key: "ウ", label: "地租改正では、土地の所有者が地価の3％を現金で納めた" },
+          { key: "エ", label: "廃藩置県のあとも、藩主がそのまま県を治め続けた" }
+        ], ex: "正しいのはウ。アの徴兵令は満20歳以上の男子に兵役を課すもので、身分は関係ありません。イは逆で、政府は殖産興業で工場を建て産業を育てました。エは廃藩置県で藩が廃止され、政府が任命した県知事が治めました。" },
+        { n: "誤10", type: "statement", q: "自由民権運動と大日本帝国憲法について、誤っているものを1つ選べ。", a: "エ 日本で最初の内閣総理大臣は、大隈重信である", correct: "エ", choices: [
+          { key: "ア", label: "板垣退助らは、民撰議院設立建白書を政府に提出した" },
+          { key: "イ", label: "大日本帝国憲法は、天皇が制定する欽定憲法として発布された" },
+          { key: "ウ", label: "初めての衆議院議員総選挙では、直接国税を多く納める満25歳以上の男子だけに選挙権があった" },
+          { key: "エ", label: "日本で最初の内閣総理大臣は、大隈重信である" }
+        ], ex: "誤りはエ。初代内閣総理大臣は伊藤博文です。大隈重信は立憲改進党を結成し、のちに総理大臣になりましたが初代ではありません。ウの制限選挙から、普通選挙、女性参政権へと選挙権は広がっていきました。" },
+        { n: "誤11", type: "statement", q: "日清戦争と日露戦争について、正しいものを1つ選べ。", a: "イ 日清戦争の講和条約（下関条約）で得た遼東半島は、三国干渉によって清に返還した", correct: "イ", choices: [
+          { key: "ア", label: "義和団事件が、日清戦争のきっかけとなった" },
+          { key: "イ", label: "日清戦争の講和条約（下関条約）で得た遼東半島は、三国干渉によって清に返還した" },
+          { key: "ウ", label: "日露戦争のあと、日本は樺太（サハリン）の全域を領有した" },
+          { key: "エ", label: "日露戦争の講和条約（ポーツマス条約）で、日本は多額の賠償金を得た" }
+        ], ex: "正しいのはイ。アの義和団事件は1900年で日清戦争よりあとの出来事です。日清戦争のきっかけは甲午農民戦争でした。ウで得たのは樺太の南半分です。エの日露戦争では賠償金は得られず、国民の不満が日比谷焼き打ち事件につながりました。" },
+        { n: "誤12", type: "statement", q: "大正時代から戦後にかけての政治について、誤っているものを1つ選べ。", a: "ア 日本国憲法では、天皇が主権者であると定められた", correct: "ア", choices: [
+          { key: "ア", label: "日本国憲法では、天皇が主権者であると定められた" },
+          { key: "イ", label: "女性に参政権が認められたのは、第二次世界大戦のあとのことである" },
+          { key: "ウ", label: "普通選挙法によって、満25歳以上のすべての男子に選挙権が与えられた" },
+          { key: "エ", label: "戦後の農地改革では、地主の土地が買い上げられ、小作人に安く売り渡された" }
+        ], ex: "誤りはア。日本国憲法の主権者は国民（国民主権）で、天皇は「日本国と日本国民統合の象徴」です。主権が天皇にあるのは大日本帝国憲法の方です。イの女性参政権は1945年に認められました。" }
+      ];
+
+      var HISTORY_NEW = HISTORY_PERIOD.concat(HISTORY_STATEMENT);
     </script>
     <script>
       var SCIENCE_QA = [
@@ -635,6 +755,9 @@
         { subject: "history", name: "横断問題 ・ 全部", desc: "並べ替え12問＋テーマ別一問一答18問", make: function () { return tagQ(HISTORY_CROSS, "歴史 横断"); } },
         { subject: "history", name: "横断 ・ 並べ替え", desc: "出来事を古い順に並べ替える（入試頻出形式）", make: function () { return tagQ(HISTORY_CROSS_ORDER, "歴史 横断"); } },
         { subject: "history", name: "横断 ・ テーマ別一問一答", desc: "外交・貿易／仏教／土地・税／政治・法を時代をまたいで問う", make: function () { return tagQ(HISTORY_CROSS_QA, "歴史 横断"); } },
+        { subject: "history", name: "時期特定・誤文選択 ・ 全部", desc: "時期特定10問＋誤文選択12問", make: function () { return tagQ(HISTORY_NEW, "歴史 時期・誤文"); } },
+        { subject: "history", name: "時期特定", desc: "年表の区切りから出来事の時期を選ぶ（入試頻出形式）", make: function () { return tagQ(HISTORY_PERIOD, "歴史 時期特定"); } },
+        { subject: "history", name: "誤文選択", desc: "4つの説明文から正しいもの・誤っているものを選ぶ", make: function () { return tagQ(HISTORY_STATEMENT, "歴史 誤文選択"); } },
         { subject: "science", name: "一問一答 ・ 全部", desc: "中1〜中3 化学分野ぜんぶ", make: function () { return tagQ(SCIENCE_QA, "理科・化学"); } },
         { subject: "science", name: "① 物質・水溶液・原子と分子", desc: "問1〜24", make: function () { return tagQ(SCIENCE_QA.slice(0, 24), "理科・化学"); } },
         { subject: "science", name: "② 酸化・還元・質量", desc: "問25〜48", make: function () { return tagQ(SCIENCE_QA.slice(24, 48), "理科・化学"); } },
@@ -1122,6 +1245,11 @@
 
       var selectedChoice = null, orderPicked = [], graded = false;
 
+      /* 選択式の仲間：choice（時代判定・共通の時代選択肢）／period（時期特定）／
+         statement（誤文選択）。period・statement は問題ごとに choices を持つ。 */
+      function isChoiceType(q) { return !!q && (q.type === "choice" || q.type === "period" || q.type === "statement"); }
+      function getChoiceOptions(q) { return (q && q.choices && q.choices.length) ? q.choices : ERA_OPTIONS; }
+
       function renderQuestion() {
         var q = session.list[session.idx];
         graded = false; selectedChoice = null; orderPicked = [];
@@ -1144,7 +1272,7 @@
         $("fb-pair").textContent = "";
 
         $("q-input-area").style.display = q.type === "text" ? "block" : "none";
-        $("q-choice-area").style.display = q.type === "choice" ? "block" : "none";
+        $("q-choice-area").style.display = isChoiceType(q) ? "block" : "none";
         $("q-order-area").style.display = q.type === "order" ? "block" : "none";
 
         if (q.type === "text") {
@@ -1165,9 +1293,10 @@
           var focusEl = pairMode ? $("answer-input-a") : input;
           setTimeout(function () { focusEl.focus(); }, 60);
         }
-        if (q.type === "choice") {
+        if (isChoiceType(q)) {
           var box = $("choices"); box.innerHTML = "";
-          ERA_OPTIONS.forEach(function (opt) {
+          box.className = "choices" + (q.type === "statement" ? " long" : "");
+          getChoiceOptions(q).forEach(function (opt) {
             var b = document.createElement("button");
             b.type = "button"; b.className = "choice-btn";
             b.innerHTML = "<span class='key'></span><span class='lbl'></span>";
@@ -1221,10 +1350,10 @@
       $("answer-input-b").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
 
       function currentAnswerText(q) {
-        if (q.type === "choice") {
+        if (isChoiceType(q)) {
           if (!selectedChoice) return "";
-          var o = ERA_OPTIONS.filter(function (x) { return x.key === selectedChoice; })[0];
-          return o.key + " " + o.label;
+          var o = getChoiceOptions(q).filter(function (x) { return x.key === selectedChoice; })[0];
+          return o ? (o.key + " " + o.label) : selectedChoice;
         }
         if (q.type === "order") {
           return orderPicked.map(function (k) {
@@ -1247,11 +1376,11 @@
         var q = session.list[session.idx];
         var userText = currentAnswerText(q);
         if (q.type === "text" && !userText.trim()) return;
-        if (q.type === "choice" && !selectedChoice) return;
+        if (isChoiceType(q) && !selectedChoice) return;
         if (q.type === "order" && orderPicked.length < q.items.length) return;
         var ok;
         var pairDetail = null;
-        if (q.type === "choice") ok = selectedChoice === q.correct;
+        if (isChoiceType(q)) ok = selectedChoice === q.correct;
         else if (q.type === "order") ok = orderPicked.join(",") === q.correct.join(",");
         else if (isPairQuestion(q)) {
           pairDetail = gradePairDetailed(q, pairInputs());
