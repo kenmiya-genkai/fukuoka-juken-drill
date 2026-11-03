@@ -189,6 +189,12 @@
       .pair-inputs { display: grid; gap: 12px; }
       .pair-field label { display: block; font-size: 13px; font-weight: 700; color: var(--ink-soft); margin: 0 0 4px 2px; }
       .pair-feedback { font-size: 14.5px; font-weight: 700; margin: 0 0 8px; line-height: 1.7; }
+      .calc-inputs { display: grid; gap: 12px; }
+      .calc-field { display: grid; gap: 4px; }
+      .calc-field label { display: block; font-size: 13.5px; font-weight: 700; color: var(--ink-soft); margin: 0 0 0 2px; }
+      .calc-field-row { display: flex; align-items: center; gap: 10px; }
+      .calc-field-row .answer-input { flex: 1; min-width: 0; text-align: center; font-weight: 700; }
+      .calc-unit { flex: none; font-size: 15px; font-weight: 700; color: var(--ink-soft); }
       .hint { font-size: 12.5px; color: var(--ink-soft); margin: 8px 2px 0; }
       .choices { display: grid; gap: 9px; }
       .choice-btn {
@@ -282,7 +288,7 @@
       <!-- ホーム -->
       <section id="screen-home" class="screen active">
         <h1>福岡受験ドリル</h1>
-        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術／歴史・横断問題／時期特定・誤文選択／公民・人権と選挙 ／ 理科・化学）</p>
+        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術／歴史・横断問題／時期特定・誤文選択／公民・人権と選挙・計算ドント式 ／ 理科・化学）</p>
 
         <div class="shuffle-row">
           <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
@@ -318,7 +324,7 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>社会 ・ 公民（人権・選挙と政治）</h2><span>全44問</span></div>
+          <div class="subject-head"><h2>社会 ・ 公民（人権・選挙と政治・計算）</h2><span>全53問</span></div>
           <div class="set-list" id="civics-sets"></div>
         </div>
 
@@ -327,7 +333,7 @@
           <div class="set-list" id="science-sets"></div>
         </div>
 
-        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。時期特定は、年表の区切り（ア〜エ）のどこで出来事が起きたかを選ぶ問題です。誤文選択は、4つの説明文から正しいもの（または誤っているもの）を1つ選ぶ問題で、問題文の指示をよく読んでください。公民は、人権の種類（自由権・平等権・社会権・参政権・請求権）と選挙の原則・しくみを取り違えやすいので、解説で「どの権利か」「どの選挙制度か」を確認しながら進めてください。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。時期特定は、年表の区切り（ア〜エ）のどこで出来事が起きたかを選ぶ問題です。誤文選択は、4つの説明文から正しいもの（または誤っているもの）を1つ選ぶ問題で、問題文の指示をよく読んでください。公民は、人権の種類（自由権・平等権・社会権・参政権・請求権）と選挙の原則・しくみを取り違えやすいので、解説で「どの権利か」「どの選挙制度か」を確認しながら進めてください。計算問題（ドント式）は、比例代表の議席配分を計算する問題です。各党の得票数を1、2、3…で割った商を大きい順に並べ、定数の数だけ上から議席を与えます。各党の議席数を数字で入力してください（合計は定数と一致します）。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
       </section>
 
       <!-- クイズ -->
@@ -365,6 +371,10 @@
             <div class="order-picked" id="order-picked"></div>
             <div class="choices" id="order-choices"></div>
             <button class="order-clear" id="order-clear" type="button">選び直す</button>
+          </div>
+          <div id="q-calc-area" style="display:none">
+            <div class="calc-inputs" id="calc-inputs"></div>
+            <p class="hint" id="calc-hint"></p>
           </div>
           <button class="grade-btn" id="grade-btn" type="button">答える</button>
           <button class="skip-btn" id="skip-btn" type="button">わからない</button>
@@ -784,7 +794,44 @@
         ], ex: "誤りはア。住民には解職請求（リコール）の権利があり、有権者の3分の1以上の署名で請求し、住民投票で過半数の同意があれば解職されます。条例の制定・改廃の請求に必要な署名は有権者の50分の1以上です。" }
       ];
 
-      var CIVICS_ALL = CIVICS_QA.concat(CIVICS_STATEMENT);
+      /* ===== 公民・計算（ドント式） =====
+         比例代表制の議席配分を計算する問題。実際の入試では、得票数の表と
+         定数が与えられ、ドント式で各党の議席数を答えさせる形式で出る。
+         解き方：各党の得票数を1、2、3…で割った商を大きい順に並べ、
+         定数の数だけ上から1議席ずつ与える。商が並んだ場合でも、区切り
+         （定数番目とその次）で同点にならない数値だけを選んである。
+         答え（ans）は検算済み：全問、商の上位（定数分）の内訳と一致する。 */
+      var CIVICS_CALC = [
+        { n: "公計1", type: "calc", seats: 5, q: "比例代表選挙で、定数5に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　12,000票\nB党　9,000票\nC党　6,000票", parties: [
+          { key: "A", label: "A党", votes: 12000, ans: 2 }, { key: "B", label: "B党", votes: 9000, ans: 2 }, { key: "C", label: "C党", votes: 6000, ans: 1 }
+        ], a: "A党 2議席 ・ B党 2議席 ・ C党 1議席", ex: "各党の得票数を1、2、3…で割った商を大きい順に並べると、12,000（A）→ 9,000（B）→ 6,000（A）→ 6,000（C）→ 4,500（B）の順で、定数5の分だけ上から議席を与えます。よってA党2・B党2・C党1です。まず各党の得票数そのもの（÷1）が最初の議席になるのがポイントです。" },
+        { n: "公計2", type: "calc", seats: 6, q: "比例代表選挙で、定数6に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　18,000票\nB党　12,000票\nC党　6,000票", parties: [
+          { key: "A", label: "A党", votes: 18000, ans: 3 }, { key: "B", label: "B党", votes: 12000, ans: 2 }, { key: "C", label: "C党", votes: 6000, ans: 1 }
+        ], a: "A党 3議席 ・ B党 2議席 ・ C党 1議席", ex: "商を大きい順に並べると、18,000（A）→ 12,000（B）→ 9,000（A÷2）→ 6,000（A÷3）→ 6,000（B÷2）→ 6,000（C）の順で、定数6の分だけ議席を与えます。よってA党3・B党2・C党1です。得票数の比（3：2：1）がそのまま議席数の比になりました。" },
+        { n: "公計3", type: "calc", seats: 5, q: "比例代表選挙で、定数5に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　10,000票\nB党　8,000票\nC党　5,000票\nD党　3,000票", parties: [
+          { key: "A", label: "A党", votes: 10000, ans: 2 }, { key: "B", label: "B党", votes: 8000, ans: 2 }, { key: "C", label: "C党", votes: 5000, ans: 1 }, { key: "D", label: "D党", votes: 3000, ans: 0 }
+        ], a: "A党 2議席 ・ B党 2議席 ・ C党 1議席 ・ D党 0議席", ex: "商を大きい順に並べると、10,000（A）→ 8,000（B）→ 5,000（A÷2）→ 5,000（C）→ 4,000（B÷2）の順で、定数5の分だけ議席を与えます。D党の3,000は6番目で届かず、D党は0議席です。比例代表制でも、得票が少ない政党は議席を得られないことがあります。" },
+        { n: "公計4", type: "calc", seats: 8, q: "比例代表選挙で、定数8に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　24,000票\nB党　15,000票\nC党　9,000票", parties: [
+          { key: "A", label: "A党", votes: 24000, ans: 4 }, { key: "B", label: "B党", votes: 15000, ans: 3 }, { key: "C", label: "C党", votes: 9000, ans: 1 }
+        ], a: "A党 4議席 ・ B党 3議席 ・ C党 1議席", ex: "商を大きい順に並べると、24,000（A）→ 15,000（B）→ 12,000（A÷2）→ 9,000（C）→ 8,000（A÷3）→ 7,500（B÷2）→ 6,000（A÷4）→ 5,000（B÷3）の順で、定数8の分だけ議席を与えます。よってA党4・B党3・C党1です。C党の2議席目の商は4,500で、9番目でした。" },
+        { n: "公計5", type: "calc", seats: 10, q: "比例代表選挙で、定数10に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　32,000票\nB党　24,000票\nC党　16,000票\nD党　8,000票", parties: [
+          { key: "A", label: "A党", votes: 32000, ans: 4 }, { key: "B", label: "B党", votes: 24000, ans: 3 }, { key: "C", label: "C党", votes: 16000, ans: 2 }, { key: "D", label: "D党", votes: 8000, ans: 1 }
+        ], a: "A党 4議席 ・ B党 3議席 ・ C党 2議席 ・ D党 1議席", ex: "商を大きい順に並べると、32,000（A）→ 24,000（B）→ 16,000（A÷2）→ 16,000（C）→ 12,000（B÷2）→ 約10,667（A÷3）→ 8,000（A÷4）→ 8,000（B÷3）→ 8,000（C÷2）→ 8,000（D）の順で、定数10の分だけ議席を与えます。よってA党4・B党3・C党2・D党1で、4党すべてが議席を得ました。" },
+        { n: "公計6", type: "calc", seats: 7, q: "比例代表選挙で、定数7に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　15,000票\nB党　11,000票\nC党　7,000票\nD党　4,000票", parties: [
+          { key: "A", label: "A党", votes: 15000, ans: 3 }, { key: "B", label: "B党", votes: 11000, ans: 2 }, { key: "C", label: "C党", votes: 7000, ans: 1 }, { key: "D", label: "D党", votes: 4000, ans: 1 }
+        ], a: "A党 3議席 ・ B党 2議席 ・ C党 1議席 ・ D党 1議席", ex: "商を大きい順に並べると、15,000（A）→ 11,000（B）→ 7,500（A÷2）→ 7,000（C）→ 5,500（B÷2）→ 5,000（A÷3）→ 4,000（D）の順で、定数7の分だけ議席を与えます。よってA党3・B党2・C党1・D党1です。D党は最後の1議席に届きました（次の商はA党÷4の3,750）。" },
+        { n: "公計7", type: "calc", seats: 6, q: "比例代表選挙で、定数6に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　9,000票\nB党　8,500票\nC党　8,000票", parties: [
+          { key: "A", label: "A党", votes: 9000, ans: 2 }, { key: "B", label: "B党", votes: 8500, ans: 2 }, { key: "C", label: "C党", votes: 8000, ans: 2 }
+        ], a: "A党 2議席 ・ B党 2議席 ・ C党 2議席", ex: "商を大きい順に並べると、9,000（A）→ 8,500（B）→ 8,000（C）→ 4,500（A÷2）→ 4,250（B÷2）→ 4,000（C÷2）の順で、定数6の分だけ議席を与えます。得票数に差があっても、3党とも2議席ずつになりました。票が割れると議席も割れるのが比例代表制の特徴です。" },
+        { n: "公計8", type: "calc", seats: 9, q: "比例代表選挙で、定数9に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　26,000票\nB党　17,000票\nC党　11,000票\nD党　5,000票", parties: [
+          { key: "A", label: "A党", votes: 26000, ans: 4 }, { key: "B", label: "B党", votes: 17000, ans: 3 }, { key: "C", label: "C党", votes: 11000, ans: 2 }, { key: "D", label: "D党", votes: 5000, ans: 0 }
+        ], a: "A党 4議席 ・ B党 3議席 ・ C党 2議席 ・ D党 0議席", ex: "商を大きい順に並べると、26,000（A）→ 17,000（B）→ 13,000（A÷2）→ 11,000（C）→ 約8,667（A÷3）→ 8,500（B÷2）→ 6,500（A÷4）→ 約5,667（B÷3）→ 5,500（C÷2）の順で、定数9の分だけ議席を与えます。D党の5,000は10番目で届かず、D党は0議席です。" },
+        { n: "公計9", type: "calc", seats: 4, q: "比例代表選挙で、定数4に対して各党の得票数は次のとおりだった。ドント式で議席を配分すると、各党は何議席になるか。\n\nA党　14,000票\nB党　6,000票\nC党　4,000票", parties: [
+          { key: "A", label: "A党", votes: 14000, ans: 3 }, { key: "B", label: "B党", votes: 6000, ans: 1 }, { key: "C", label: "C党", votes: 4000, ans: 0 }
+        ], a: "A党 3議席 ・ B党 1議席 ・ C党 0議席", ex: "商を大きい順に並べると、14,000（A）→ 7,000（A÷2）→ 6,000（B）→ 約4,667（A÷3）の順で、定数4の分だけ議席を与えます。よってA党3・B党1・C党0です。定数が小さいと、得票の多い政党に議席が集まりやすくなります。" }
+      ];
+
+      var CIVICS_ALL = CIVICS_QA.concat(CIVICS_CALC).concat(CIVICS_STATEMENT);
     </script>
     <script>
       var SCIENCE_QA = [
@@ -881,9 +928,10 @@
         { subject: "history", name: "時期特定・誤文選択 ・ 全部", desc: "時期特定10問＋誤文選択12問", make: function () { return tagQ(HISTORY_NEW, "歴史 時期・誤文"); } },
         { subject: "history", name: "時期特定", desc: "年表の区切りから出来事の時期を選ぶ（入試頻出形式）", make: function () { return tagQ(HISTORY_PERIOD, "歴史 時期特定"); } },
         { subject: "history", name: "誤文選択", desc: "4つの説明文から正しいもの・誤っているものを選ぶ", make: function () { return tagQ(HISTORY_STATEMENT, "歴史 誤文選択"); } },
-        { subject: "civics", name: "公民 ・ 全部", desc: "人権18問＋選挙と政治16問＋誤文選択10問", make: function () { return tagQ(CIVICS_ALL, "公民"); } },
+        { subject: "civics", name: "公民 ・ 全部", desc: "人権18問＋選挙と政治16問＋計算9問＋誤文選択10問", make: function () { return tagQ(CIVICS_ALL, "公民"); } },
         { subject: "civics", name: "公民 ・ 人権", desc: "自由権・平等権・社会権・新しい人権の区別が中心", make: function () { return tagQ(CIVICS_RIGHTS_QA, "公民 人権"); } },
-        { subject: "civics", name: "公民 ・ 選挙と政治", desc: "選挙の四原則・選挙制度・衆議院と参議院のちがい", make: function () { return tagQ(CIVICS_ELECTION_QA, "公民 選挙・政治"); } },
+        { subject: "civics", name: "公民 ・ 選挙と政治", desc: "選挙の四原則・選挙制度・衆議院と参議院のちがい＋計算9問", make: function () { return tagQ(CIVICS_ELECTION_QA.concat(CIVICS_CALC), "公民 選挙・政治"); } },
+        { subject: "civics", name: "公民 ・ 計算（ドント式）", desc: "比例代表の議席配分を計算する（得票数を1、2、3…で割った商の大きい順に議席を与える）", make: function () { return tagQ(CIVICS_CALC, "公民 計算"); } },
         { subject: "civics", name: "公民 ・ 一問一答 全部", desc: "人権＋選挙と政治の一問一答34問", make: function () { return tagQ(CIVICS_QA, "公民"); } },
         { subject: "civics", name: "公民 ・ 誤文選択", desc: "人権の種類と選挙制度の取り違えに注意", make: function () { return tagQ(CIVICS_STATEMENT, "公民 誤文選択"); } },
         { subject: "science", name: "一問一答 ・ 全部", desc: "中1〜中3 化学分野ぜんぶ", make: function () { return tagQ(SCIENCE_QA, "理科・化学"); } },
@@ -1378,6 +1426,28 @@
       function isChoiceType(q) { return !!q && (q.type === "choice" || q.type === "period" || q.type === "statement"); }
       function getChoiceOptions(q) { return (q && q.choices && q.choices.length) ? q.choices : ERA_OPTIONS; }
 
+      /* 計算問題（ドント式）：政党ごとに議席数を数字で入力する形式。
+         全党分がそろって初めて正解。政党ごとに合っているかも返す。 */
+      function isCalcType(q) { return !!q && q.type === "calc"; }
+      function calcInputValues() {
+        var els = document.querySelectorAll(".calc-input");
+        var out = [];
+        for (var i = 0; i < els.length; i++) out.push(els[i].value);
+        return out;
+      }
+      function gradeCalcDetailed(q) {
+        var inputs = calcInputValues();
+        var hits = q.parties.map(function (p, i) {
+          var m = toHalf(String(inputs[i] == null ? "" : inputs[i])).match(/\d+/);
+          return !!m && parseInt(m[0], 10) === p.ans;
+        });
+        return { hits: hits, ok: hits.every(function (h) { return h; }) };
+      }
+      function setCalcInputsDisabled(disabled) {
+        var els = document.querySelectorAll(".calc-input");
+        for (var i = 0; i < els.length; i++) els[i].disabled = disabled;
+      }
+
       function renderQuestion() {
         var q = session.list[session.idx];
         graded = false; selectedChoice = null; orderPicked = [];
@@ -1402,6 +1472,7 @@
         $("q-input-area").style.display = q.type === "text" ? "block" : "none";
         $("q-choice-area").style.display = isChoiceType(q) ? "block" : "none";
         $("q-order-area").style.display = q.type === "order" ? "block" : "none";
+        $("q-calc-area").style.display = isCalcType(q) ? "block" : "none";
 
         if (q.type === "text") {
           var pairMode = isPairQuestion(q);
@@ -1440,6 +1511,38 @@
           });
         }
         if (q.type === "order") renderOrder();
+        if (isCalcType(q)) renderCalc();
+      }
+
+      function renderCalc() {
+        var q = session.list[session.idx];
+        var box = $("calc-inputs"); box.innerHTML = "";
+        q.parties.forEach(function (p, idx) {
+          var field = document.createElement("div");
+          field.className = "calc-field";
+          var lab = document.createElement("label");
+          lab.setAttribute("for", "calc-input-" + idx);
+          lab.textContent = p.label + "（" + p.votes.toLocaleString("ja-JP") + "票）の議席数";
+          var row = document.createElement("div");
+          row.className = "calc-field-row";
+          var inp = document.createElement("input");
+          inp.className = "answer-input calc-input";
+          inp.id = "calc-input-" + idx;
+          inp.type = "text";
+          inp.inputMode = "numeric";
+          inp.setAttribute("autocomplete", "off");
+          inp.setAttribute("autocapitalize", "off");
+          inp.setAttribute("placeholder", "数字");
+          inp.setAttribute("aria-label", p.label + "の議席数");
+          inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
+          var unit = document.createElement("span");
+          unit.className = "calc-unit"; unit.textContent = "議席";
+          row.appendChild(inp); row.appendChild(unit);
+          field.appendChild(lab); field.appendChild(row);
+          box.appendChild(field);
+        });
+        $("calc-hint").textContent = "ドント式：各党の得票数を1、2、3…で割った商を大きい順に並べ、定数（" + q.seats + "）の数だけ上から議席を与えます。各党の議席数の合計は " + q.seats + " になります。0議席の党には「0」と入力してください。";
+        setTimeout(function () { var first = document.querySelector(".calc-input"); if (first) first.focus(); }, 60);
       }
 
       function renderOrder() {
@@ -1478,6 +1581,13 @@
       $("answer-input-b").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
 
       function currentAnswerText(q) {
+        if (isCalcType(q)) {
+          var vals = calcInputValues();
+          return q.parties.map(function (p, i) {
+            var v = vals[i] == null ? "" : String(vals[i]).trim();
+            return p.label + " " + (v === "" ? "？" : v) + "議席";
+          }).join(" ／ ");
+        }
         if (isChoiceType(q)) {
           if (!selectedChoice) return "";
           var o = getChoiceOptions(q).filter(function (x) { return x.key === selectedChoice; })[0];
@@ -1506,10 +1616,16 @@
         if (q.type === "text" && !userText.trim()) return;
         if (isChoiceType(q) && !selectedChoice) return;
         if (q.type === "order" && orderPicked.length < q.items.length) return;
+        if (isCalcType(q) && calcInputValues().some(function (v) { return !String(v).trim(); })) return;
         var ok;
         var pairDetail = null;
+        var calcDetail = null;
         if (isChoiceType(q)) ok = selectedChoice === q.correct;
         else if (q.type === "order") ok = orderPicked.join(",") === q.correct.join(",");
+        else if (isCalcType(q)) {
+          calcDetail = gradeCalcDetailed(q);
+          ok = !!(calcDetail && calcDetail.ok);
+        }
         else if (isPairQuestion(q)) {
           pairDetail = gradePairDetailed(q, pairInputs());
           ok = !!(pairDetail && pairDetail.ok);
@@ -1518,7 +1634,7 @@
         graded = true;
         session.results.push({ q: q, user: userText, ok: ok, fixed: false, skipped: false });
         recordResult(q, ok);
-        showFeedback(ok, userText, false, pairDetail);
+        showFeedback(ok, userText, false, pairDetail, calcDetail);
       }
 
       function doSkip() {
@@ -1530,17 +1646,25 @@
         showFeedback(false, "わからない", true);
       }
 
-      function showFeedback(ok, userText, isSkip, pairDetail) {
+      function showFeedback(ok, userText, isSkip, pairDetail, calcDetail) {
         var q = session.list[session.idx];
         var fb = $("feedback");
         fb.className = "feedback show " + (ok ? "ok" : "ng");
         if (isSkip) $("fb-mark").textContent = "わからない — 答えを確認しよう";
         else if (ok) $("fb-mark").textContent = "○ 正解！";
         else if (pairDetail && pairDetail.hits && pairDetail.hits.some(function (h) { return h; })) $("fb-mark").textContent = "× あと少し（片方だけ合っています）";
+        else if (calcDetail && calcDetail.hits && calcDetail.hits.some(function (h) { return h; })) $("fb-mark").textContent = "× あと少し（合っている党もあります）";
         else $("fb-mark").textContent = "× ざんねん";
         $("fb-your").textContent = isSkip ? "わからないを選びました" : "あなたの答え：" + (userText || "（無回答）");
         var pairEl = $("fb-pair");
-        if (pairDetail && pairDetail.hits && !isSkip) {
+        if (calcDetail && calcDetail.hits && !isSkip) {
+          var calcLines = calcDetail.hits.map(function (hit, i) {
+            var p = q.parties[i];
+            return hit ? "○ " + p.label + " " + p.ans + "議席" : "× " + p.label + "（正解は " + p.ans + "議席）";
+          });
+          pairEl.textContent = calcLines.join("　／　");
+          pairEl.style.display = "block";
+        } else if (pairDetail && pairDetail.hits && !isSkip) {
           var labels = splitAnswerParts(q.a);
           var lines = pairDetail.hits.map(function (hit, i) {
             var lab = labels[i] || ("要素" + (i + 1));
@@ -1560,6 +1684,7 @@
         $("answer-input").disabled = true;
         $("answer-input-a").disabled = true;
         $("answer-input-b").disabled = true;
+        setCalcInputsDisabled(true);
         $("next-btn").className = "next-btn show";
         var sf = $("self-fix");
         if (!ok && !isSkip && q.type === "text") {
