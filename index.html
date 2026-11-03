@@ -1,0 +1,1431 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>福岡受験ドリル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #eef3f2;
+        --surface: #ffffff;
+        --surface-2: #f4f7f6;
+        --ink: #1d2a30;
+        --ink-soft: #54666d;
+        --line: #d5dfdc;
+        --primary: #0f6a5c;
+        --primary-ink: #ffffff;
+        --primary-soft: #e0f0ec;
+        --accent: #d95d27;
+        --accent-soft: #fdeee5;
+        --ok: #177245;
+        --ok-soft: #e2f3e8;
+        --ng: #c03434;
+        --ng-soft: #fbeaea;
+        --shadow: 0 2px 10px rgba(23, 48, 44, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121a1c;
+          --surface: #1d282b;
+          --surface-2: #243134;
+          --ink: #eef4f2;
+          --ink-soft: #a7bab4;
+          --line: #37474b;
+          --primary: #2fae97;
+          --primary-ink: #0c2420;
+          --primary-soft: #173b35;
+          --accent: #f0854f;
+          --accent-soft: #452a1d;
+          --ok: #5cc98a;
+          --ok-soft: #173a28;
+          --ng: #f08a8a;
+          --ng-soft: #452424;
+          --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        line-height: 1.6;
+      }
+      .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; }
+      h1 {
+        font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+        font-size: 30px; font-weight: 900; margin: 6px 0 2px; letter-spacing: 0.02em;
+      }
+      .sub { color: var(--ink-soft); font-size: 14px; margin: 0 0 10px; }
+      .top-notice {
+        background: var(--primary-soft); border: 1.5px solid var(--primary); border-radius: 12px;
+        padding: 12px 14px; margin: 0 0 16px; font-size: 14px; line-height: 1.7;
+      }
+      .top-notice strong { font-weight: 900; }
+      .screen { display: none; }
+      .screen.active { display: block; }
+
+      .subject { margin-bottom: 26px; }
+      .subject-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+      .subject-head h2 { font-size: 19px; margin: 0; font-weight: 900; }
+      .subject-head span { font-size: 12.5px; color: var(--ink-soft); }
+      .set-list { display: grid; gap: 10px; }
+      .set-btn {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        width: 100%; text-align: left; cursor: pointer;
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 14px 16px; font: inherit; color: var(--ink); box-shadow: var(--shadow);
+      }
+      .set-btn:active { transform: scale(0.99); }
+      .set-btn .name { font-weight: 700; font-size: 15.5px; }
+      .set-btn .desc { display: block; font-size: 12.5px; color: var(--ink-soft); font-weight: 400; margin-top: 1px; }
+      .set-btn .count {
+        flex: none; font-size: 12.5px; font-weight: 700; color: var(--primary);
+        background: var(--primary-soft); border-radius: 999px; padding: 3px 10px;
+      }
+      .shuffle-row {
+        display: flex; align-items: center; justify-content: space-between;
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 12px 16px; box-shadow: var(--shadow); margin-bottom: 8px;
+      }
+      .shuffle-row .lbl { font-weight: 700; font-size: 15px; }
+      .shuffle-row .lbl small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 12.5px; }
+      .switch { flex: none; display: inline-flex; }
+      .switch input {
+        appearance: none; -webkit-appearance: none;
+        width: 52px; height: 30px; margin: 0; flex: none; cursor: pointer;
+        border-radius: 999px; background: var(--line); position: relative;
+        transition: background 0.15s; outline-offset: 3px;
+      }
+      .switch input::after {
+        content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
+        border-radius: 50%; background: #fff; transition: left 0.15s; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      }
+      .switch input:checked { background: var(--primary); }
+      .switch input:checked::after { left: 25px; }
+      .note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+
+      /* weak / mistake memory */
+      .weak-card {
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 16px; box-shadow: var(--shadow); margin: 18px 0 26px;
+      }
+      .weak-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+      .weak-top h2 { font-size: 17px; margin: 0; font-weight: 900; }
+      .weak-total {
+        flex: none; font-size: 12.5px; font-weight: 700; color: var(--accent);
+        background: var(--accent-soft); border-radius: 999px; padding: 3px 10px;
+      }
+      .weak-total:empty { display: none; }
+      .weak-desc { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.6; }
+      .weak-empty {
+        background: var(--surface-2); border: 1.5px dashed var(--line); border-radius: 10px;
+        padding: 12px 14px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;
+      }
+      .weak-list { display: grid; gap: 8px; margin-bottom: 12px; }
+      .weak-list:empty { margin-bottom: 0; }
+      .weak-item {
+        display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+        background: var(--surface-2); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px;
+      }
+      .weak-item-main { min-width: 0; }
+      .weak-item-q { font-size: 13.5px; font-weight: 700; margin: 0 0 2px; line-height: 1.5; word-break: break-word; }
+      .weak-item-a { font-size: 12.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; word-break: break-word; }
+      .weak-item-a b { color: var(--primary); }
+      .weak-badge {
+        flex: none; font-size: 12px; font-weight: 900; color: var(--ng);
+        background: var(--ng-soft); border: 1.5px solid var(--ng); border-radius: 999px; padding: 2px 8px; white-space: nowrap;
+      }
+      .weak-badge.hot { background: #b42323; color: #ffffff; border-color: #b42323; }
+      .weak-start { width: 100%; margin-top: 4px; }
+      .reset-btn {
+        width: 100%; margin-top: 10px; font: inherit; font-size: 13.5px; font-weight: 700;
+        background: none; color: var(--ink-soft); border: 1.5px solid var(--line); border-radius: 10px;
+        padding: 10px 12px; cursor: pointer;
+      }
+      .reset-btn.armed { color: var(--ng); border-color: var(--ng); background: var(--ng-soft); }
+      .weak-note { font-size: 12px; color: var(--ink-soft); margin: 10px 2px 0; line-height: 1.6; }
+      .storage-warn {
+        display: none; font-size: 13px; font-weight: 700; color: var(--ng);
+        background: var(--ng-soft); border: 1.5px solid var(--ng); border-radius: 10px;
+        padding: 10px 12px; margin: 10px 0 0; line-height: 1.65;
+      }
+      .storage-warn.show { display: block; }
+      .backup-area { margin-top: 10px; }
+      .backup-panel { display: grid; gap: 8px; margin-top: 10px; }
+      .backup-code {
+        width: 100%; font: inherit; font-size: 12px; line-height: 1.5; padding: 10px;
+        border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface-2);
+        color: var(--ink); word-break: break-all; resize: vertical;
+      }
+      .backup-msg { font-size: 12.5px; color: var(--primary); margin: 0 2px; }
+      .backup-msg:empty { display: none; }
+
+      /* quiz */
+      .quiz-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+      .quit-btn {
+        background: none; border: none; font: inherit; font-size: 13.5px; color: var(--ink-soft);
+        cursor: pointer; padding: 6px 4px; text-decoration: underline;
+      }
+      .progress-label { font-size: 13.5px; font-weight: 700; color: var(--ink-soft); }
+      .progress { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+      .progress > div { height: 100%; background: var(--primary); width: 0%; transition: width 0.25s; }
+      .card {
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px;
+        padding: 20px 18px; box-shadow: var(--shadow);
+      }
+      .q-tag {
+        display: inline-block; font-size: 12px; font-weight: 700; color: var(--primary);
+        background: var(--primary-soft); border-radius: 999px; padding: 2px 10px; margin-bottom: 10px;
+      }
+      .q-text { font-size: 18px; font-weight: 700; line-height: 1.65; margin: 0 0 16px; white-space: pre-wrap; }
+      .answer-input {
+        width: 100%; font: inherit; font-size: 17px; padding: 13px 14px;
+        border: 2px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--ink);
+      }
+      .answer-input:focus { outline: none; border-color: var(--primary); }
+      .pair-inputs { display: grid; gap: 12px; }
+      .pair-field label { display: block; font-size: 13px; font-weight: 700; color: var(--ink-soft); margin: 0 0 4px 2px; }
+      .pair-feedback { font-size: 14.5px; font-weight: 700; margin: 0 0 8px; line-height: 1.7; }
+      .hint { font-size: 12.5px; color: var(--ink-soft); margin: 8px 2px 0; }
+      .choices { display: grid; gap: 9px; }
+      .choice-btn {
+        width: 100%; text-align: left; font: inherit; font-size: 16px; font-weight: 500;
+        background: var(--surface-2); border: 2px solid var(--line); border-radius: 10px;
+        padding: 12px 14px; cursor: pointer; color: var(--ink);
+      }
+      .choice-btn .key { font-weight: 900; color: var(--primary); margin-right: 8px; }
+      .choice-btn.selected { border-color: var(--primary); background: var(--primary-soft); }
+      .choice-btn:disabled { cursor: default; opacity: 0.85; }
+      .order-picked { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; min-height: 40px; }
+      .order-slot {
+        border: 2px dashed var(--line); border-radius: 10px; padding: 7px 12px;
+        font-weight: 700; font-size: 15px; color: var(--ink-soft); background: var(--surface-2);
+      }
+      .order-slot.filled { border-style: solid; border-color: var(--primary); color: var(--ink); background: var(--primary-soft); }
+      .order-clear { background: none; border: none; font: inherit; font-size: 13px; color: var(--ink-soft); text-decoration: underline; cursor: pointer; padding: 4px; }
+      .grade-btn {
+        width: 100%; margin-top: 18px; font: inherit; font-size: 17px; font-weight: 900;
+        background: var(--primary); color: var(--primary-ink); border: none; border-radius: 12px;
+        padding: 15px; cursor: pointer;
+      }
+      .grade-btn:disabled { opacity: 0.4; cursor: default; }
+      .skip-btn {
+        width: 100%; margin-top: 10px; font: inherit; font-size: 15.5px; font-weight: 700;
+        background: var(--surface); color: var(--ink-soft); border: 2px solid var(--line); border-radius: 12px;
+        padding: 12px; cursor: pointer;
+      }
+      .skip-btn:active { transform: scale(0.99); }
+      .skip-note { font-size: 12.5px; color: var(--ink-soft); margin: 8px 2px 0; text-align: center; }
+      .feedback { display: none; margin-top: 18px; border-radius: 12px; padding: 16px; }
+      .feedback.show { display: block; }
+      .feedback.ok { background: var(--ok-soft); border: 1.5px solid var(--ok); }
+      .feedback.ng { background: var(--ng-soft); border: 1.5px solid var(--ng); }
+      .feedback .mark { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+      .feedback.ok .mark { color: var(--ok); }
+      .feedback.ng .mark { color: var(--ng); }
+      .feedback .your { font-size: 14px; color: var(--ink-soft); margin: 0 0 4px; word-break: break-all; }
+      .feedback .correct-ans { font-size: 16.5px; font-weight: 700; margin: 0 0 8px; }
+      .feedback .expl { font-size: 14.5px; margin: 0; }
+      .self-fix {
+        margin-top: 12px; font: inherit; font-size: 14.5px; font-weight: 700;
+        background: var(--surface); color: var(--accent); border: 2px solid var(--accent);
+        border-radius: 10px; padding: 10px 14px; cursor: pointer; width: 100%;
+      }
+      .self-fix.done { color: var(--ok); border-color: var(--ok); }
+      .next-btn {
+        display: none; width: 100%; margin-top: 14px; font: inherit; font-size: 17px; font-weight: 900;
+        background: var(--ink); color: var(--bg); border: none; border-radius: 12px; padding: 15px; cursor: pointer;
+      }
+      .next-btn.show { display: block; }
+
+      /* result */
+      .score-box { text-align: center; padding: 26px 18px 20px; }
+      .score-big { font-family: "Zen Maru Gothic", sans-serif; font-size: 44px; font-weight: 900; margin: 0; }
+      .score-big small { font-size: 20px; color: var(--ink-soft); }
+      .score-rate { font-size: 16px; font-weight: 700; color: var(--primary); margin: 2px 0 0; }
+      .score-breakdown { font-size: 13.5px; color: var(--ink-soft); margin: 6px 0 0; }
+      .score-breakdown b { color: var(--ink); }
+      .score-msg { color: var(--ink-soft); font-size: 14px; margin: 8px 0 0; }
+      .skip-badge {
+        display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--ink-soft);
+        background: var(--surface-2); border: 1.5px solid var(--line); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 1px;
+      }
+      .wrong-head { font-size: 16px; font-weight: 900; margin: 24px 0 10px; }
+      .wrong-item {
+        background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px;
+        padding: 13px 15px; margin-bottom: 9px; box-shadow: var(--shadow);
+      }
+      .wrong-item .wq { font-weight: 700; font-size: 14.5px; margin: 0 0 3px; }
+      .wrong-item .wa { font-size: 14px; margin: 0; }
+      .wrong-item .wa b { color: var(--primary); }
+      .wrong-item .wy { font-size: 13px; color: var(--ink-soft); margin: 2px 0 0; word-break: break-all; }
+      .all-ok { background: var(--ok-soft); border: 1.5px solid var(--ok); border-radius: 12px; padding: 14px 16px; font-weight: 700; }
+      .result-btns { display: grid; gap: 10px; margin-top: 22px; }
+      .btn {
+        font: inherit; font-size: 16px; font-weight: 900; border-radius: 12px; padding: 14px;
+        cursor: pointer; border: 2px solid var(--primary); background: var(--primary); color: var(--primary-ink);
+      }
+      .btn.sub { background: var(--surface); color: var(--primary); }
+      .btn.ghost { background: var(--surface); color: var(--ink-soft); border-color: var(--line); }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- ホーム -->
+      <section id="screen-home" class="screen active">
+        <h1>福岡受験ドリル</h1>
+        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術 ／ 理科・化学）</p>
+        <div class="top-notice" role="note"><strong>登録はいりません。</strong>画面の一番上に出るバーは、このドリルのものではありません。触らなくて大丈夫です。そのまま下の問題を始めてください。</div>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" id="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
+
+        <div class="weak-card" id="weak-card">
+          <div class="weak-top"><h2>苦手な問題</h2><span class="weak-total" id="weak-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
+          <div class="weak-empty" id="weak-empty">まだ苦手な問題はありません。問題を解いて間違えると、ここにたまっていきます。</div>
+          <div class="weak-list" id="weak-list"></div>
+          <button class="btn weak-start" id="weak-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn" id="weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn" id="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn" id="backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" id="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" id="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn" id="backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn" id="backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg" id="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>社会 ・ 歴史（文化芸術）</h2><span>全54問</span></div>
+          <div class="set-list" id="history-sets"></div>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>理科 ・ 化学</h2><span>全72問</span></div>
+          <div class="set-list" id="science-sets"></div>
+        </div>
+
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+      </section>
+
+      <!-- クイズ -->
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-top">
+          <button class="quit-btn" id="quit-btn" type="button">やめる</button>
+          <div class="progress-label" id="progress-label"></div>
+        </div>
+        <div class="progress"><div id="progress-bar"></div></div>
+        <div class="card">
+          <span class="q-tag" id="q-tag"></span>
+          <p class="q-text" id="q-text"></p>
+          <div id="q-input-area">
+            <div id="single-input-wrap">
+              <input class="answer-input" id="answer-input" type="text" autocomplete="off" autocapitalize="off" placeholder="答えを入力" />
+            </div>
+            <div id="pair-input-wrap" style="display:none">
+              <div class="pair-inputs">
+                <div class="pair-field">
+                  <label for="answer-input-a">答え（1つ目）</label>
+                  <input class="answer-input" id="answer-input-a" type="text" autocomplete="off" autocapitalize="off" placeholder="1つ目の答え" />
+                </div>
+                <div class="pair-field">
+                  <label for="answer-input-b">答え（2つ目）</label>
+                  <input class="answer-input" id="answer-input-b" type="text" autocomplete="off" autocapitalize="off" placeholder="2つ目の答え" />
+                </div>
+              </div>
+            </div>
+            <p class="hint" id="q-hint"></p>
+          </div>
+          <div id="q-choice-area" style="display:none">
+            <div class="choices" id="choices"></div>
+          </div>
+          <div id="q-order-area" style="display:none">
+            <div class="order-picked" id="order-picked"></div>
+            <div class="choices" id="order-choices"></div>
+            <button class="order-clear" id="order-clear" type="button">選び直す</button>
+          </div>
+          <button class="grade-btn" id="grade-btn" type="button">答える</button>
+          <button class="skip-btn" id="skip-btn" type="button">わからない</button>
+          <p class="skip-note" id="skip-note">わからないときは、空らんのままこのボタンを押してOKです</p>
+          <div class="feedback" id="feedback">
+            <div class="mark" id="fb-mark"></div>
+            <p class="your" id="fb-your"></p>
+            <p class="pair-feedback" id="fb-pair" style="display:none"></p>
+            <p class="correct-ans" id="fb-answer"></p>
+            <p class="expl" id="fb-expl"></p>
+            <button class="self-fix" id="self-fix" type="button" style="display:none">ほんとは合ってた（自分で○にする）</button>
+          </div>
+          <button class="next-btn" id="next-btn" type="button">次の問題へ</button>
+        </div>
+      </section>
+
+      <!-- 結果 -->
+      <section id="screen-result" class="screen">
+        <div class="card score-box">
+          <p class="score-big"><span id="score-num">0</span><small> / <span id="score-total">0</span> 問</small></p>
+          <p class="score-rate">正答率 <span id="score-rate">0</span>%</p>
+          <p class="score-breakdown" id="score-breakdown"></p>
+          <p class="score-msg" id="score-msg"></p>
+        </div>
+        <div id="wrong-area"></div>
+        <div class="result-btns">
+          <button class="btn" id="retry-wrong-btn" type="button" style="display:none">間違えた・わからなかった問題だけ解き直す</button>
+          <button class="btn sub" id="retry-all-btn" type="button">同じセットをもう一度</button>
+          <button class="btn ghost" id="home-btn" type="button">ホームに戻る</button>
+        </div>
+      </section>
+
+    </div>
+
+    <script>
+      /* ===== 問題データ（問題集PDFから抽出） =====
+         type: "text" 入力式 / "choice" 選択式 / "order" 並べ替え
+         accept: 正解として認める表記の配列（読み・別名ふくむ）
+         pair: [[...],[...]] 両方の要素を含む必要がある問題
+         ratio: [4,1,5] のような数値列で判定する問題
+         kw: キーワードのどれかを含めば正解とする問題 */
+
+      var HISTORY_QA = [
+        { n: 1, q: "現存する世界最古級の木造建築で、飛鳥文化を代表する寺院はどこか。", a: "法隆寺", accept: ["法隆寺", "ほうりゅうじ"], ex: "飛鳥文化の代表。聖徳太子ゆかりの寺で、現存する世界最古級の木造建築です。" },
+        { n: 2, q: "法隆寺の釈迦三尊像を作った、渡来系の仏師は誰か。", a: "鞍作鳥（止利仏師）", accept: ["鞍作鳥", "くらつくりのとり", "止利仏師", "しりぶっし", "止利"], ex: "釈迦三尊像の作者。渡来系の仏師です。" },
+        { n: 3, q: "奈良時代、東大寺に大仏を造らせた天皇は誰か。", a: "聖武天皇", accept: ["聖武天皇", "しょうむてんのう"], ex: "東大寺の大仏・国分寺の建立とセットで覚えましょう。天平文化の中心人物です。" },
+        { n: 4, q: "東大寺の倉庫で、天皇の遺品などを収めた建物を何というか。", a: "正倉院", accept: ["正倉院", "しょうそういん"], ex: "聖武天皇の遺品などを収めた東大寺の宝庫。西アジアやヨーロッパの影響を受けた工芸品も残されています。" },
+        { n: 5, q: "唐から来日し、唐招提寺を開いた僧は誰か。", a: "鑑真", accept: ["鑑真", "がんじん"], ex: "何度も渡航に失敗しながら唐から来日し、唐招提寺を開きました。" },
+        { n: 6, q: "現存する最古の歌集で、奈良時代にまとめられた歌集は何か。", a: "『万葉集』", accept: ["万葉集", "まんようしゅう"], ex: "奈良時代にまとめられた、現存する最古の歌集。天皇から庶民まで幅広い歌を収めています。" },
+        { n: 7, q: "894年に遣唐使の廃止を提案した人物は誰か。", a: "菅原道真", accept: ["菅原道真", "すがわらのみちざね", "道真"], ex: "894年、遣唐使の廃止を提案。これを境に日本風の国風文化が発達しました。" },
+        { n: 8, q: "『源氏物語』の作者は誰か。", a: "紫式部", accept: ["紫式部", "むらさきしきぶ"], ex: "国風文化を代表する女性作家。清少納言の『枕草子』と取り違えないように。" },
+        { n: 9, q: "『枕草子』の作者は誰か。", a: "清少納言", accept: ["清少納言", "せいしょうなごん"], ex: "国風文化の随筆。紫式部＝『源氏物語』、清少納言＝『枕草子』の組み合わせは福岡入試でも取り上げられました。" },
+        { n: 10, q: "藤原頼通が宇治に建てた、浄土信仰を表す建物を何というか。", a: "平等院鳳凰堂", accept: ["平等院鳳凰堂", "びょうどういんほうおうどう", "鳳凰堂"], ex: "藤原頼通が宇治に建てた阿弥陀堂。末法思想と浄土信仰を表す国風文化の建物です。" },
+        { n: 11, q: "平安時代に発達した、日本独自の文字を何というか（漢字から生まれた表音文字）。", a: "かな文字", accept: ["かな文字", "かなもじ", "仮名文字", "仮名", "かな"], ex: "ひらがな・カタカナのこと。漢字をくずして生まれ、国風文化の土台になりました。" },
+        { n: 12, q: "東大寺南大門の金剛力士像を作った鎌倉時代の仏師2人は誰か。", a: "運慶・快慶", pair: [["運慶", "うんけい"], ["快慶", "かいけい"]], ex: "鎌倉文化の力強い写実彫刻の代表作を作った仏師コンビです。" },
+        { n: 13, q: "琵琶法師によって語り伝えられた、鎌倉時代の軍記物語は何か。", a: "『平家物語』", accept: ["平家物語", "へいけものがたり"], ex: "武士の興亡を描く軍記物語。琵琶法師が語り伝えました。" },
+        { n: 14, q: "『方丈記』の作者は誰か。", a: "鴨長明", accept: ["鴨長明", "かものちょうめい"], ex: "無常観を表す鎌倉時代の随筆です。" },
+        { n: 15, q: "『徒然草』の作者は誰か。", a: "兼好法師（吉田兼好）", accept: ["兼好法師", "けんこうほうし", "吉田兼好", "よしだけんこう", "兼好"], ex: "鎌倉時代の随筆。『方丈記』の鴨長明と区別しましょう。" },
+        { n: 16, q: "金閣（鹿苑寺）を建てた室町幕府の将軍は誰か。", a: "足利義満", accept: ["足利義満", "あしかがよしみつ", "義満"], ex: "金閣＝義満＝北山文化。銀閣の義政と取り違えないように。" },
+        { n: 17, q: "能を大成した室町時代の親子は誰か。", a: "観阿弥・世阿弥", pair: [["観阿弥", "かんあみ"], ["世阿弥", "ぜあみ"]], ex: "親子で能を大成しました。北山文化の頃の人物です。" },
+        { n: 18, q: "銀閣（慈照寺）を建てた将軍と、その文化の名称を答えよ。", a: "足利義政・東山文化", pair: [["足利義政", "あしかがよしまさ", "義政"], ["東山文化", "ひがしやまぶんか"]], ex: "銀閣＝義政＝東山文化。わび・さびの簡素な美しさが特徴です。" },
+        { n: 19, q: "水墨画を大成し、室町時代に明へ渡った画僧は誰か。", a: "雪舟", accept: ["雪舟", "せっしゅう"], ex: "室町時代に明へ渡って水墨画を学び、大成しました。東山文化の代表です。" },
+        { n: 20, q: "安土桃山文化を代表する、金地の大画面の障壁画で知られる画家は誰か。", a: "狩野永徳", accept: ["狩野永徳", "かのうえいとく", "永徳"], ex: "桃山文化の画家。金地に大画面という豪華さが桃山の判定ポイントです。" },
+        { n: 21, q: "茶の湯（わび茶）を大成した人物は誰か。", a: "千利休", accept: ["千利休", "せんのりきゅう", "利休"], ex: "わび茶を大成した茶人。安土桃山時代の人物です。" },
+        { n: 22, q: "浮世絵の始祖とされ、『見返り美人図』を描いた人物は誰か。", a: "菱川師宣", accept: ["菱川師宣", "ひしかわもろのぶ", "師宣"], ex: "浮世絵の始祖。元禄文化の人物です。" },
+        { n: 23, q: "『日本永代蔵』など浮世草子を書いた元禄文化の作家は誰か。", a: "井原西鶴", accept: ["井原西鶴", "いはらさいかく", "西鶴"], ex: "浮世草子で町人の世界を描いた元禄文化の作家です。" },
+        { n: 24, q: "人形浄瑠璃の脚本で知られる元禄文化の作家は誰か。", a: "近松門左衛門", accept: ["近松門左衛門", "ちかまつもんざえもん", "近松"], ex: "人形浄瑠璃・歌舞伎の脚本家。元禄文化の三大文芸は西鶴・近松・芭蕉です。" },
+        { n: 25, q: "『奥の細道』を著し、俳諧を芸術に高めた人物は誰か。", a: "松尾芭蕉", accept: ["松尾芭蕉", "まつおばしょう", "芭蕉"], ex: "『奥の細道』で知られる元禄文化の俳人です。" },
+        { n: 26, q: "元禄文化が栄えた地域を、当時の呼び方で何というか。", a: "上方（大阪・京都）", accept: ["上方", "かみがた", "大阪京都", "大阪・京都", "大阪と京都"], ex: "元禄文化の中心は上方（大阪・京都）。化政文化の江戸と対で覚えましょう。" },
+        { n: 27, q: "『富嶽三十六景』を描いた化政文化の浮世絵師は誰か。", a: "葛飾北斎", accept: ["葛飾北斎", "かつしかほくさい", "北斎"], ex: "化政文化（江戸・19世紀）の浮世絵師。『東海道五十三次』の広重とセットで。" },
+        { n: 28, q: "『東海道五十三次』を描いた浮世絵師は誰か。", a: "歌川（安藤）広重", accept: ["歌川広重", "うたがわひろしげ", "安藤広重", "広重"], ex: "化政文化の浮世絵師。北斎の『富嶽三十六景』と対で覚えましょう。" },
+        { n: 29, q: "『東海道中膝栗毛』の作者は誰か。", a: "十返舎一九", accept: ["十返舎一九", "じっぺんしゃいっく", "一九"], ex: "滑稽本『東海道中膝栗毛』は化政文化の読み物です。" },
+        { n: 30, q: "化政文化が栄えた都市はどこか。", a: "江戸", accept: ["江戸", "えど"], ex: "化政文化の中心地は江戸。元禄文化の上方（大阪・京都）と対で覚えましょう。" },
+        { n: 31, q: "『燕子花図屏風』で知られる江戸時代初期の画家で、琳派の代表格は誰か。", a: "尾形光琳", accept: ["尾形光琳", "おがたこうりん", "光琳"], ex: "琳派の代表格。装飾的な大画面の屏風絵で知られます。" },
+        { n: 32, q: "解剖書『解体新書』を翻訳した蘭学者は誰か（代表者1人）。", a: "杉田玄白", accept: ["杉田玄白", "すぎたげんぱく", "前野良沢", "まえのりょうたく"], ex: "杉田玄白・前野良沢らがオランダ語の解剖書を翻訳しました。" },
+        { n: 33, q: "『古事記伝』を著し、国学を大成した人物は誰か。", a: "本居宣長", accept: ["本居宣長", "もとおりのりなが", "宣長"], ex: "国学を大成した江戸時代の学者です。" },
+        { n: 34, q: "明治時代、西洋文化を積極的に取り入れた風潮を何というか。", a: "文明開化", accept: ["文明開化", "ぶんめいかいか"], ex: "ガス灯・洋装・洋風建築など、西洋の新しさを取り入れた明治の風潮です。" },
+        { n: 35, q: "明治政府が欧米の賓客をもてなすために東京に建てた洋風の社交場は何か。", a: "鹿鳴館", accept: ["鹿鳴館", "ろくめいかん"], ex: "明治の欧化政策の象徴。文明開化の判定ワードです。" },
+        { n: 36, q: "日本画の復興に努め、フェノロサとともに活動した明治の美術指導者は誰か。", a: "岡倉天心", accept: ["岡倉天心", "おかくらてんしん", "天心"], ex: "フェノロサとともに日本美術の復興に尽力しました。" }
+      ];
+
+      var ERA_OPTIONS = [
+        { key: "ア", label: "飛鳥" },
+        { key: "イ", label: "奈良（天平）" },
+        { key: "ウ", label: "平安（国風）" },
+        { key: "エ", label: "鎌倉" },
+        { key: "オ", label: "室町" },
+        { key: "カ", label: "安土桃山" },
+        { key: "キ", label: "江戸（元禄）" },
+        { key: "ク", label: "江戸（化政）" },
+        { key: "ケ", label: "明治" }
+      ];
+
+      var HISTORY_ERA = [
+        { n: "判1", type: "choice", q: "『枕草子』", a: "ウ 平安（国風）", correct: "ウ", ex: "清少納言の随筆。かな文字と女性作家は国風文化（平安）の目印です。" },
+        { n: "判2", type: "choice", q: "東大寺南大門の金剛力士像", a: "エ 鎌倉", correct: "エ", ex: "運慶・快慶の力強く写実的な彫刻は鎌倉文化です。" },
+        { n: "判3", type: "choice", q: "『富嶽三十六景』", a: "ク 江戸（化政）", correct: "ク", ex: "葛飾北斎の風景画。化政文化（江戸・19世紀）です。" },
+        { n: "判4", type: "choice", q: "法隆寺五重塔", a: "ア 飛鳥", correct: "ア", ex: "法隆寺は飛鳥文化を代表する寺院です。" },
+        { n: "判5", type: "choice", q: "『日本永代蔵』", a: "キ 江戸（元禄）", correct: "キ", ex: "井原西鶴の浮世草子。上方の町人文化＝元禄です。" },
+        { n: "判6", type: "choice", q: "銀閣（慈照寺）", a: "オ 室町", correct: "オ", ex: "足利義政の東山文化。室町時代の建物です。" },
+        { n: "判7", type: "choice", q: "『万葉集』", a: "イ 奈良（天平）", correct: "イ", ex: "奈良時代にまとめられた最古の歌集です。" },
+        { n: "判8", type: "choice", q: "鹿鳴館", a: "ケ 明治", correct: "ケ", ex: "明治の欧化政策の象徴。文明開化のキーワードです。" },
+        { n: "判9", type: "choice", q: "平等院鳳凰堂", a: "ウ 平安（国風）", correct: "ウ", ex: "藤原頼通が宇治に建てた、平安時代（国風文化）の建物です。" },
+        { n: "判10", type: "choice", q: "『奥の細道』", a: "キ 江戸（元禄）", correct: "キ", ex: "松尾芭蕉の紀行文。元禄文化です。" },
+        { n: "判11", type: "choice", q: "雪舟の水墨画", a: "オ 室町", correct: "オ", ex: "雪舟は室町時代の画僧で、水墨画を大成しました。" },
+        { n: "判12", type: "choice", q: "狩野永徳の障壁画", a: "カ 安土桃山", correct: "カ", ex: "金地の大画面は桃山文化の豪華さそのものです。" },
+        { n: "判13", type: "choice", q: "『平家物語』", a: "エ 鎌倉", correct: "エ", ex: "琵琶法師が語った鎌倉時代の軍記物語です。" },
+        { n: "判14", type: "choice", q: "正倉院の宝物", a: "イ 奈良（天平）", correct: "イ", ex: "正倉院は聖武天皇の遺品を収めた奈良時代（天平文化）の宝庫です。" },
+        { n: "判15", type: "choice", q: "『東海道五十三次』", a: "ク 江戸（化政）", correct: "ク", ex: "歌川広重の浮世絵。化政文化（江戸・19世紀）です。" },
+        { n: "判16", type: "choice", q: "金閣（鹿苑寺）", a: "オ 室町", correct: "オ", ex: "足利義満の北山文化。室町時代の建物です。" },
+        { n: "判17", type: "order", q: "次の文化を、古い順に並べ替えよ。", a: "天平文化 → 国風文化 → 北山文化 → 化政文化", items: [
+          { key: "A", label: "化政文化" }, { key: "B", label: "天平文化" }, { key: "C", label: "国風文化" }, { key: "D", label: "北山文化" }
+        ], correct: ["B", "C", "D", "A"], ex: "天平（奈良）→ 国風（平安）→ 北山（室町）→ 化政（江戸）の順です。" },
+        { n: "判18", type: "order", q: "次の作品を、作られたのが古い順に並べ替えよ。", a: "『万葉集』 → 『源氏物語』 → 『徒然草』 → 『奥の細道』", items: [
+          { key: "A", label: "『源氏物語』" }, { key: "B", label: "『徒然草』" }, { key: "C", label: "『奥の細道』" }, { key: "D", label: "『万葉集』" }
+        ], correct: ["D", "A", "B", "C"], ex: "『万葉集』（奈良）→『源氏物語』（平安）→『徒然草』（鎌倉）→『奥の細道』（江戸）の順です。" }
+      ];
+    </script>
+    <script>
+      var SCIENCE_QA = [
+        { n: 1, q: "質量÷体積で求める、物質1 cm3あたりの質量を何というか。", a: "密度", accept: ["密度", "みつど"], ex: "密度［g/cm3］＝ 質量［g］÷ 体積［cm3］。水に浮くか沈むかは水の密度1.0 g/cm3と比べて判断します。" },
+        { n: 2, q: "固体が液体になる温度を何というか。", a: "融点", accept: ["融点", "ゆうてん"], ex: "液体が気体になる温度は沸点。加熱曲線の水平な部分が融点・沸点です。" },
+        { n: 3, q: "沸点のちがいを利用して混合物を分ける方法を何というか。", a: "蒸留", accept: ["蒸留", "じょうりゅう"], ex: "沸点のちがいを利用します。温度計は枝分かれの位置に置くのがポイントです。" },
+        { n: 4, q: "水に溶けている物質を何というか（溶質・溶媒のどちらか）。", a: "溶質", accept: ["溶質", "ようしつ"], ex: "溶けている物質が溶質、溶かす液体が溶媒、全体が溶液です。" },
+        { n: 5, q: "水100 gに溶ける限度の質量を何というか。", a: "溶解度", accept: ["溶解度", "ようかいど"], ex: "溶解度は水100 gあたりの値。温度によって変わります。" },
+        { n: 6, q: "質量パーセント濃度の分母は、水の質量と溶液の質量のどちらか。", a: "溶液の質量", accept: ["溶液の質量", "溶液", "ようえきのしつりょう", "溶液全体の質量", "溶液全体"], ex: "濃度＝溶質÷（溶質＋溶媒）×100。分母は水だけではなく溶液全体です。" },
+        { n: 7, q: "酸素の集め方として適した方法を答えよ。", a: "水上置換法", accept: ["水上置換法", "水上置換", "すいじょうちかんほう", "すいじょうちかん"], ex: "酸素は水に溶けにくいので水上置換法で集めます。ものを燃やすはたらき（助燃性）があります。" },
+        { n: 8, q: "アンモニアは水に溶けやすく空気より軽い。集め方は何置換法か。", a: "上方置換法", accept: ["上方置換法", "上方置換", "じょうほうちかんほう", "じょうほうちかん"], ex: "水に溶けやすく空気より軽い気体は上方置換法。水に溶けやすく重い気体は下方置換法です。" },
+        { n: 9, q: "二酸化炭素を石灰水に通すと、石灰水はどうなるか。", a: "白くにごる", accept: ["白くにごる", "白く濁る", "しろくにごる", "白くにごらせる"], kw: ["白", "にご"], ex: "二酸化炭素の確認方法。石灰水が白くにごります。" },
+        { n: 10, q: "過酸化水素水から酸素が発生するときに使う、反応を速める物質は何か。", a: "二酸化マンガン", accept: ["二酸化マンガン", "にさんかまんがん"], ex: "二酸化マンガン自体は変化せず、反応を速めるはたらきをします。" },
+        { n: 11, q: "物質を構成する最小の粒子で、化学変化でそれ以上分かれないものを何というか。", a: "原子", accept: ["原子", "げんし"], ex: "原子は化学変化でそれ以上分かれず、種類も数も変わりません。" },
+        { n: 12, q: "いくつかの原子が結びついた、物質の性質を示す最小の単位を何というか。", a: "分子", accept: ["分子", "ぶんし"], ex: "原子が結びついてできた、物質の性質を示す最小の単位です。" },
+        { n: 13, q: "水の化学式を書け。", a: "H2O", formula: true, accept: ["H2O"], ex: "水素原子2つと酸素原子1つで H2O です。" },
+        { n: 14, q: "二酸化炭素の化学式を書け。", a: "CO2", formula: true, accept: ["CO2"], ex: "炭素原子1つと酸素原子2つで CO2 です。" },
+        { n: 15, q: "鉄と硫黄が化合してできる物質の名前と化学式を書け。", a: "硫化鉄・FeS", pair: [["硫化鉄", "りゅうかてつ"], ["FeS"]], pairFormula: [false, true], ex: "Fe ＋ S → FeS。鉄とは性質のちがう硫化鉄ができます。" },
+        { n: 16, q: "1種類の物質が2種類以上に分かれる化学変化を何というか。", a: "分解", accept: ["分解", "ぶんかい"], ex: "反対に、2種類以上が結びつく変化は化合です。" },
+        { n: 17, q: "炭酸水素ナトリウムを加熱すると発生する気体は何か（1つ）。", a: "二酸化炭素（または水）", accept: ["二酸化炭素", "にさんかたんそ", "CO2", "水", "みず"], ex: "熱分解で二酸化炭素と水（と炭酸ナトリウム）ができます。どちらか1つで正解です。" },
+        { n: 18, q: "化学反応式を作るとき、変えてよいのは係数と化学式の数字のどちらか。", a: "係数", accept: ["係数", "けいすう"], ex: "化学式の数字（H2Oの「2」など）は変えられません。係数で原子の数をそろえます。" },
+        { n: 19, q: "水素が燃えると何ができるか。", a: "水", accept: ["水", "みず", "H2O"], ex: "2H2 ＋ O2 → 2H2O。水素の燃焼は化合です。" },
+        { n: 20, q: "銅の元素記号を書け。", a: "Cu", formula: true, accept: ["Cu"], ex: "銅は Cu（ラテン語 cuprum 由来）。" },
+        { n: 21, q: "マグネシウムの元素記号を書け。", a: "Mg", formula: true, accept: ["Mg"], ex: "マグネシウムは Mg です。" },
+        { n: 22, q: "塩化ナトリウムの化学式を書け。", a: "NaCl", formula: true, accept: ["NaCl"], ex: "ナトリウム Na と塩素 Cl で NaCl（食塩）です。" },
+        { n: 23, q: "うすい塩酸に亜鉛を入れると発生する気体は何か。", a: "水素", accept: ["水素", "すいそ", "H2"], ex: "酸と金属の反応では水素が発生します。最も軽い気体です。" },
+        { n: 24, q: "状態変化では、粒子の種類は変わるか、変わらないか。", a: "変わらない", accept: ["変わらない", "かわらない", "変化しない"], ex: "状態変化では粒子の種類や数は変わらず、粒子どうしの間隔が変わるため体積が変わります。" },
+        { n: 25, q: "物質が酸素と結びつく化学変化を何というか。", a: "酸化", accept: ["酸化", "さんか"], ex: "燃焼も速い酸化です。" },
+        { n: 26, q: "酸化物から酸素がうばわれる化学変化を何というか。", a: "還元", accept: ["還元", "かんげん"], ex: "酸化と還元は反対の動きで、同時に起こります。" },
+        { n: 27, q: "化学変化の前後で物質全体の質量が変わらないことを何の法則というか。", a: "質量保存の法則", accept: ["質量保存の法則", "しつりょうほぞんのほうそく"], ex: "原子の種類と数が変わらないため成り立ちます。" },
+        { n: 28, q: "質量保存の法則が成り立つ理由は、原子の何と何が変わらないからか。", a: "種類と数", accept: ["種類と数", "しゅるいとかず", "原子の種類と数"], pair: [["種類", "しゅるい"], ["数", "かず"]], ex: "化学変化で変わるのは原子の組み合わせだけ。種類と数は変わりません。" },
+        { n: 29, q: "銅を加熱するとできる酸化物の名前と化学式を書け。", a: "酸化銅・CuO", pair: [["酸化銅", "さんかどう"], ["CuO"]], pairFormula: [false, true], ex: "2Cu ＋ O2 → 2CuO。黒色の酸化銅ができます。" },
+        { n: 30, q: "銅：酸素：酸化銅の質量の比を書け。", a: "4：1：5", ratio: [4, 1, 5], ex: "銅0.80 gなら酸素0.20 g、酸化銅1.00 g。4：1：5は頻出です。" },
+        { n: 31, q: "マグネシウム：酸素：酸化マグネシウムの質量の比を書け。", a: "3：2：5", ratio: [3, 2, 5], ex: "Mg 0.60 gなら酸素0.40 g、酸化物1.00 g。銅の4：1：5と区別しましょう。" },
+        { n: 32, q: "酸化銅と水素を加熱すると、酸化銅は酸化・還元のどちらを受けるか。", a: "還元", accept: ["還元", "かんげん"], ex: "CuO ＋ H2 → Cu ＋ H2O。酸化銅は酸素をうばわれるので還元、水素は酸化されます。" },
+        { n: 33, q: "鉄がさびるのは、酸化・還元のどちらか。", a: "酸化", accept: ["酸化", "さんか"], ex: "さびはおだやかな酸化です。燃焼は速い酸化。" },
+        { n: 34, q: "加熱をくり返しても質量が増えなくなったとき、金属はどうなったと考えられるか（漢字4字で「○○に酸化した」の形）。", a: "完全（に酸化した）", accept: ["完全", "かんぜん", "完全に酸化した"], ex: "質量が一定になるのは、金属が完全に酸化した合図です。" },
+        { n: 35, q: "気体が発生する反応をふたのない容器で行うと、見かけの質量は増えるか、減るか。", a: "減る", accept: ["減る", "へる", "減少する", "小さくなる"], ex: "発生した気体が外に逃げるため、見かけの質量は減ります。密閉すれば変わりません。" },
+        { n: 36, q: "うすい塩酸と石灰石の反応で発生する気体は何か。", a: "二酸化炭素", accept: ["二酸化炭素", "にさんかたんそ", "CO2"], ex: "石灰石（炭酸カルシウム）と塩酸で二酸化炭素が発生します。" },
+        { n: 37, q: "酸化カルシウムに水を加えると熱が出る。このような反応を何反応というか。", a: "発熱反応", accept: ["発熱反応", "はつねつはんのう"], ex: "反対に、熱を吸収する反応は吸熱反応です（硝酸アンモニウム＋水など）。" },
+        { n: 38, q: "マグネシウムを燃やすときの反応式を書け。", a: "2Mg ＋ O2 → 2MgO", formula: true, accept: ["2Mg+O2->2MgO"], ex: "左右の原子の数をそろえます。Mgが2つ、Oが2つずつです。" },
+        { n: 39, q: "銅の酸化の反応式を書け。", a: "2Cu ＋ O2 → 2CuO", formula: true, accept: ["2Cu+O2->2CuO"], ex: "係数で原子の数をそろえるのがポイントです。" },
+        { n: 40, q: "硫化鉄ができる反応で、鉄7.0 gと結びつく硫黄は何gか。鉄：硫黄＝7：4とする。", a: "4.0 g", accept: ["4.0g", "4g", "4.0", "4"], numeric: 4.0, ex: "7：4 ＝ 7.0：x より x＝4.0 g。比は対応するものどうしをそろえて比例式を作ります。" },
+        { n: 41, q: "酸化と還元は別々に起こるか、同時に起こるか。", a: "同時に起こる", accept: ["同時に起こる", "同時", "どうじにおこる", "同時に"], ex: "一方の還元は、もう一方の酸化と必ずセットで起こります。" },
+        { n: 42, q: "燃焼は、速い酸化・おだやかな酸化のどちらか。", a: "速い酸化", accept: ["速い酸化", "はやいさんか"], ex: "鉄がさびるのはおだやかな酸化、燃焼は速い酸化です。" },
+        { n: 43, q: "スチールウール（鉄）を燃やすと、質量は増えるか、減るか。", a: "増える", accept: ["増える", "ふえる", "増加する", "大きくなる"], ex: "空気中の酸素が結びつくため、燃やす前より質量が増えます。" },
+        { n: 44, q: "沈殿ができる反応でも質量保存の法則は成り立つか。", a: "成り立つ", accept: ["成り立つ", "なりたつ", "成り立た", "はい"], ex: "沈殿ができても全体の質量は変わりません。イオンどうしが結びついただけだからです。" },
+        { n: 45, q: "炭素で酸化銅を還元すると発生する気体は何か。", a: "二酸化炭素", accept: ["二酸化炭素", "にさんかたんそ", "CO2"], ex: "酸化銅は還元されて銅になり、炭素は酸化されて二酸化炭素になります。" },
+        { n: 46, q: "水素で酸化銅を還元すると、試験管の口付近につく液体は何か。", a: "水", accept: ["水", "みず", "H2O"], ex: "CuO ＋ H2 → Cu ＋ H2O。生じた水が口付近につきます。" },
+        { n: 47, q: "同じ質量なら、銅とマグネシウムでは結びつく酸素の質量が大きいのはどちらか。", a: "マグネシウム", accept: ["マグネシウム", "まぐねしうむ", "Mg"], ex: "マグネシウムは3：2で、銅の4：1より酸素の割合が大きいからです。" },
+        { n: 48, q: "質量の比の問題で、反応物が余るかどうかを先に確認する理由を一言で答えよ。", a: "全部が反応しない場合があるから", kwAny: ["余", "全部が反応", "反応しない場合", "上限"], ex: "反応する量には上限があり、どちらかが余る場合があるためです。余る方ではなく、足りない方を基準に計算します。" },
+        { n: 49, q: "酸性の水溶液に共通して含まれるイオンは何か。", a: "水素イオン H+", accept: ["水素イオン", "すいそいおん", "H+"], ex: "酸は水に溶けると水素イオン H+ を出します。" },
+        { n: 50, q: "アルカリ性の水溶液に共通して含まれるイオンは何か。", a: "水酸化物イオン OH-", accept: ["水酸化物イオン", "すいさんかぶついおん", "OH-"], ex: "アルカリは水酸化物イオン OH- を出します。中和は H+ ＋ OH- → H2O です。" },
+        { n: 51, q: "pHが7の水溶液は何性か。", a: "中性", accept: ["中性", "ちゅうせい"], ex: "pH7が中性。7より小さいと酸性、大きいとアルカリ性です。" },
+        { n: 52, q: "BTB溶液を酸性に入れると何色になるか。", a: "黄色", accept: ["黄色", "きいろ", "黄"], ex: "BTB溶液は酸性で黄、中性で緑、アルカリ性で青になります。" },
+        { n: 53, q: "フェノールフタレイン溶液が赤くなるのは、酸性・アルカリ性のどちらか。", a: "アルカリ性", accept: ["アルカリ性", "あるかりせい", "アルカリ"], ex: "フェノールフタレイン溶液は酸性・中性では無色、アルカリ性で赤（濃いピンク）になります。" },
+        { n: 54, q: "塩酸が電離したときに出る陽イオンと陰イオンを書け。", a: "H+ と Cl-", pair: [["H+"], ["Cl-"]], pairFormula: [true, true], ex: "HCl → H+ ＋ Cl-。水素イオンが陽イオン、塩化物イオンが陰イオンです。" },
+        { n: 55, q: "水酸化ナトリウムが電離したときに出る陽イオンと陰イオンを書け。", a: "Na+ と OH-", pair: [["Na+"], ["OH-"]], pairFormula: [true, true], ex: "NaOH → Na+ ＋ OH- です。" },
+        { n: 56, q: "砂糖水が電気を通さないのは、砂糖が何をしないからか。", a: "電離（しない）", accept: ["電離", "でんり", "イオンに分かれること", "イオンにならない"], ex: "砂糖は非電解質で、水に溶けても電離（イオンに分かれること）をしないため電気を通しません。" },
+        { n: 57, q: "原子が電子を失うと、陽イオン・陰イオンのどちらになるか。", a: "陽イオン", accept: ["陽イオン", "よういおん"], ex: "電子（−）を失うと＋が勝って陽イオン、受け取ると陰イオンになります。" },
+        { n: 58, q: "銅イオンのイオン式を書け。", a: "Cu2+", formula: true, accept: ["CU2+", "Cu2+"], ex: "銅イオンは2価の陽イオンで Cu2+ です。" },
+        { n: 59, q: "水を電気分解すると、陰極と陽極ではどちらの体積が大きいか。", a: "陰極", accept: ["陰極", "いんきょく"], ex: "陰極に水素、陽極に酸素が集まり、体積比は水素：酸素＝2：1です。" },
+        { n: 60, q: "水の電気分解で集まる水素と酸素の体積比を書け。", a: "2：1", ratio: [2, 1], ex: "反応式 2H2O → 2H2 ＋ O2 の係数の比がそのまま体積比になります。" },
+        { n: 61, q: "純粋な水に水酸化ナトリウムを少し入れるのはなぜか。", a: "電気を通しやすくするため", kwAny: ["通しやすく", "流れやすく", "通りやすく"], ex: "純粋な水は電気を通しにくいため。分解されるのは水で、水酸化ナトリウム自体は変化しません。" },
+        { n: 62, q: "塩化銅水溶液を電気分解すると、陰極に付着する物質は何か。", a: "銅", accept: ["銅", "どう", "Cu"], ex: "赤茶色の銅が付着します。銅イオンが減るので水溶液の青色はうすくなります。" },
+        { n: 63, q: "塩酸を電気分解すると、陽極から発生する気体は何か。", a: "塩素", accept: ["塩素", "えんそ", "Cl2"], ex: "塩素は刺激臭があり、漂白のはたらきがあります。プールのにをいのもとです。" },
+        { n: 64, q: "化学電池は、何エネルギーを電気エネルギーに変える装置か。", a: "化学エネルギー", accept: ["化学エネルギー", "化学", "かがくえねるぎー", "かがく"], ex: "化学変化のエネルギーを電気エネルギーに変える装置が化学電池です。" },
+        { n: 65, q: "亜鉛板と銅板で電池を作ると、−極になるのはどちらか。", a: "亜鉛", accept: ["亜鉛", "あえん", "Zn"], ex: "イオンへのなりやすさが大きい金属が−極になります（Zn ＞ Fe ＞ Cu）。" },
+        { n: 66, q: "燃料電池で、水素と結びつく気体と、できる物質を書け。", a: "酸素・水", pair: [["酸素", "さんそ", "O2"], ["水", "みず", "H2O"]], ex: "水素 ＋ 酸素 → 水。発電してできるのは水だけです。" },
+        { n: 67, q: "酸とアルカリが互いの性質を打ち消す反応を何というか。", a: "中和", accept: ["中和", "ちゅうわ"], ex: "H+ ＋ OH- → H2O。水と塩ができます。" },
+        { n: 68, q: "中和で必ずできる物質は何か。", a: "水", accept: ["水", "みず", "H2O"], ex: "酸のH+とアルカリのOH-が結びついて水ができます。" },
+        { n: 69, q: "中和で水とともにできる物質をまとめて何というか。", a: "塩", accept: ["塩", "えん"], ex: "塩（えん）。塩酸＋水酸化ナトリウムなら塩化ナトリウムができます。「しお」ではありません。" },
+        { n: 70, q: "塩酸と水酸化ナトリウムの中和でできる塩は何か。", a: "塩化ナトリウム", accept: ["塩化ナトリウム", "えんかナトリウム", "NaCl"], ex: "HCl ＋ NaOH → NaCl ＋ H2O。食塩のことです。" },
+        { n: 71, q: "硫酸に塩化バリウム水溶液を加えるとできる白い沈殿は何か。", a: "硫酸バリウム", accept: ["硫酸バリウム", "りゅうさんばりうむ", "BaSO4"], ex: "水に溶けにくい硫酸バリウムが白い沈殿として生じます。" },
+        { n: 72, q: "中和がちょうど起こったとき、BTB溶液は何色になるか。", a: "緑色", accept: ["緑色", "みどりいろ", "緑", "みどり"], ex: "BTB溶液は中性で緑色。ちょうど中和した点の目印になります。" }
+      ];
+
+      /* ===== セット定義 ===== */
+      function tagQ(list, tag) {
+        return list.map(function (item) {
+          var c = {}; for (var k in item) c[k] = item[k];
+          c.tag = tag; if (!c.type) c.type = "text";
+          return c;
+        });
+      }
+      var SETS = [
+        { subject: "history", name: "一問一答 ・ 全部", desc: "古代・中世＋近世・近代", make: function () { return tagQ(HISTORY_QA, "歴史 一問一答"); } },
+        { subject: "history", name: "一問一答 ・ 古代・中世", desc: "問1〜18（飛鳥〜室町）", make: function () { return tagQ(HISTORY_QA.slice(0, 18), "歴史 一問一答"); } },
+        { subject: "history", name: "一問一答 ・ 近世・近代", desc: "問19〜36（室町〜明治）", make: function () { return tagQ(HISTORY_QA.slice(18), "歴史 一問一答"); } },
+        { subject: "history", name: "時代判定ドリル", desc: "作品名だけで時代を当てる（選択式）", make: function () { return tagQ(HISTORY_ERA, "時代判定"); } },
+        { subject: "science", name: "一問一答 ・ 全部", desc: "中1〜中3 化学分野ぜんぶ", make: function () { return tagQ(SCIENCE_QA, "理科・化学"); } },
+        { subject: "science", name: "① 物質・水溶液・原子と分子", desc: "問1〜24", make: function () { return tagQ(SCIENCE_QA.slice(0, 24), "理科・化学"); } },
+        { subject: "science", name: "② 酸化・還元・質量", desc: "問25〜48", make: function () { return tagQ(SCIENCE_QA.slice(24, 48), "理科・化学"); } },
+        { subject: "science", name: "③ 酸・アルカリ・イオン・電気分解・中和", desc: "問49〜72", make: function () { return tagQ(SCIENCE_QA.slice(48), "理科・化学"); } }
+      ];
+
+      /* ===== 間違いの記録（この端末の中だけに保存・サーバー送信なし） =====
+         保存先は2か所（localStorage と IndexedDB）に二重化し、開いたときに
+         両方を読み合わせて復元する。片方の保存領域が消えても、もう片方から戻る。
+         さらに、埋め込み表示などで保存が制限される環境向けに、ユーザーのタップを
+         きっかけに Storage Access API で保存の許可を取り、永続化も申請する。 */
+      var MISTAKE_KEY = "fukuoka-juken-drill-mistakes-v1";
+      var MISTAKE_DB = "fukuoka-juken-drill";
+      var MISTAKE_STORE = "kv";
+      var mistakesCache = {};
+      var storageWritable = true;
+      function canonicalTag(tag) {
+        var t = tag || "";
+        if (t.indexOf("理科・化学") === 0) return "理科・化学";
+        return t;
+      }
+      function mistakeKey(q) { return canonicalTag(q.tag || "") + "|" + String(q.n); }
+      function migrateMistakes(map) {
+        if (!map || typeof map !== "object") return { map: {}, changed: false };
+        var out = {};
+        var changed = false;
+        Object.keys(map).forEach(function (oldKey) {
+          var entry = map[oldKey];
+          if (!entry || !entry.q) { out[oldKey] = entry; return; }
+          var nVal = entry.q.n;
+          if (nVal === undefined || nVal === null || nVal === "") {
+            var parts = String(oldKey).split("|");
+            if (parts.length > 1) nVal = parts[parts.length - 1];
+          }
+          var rawTag = entry.q.tag || (String(oldKey).split("|")[0] || "");
+          var cTag = canonicalTag(rawTag);
+          var newKey = cTag + "|" + String(nVal);
+          var newQ = entry.q;
+          if (newQ.tag !== cTag) {
+            var copy = {}; for (var k in newQ) copy[k] = newQ[k]; copy.tag = cTag; newQ = copy;
+          }
+          if (newKey !== oldKey || entry.key !== newKey) changed = true;
+          if (out[newKey]) {
+            out[newKey].count = (out[newKey].count || 1) + (entry.count || 1);
+            out[newKey].q = newQ;
+            out[newKey].key = newKey;
+            changed = true;
+          } else {
+            var ecopy = {}; for (var ek in entry) ecopy[ek] = entry[ek];
+            ecopy.key = newKey; ecopy.q = newQ; ecopy.count = entry.count || 1;
+            out[newKey] = ecopy;
+          }
+        });
+        return { map: out, changed: changed };
+      }
+      function parseMistakeJson(raw) {
+        if (!raw) return null;
+        try {
+          var obj = JSON.parse(raw);
+          if (!obj || typeof obj !== "object") return null;
+          return migrateMistakes(obj).map;
+        } catch (e) { return null; }
+      }
+      function readLocalMistakes() {
+        try { return parseMistakeJson(localStorage.getItem(MISTAKE_KEY)); } catch (e) { return null; }
+      }
+      function writeLocalMistakes(map) {
+        try { localStorage.setItem(MISTAKE_KEY, JSON.stringify(map)); } catch (e) {}
+      }
+      /* IndexedDB 側（小さなラッパー。使えない環境では null を返す） */
+      function idbOpen() {
+        return new Promise(function (resolve) {
+          if (!("indexedDB" in window)) { resolve(null); return; }
+          var req;
+          try { req = indexedDB.open(MISTAKE_DB, 1); } catch (e) { resolve(null); return; }
+          req.onupgradeneeded = function () {
+            try { req.result.createObjectStore(MISTAKE_STORE); } catch (e) {}
+          };
+          req.onsuccess = function () { resolve(req.result); };
+          req.onerror = function () { resolve(null); };
+          req.onblocked = function () { resolve(null); };
+        });
+      }
+      function idbReadMistakes() {
+        return idbOpen().then(function (db) {
+          if (!db) return null;
+          return new Promise(function (resolve) {
+            try {
+              var tx = db.transaction(MISTAKE_STORE, "readonly");
+              var req = tx.objectStore(MISTAKE_STORE).get(MISTAKE_KEY);
+              req.onsuccess = function () {
+                var v = req.result;
+                try { db.close(); } catch (e) {}
+                resolve(typeof v === "string" ? parseMistakeJson(v) : null);
+              };
+              req.onerror = function () { try { db.close(); } catch (e) {} resolve(null); };
+            } catch (e) { resolve(null); }
+          });
+        });
+      }
+      function idbWriteMistakes(map) {
+        idbOpen().then(function (db) {
+          if (!db) return;
+          try {
+            var tx = db.transaction(MISTAKE_STORE, "readwrite");
+            tx.objectStore(MISTAKE_STORE).put(JSON.stringify(map), MISTAKE_KEY);
+            tx.oncomplete = function () { try { db.close(); } catch (e) {} };
+            tx.onerror = function () { try { db.close(); } catch (e) {} };
+          } catch (e) {}
+        });
+      }
+      /* 2つの保存内容を合わせる：同じ問題は回数の多い方を残す */
+      function mergeMistakeMaps(a, b) {
+        var out = {};
+        [a, b].forEach(function (src) {
+          if (!src) return;
+          Object.keys(src).forEach(function (k) {
+            var e = src[k];
+            if (!e || !e.q) return;
+            if (!out[k] || (e.count || 1) > (out[k].count || 1)) {
+              var c = {}; for (var ek in e) c[ek] = e[ek]; out[k] = c;
+            }
+          });
+        });
+        return out;
+      }
+      function loadMistakes() { return mistakesCache; }
+      function saveMistakes(map) {
+        mistakesCache = map;
+        writeLocalMistakes(map);
+        idbWriteMistakes(map);
+      }
+      /* 開いた直後：まず localStorage を即表示し、IndexedDB と合わせて復元する */
+      function hydrateMistakes() {
+        var local = readLocalMistakes();
+        if (local) mistakesCache = local;
+        idbReadMistakes().then(function (fromIdb) {
+          if (fromIdb) {
+            var merged = mergeMistakeMaps(mistakesCache, fromIdb);
+            mistakesCache = merged;
+            writeLocalMistakes(merged);
+          } else {
+            idbWriteMistakes(mistakesCache);
+          }
+          updateStorageWarn();
+          if (typeof renderWeak === "function") renderWeak();
+        });
+      }
+      /* 保存できるかどうかの自己チェック（書いて読み戻す） */
+      function probeStorage() {
+        try {
+          var k = MISTAKE_KEY + "-probe";
+          localStorage.setItem(k, "1");
+          var ok = localStorage.getItem(k) === "1";
+          localStorage.removeItem(k);
+          return ok;
+        } catch (e) { return false; }
+      }
+      function updateStorageWarn() {
+        var warn = document.getElementById("storage-warn");
+        if (!warn) return;
+        storageWritable = probeStorage();
+        warn.className = "storage-warn" + (storageWritable ? "" : " show");
+      }
+      /* 埋め込み表示で保存が制限される環境向け：タップをきっかけに保存の許可を取り、
+         ブラウザに「この保存を消さないで」と申請する */
+      var durableRequested = false;
+      function requestDurableStorage() {
+        if (durableRequested) return;
+        durableRequested = true;
+        try {
+          if (document.hasStorageAccess && document.requestStorageAccess) {
+            document.hasStorageAccess().then(function (has) {
+              if (!has) {
+                document.requestStorageAccess().then(function () {
+                  /* 許可が取れたら、今の記録を保存し直す */
+                  writeLocalMistakes(mistakesCache);
+                  idbWriteMistakes(mistakesCache);
+                  updateStorageWarn();
+                }, function () {});
+              }
+            }, function () {});
+          }
+        } catch (e) {}
+        try {
+          if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+        } catch (e) {}
+      }
+      document.addEventListener("pointerdown", requestDurableStorage);
+      document.addEventListener("keydown", requestDurableStorage);
+      /* 閉じる直前にもう一度保存する（書き込み漏れ防止） */
+      window.addEventListener("pagehide", function () { writeLocalMistakes(mistakesCache); idbWriteMistakes(mistakesCache); });
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden") { writeLocalMistakes(mistakesCache); idbWriteMistakes(mistakesCache); }
+      });
+      function recordResult(q, ok) {
+        if (!q) return;
+        var map = loadMistakes();
+        var k = mistakeKey(q);
+        var storedQ = q;
+        if (canonicalTag(q.tag || "") !== (q.tag || "")) {
+          storedQ = {}; for (var qk in q) storedQ[qk] = q[qk]; storedQ.tag = canonicalTag(q.tag || "");
+        }
+        if (!ok) {
+          if (map[k] && map[k].q) {
+            map[k].count = (map[k].count || 1) + 1;
+            map[k].q = storedQ;
+            map[k].key = k;
+          } else {
+            map[k] = { key: k, count: 1, q: storedQ };
+          }
+        } else {
+          if (map[k]) {
+            if ((map[k].count || 1) > 1) map[k].count = map[k].count - 1;
+            else delete map[k];
+          }
+        }
+        saveMistakes(map);
+        if (typeof renderWeak === "function") renderWeak();
+      }
+      function getWeakEntries() {
+        var map = loadMistakes();
+        var arr = Object.keys(map).map(function (k) { return map[k]; }).filter(function (e) { return e && e.q; });
+        arr.sort(function (a, b) {
+          if ((b.count || 1) !== (a.count || 1)) return (b.count || 1) - (a.count || 1);
+          var ta = String(a.q.tag || ""), tb = String(b.q.tag || "");
+          if (ta !== tb) return ta < tb ? -1 : 1;
+          return String(a.q.n).localeCompare(String(b.q.n), "ja", { numeric: true });
+        });
+        return arr;
+      }
+
+      /* ===== 採点（表記ゆれに寛容） ===== */
+      function toHalf(s) {
+        return s.replace(/[！-～]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).replace(/　/g, " ");
+      }
+      function kataToHira(s) {
+        return s.replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); });
+      }
+      function normText(s) {
+        if (!s) return "";
+        s = kataToHira(toHalf(String(s)).toLowerCase());
+        s = s.replace(/[\s『』「」【】（）()・、。，．：:；;＝=＋+ー―‐-]/g, "");
+        return s;
+      }
+      /* 複数要素の答えを区切りで分解し、各要素を正規化して返す
+         （順不同判定用。比・数値列には使わない） */
+      function splitParts(s) {
+        if (!s) return [];
+        var t = kataToHira(toHalf(String(s)).toLowerCase());
+        var arr = t.split(/[、・,，／\/と]/);
+        var out = [];
+        for (var i = 0; i < arr.length; i++) {
+          var p = normText(arr[i]);
+          if (p) out.push(p);
+        }
+        return out;
+      }
+      function normFormula(s) {
+        if (!s) return "";
+        s = toHalf(String(s));
+        s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function (c) { return "0123456789"["⁰¹²³⁴⁵⁶⁷⁸⁹".indexOf(c)]; });
+        s = s.replace(/＋/g, "+").replace(/→/g, "->").replace(/＝/g, "=").replace(/−/g, "-").replace(/\s/g, "");
+        return s.toUpperCase();
+      }
+      /* 化学式の照合は完全一致のみ（部分一致は使わない）。
+         FeS が正解のとき FeS2 を正解にしないため。
+         ただし区切り・空白で分けられたトークン単位では照合するので、
+         1つの欄に「硫化鉄 FeS」のようにまとめて書いた場合や、
+         2枠を合わせた文字列（「FeS、硫化鉄」）でも化学式トークンを拾える。
+         大文字小文字・空白・全角半角のゆれは normFormula で吸収する。 */
+      function formulaExactHit(rawInput, variant) {
+        if (rawInput == null) return false;
+        var target = normFormula(variant);
+        if (!target) return false;
+        if (normFormula(rawInput) === target) return true;
+        var parts = String(rawInput).split(/[\s、・,，\/／]+/);
+        for (var i = 0; i < parts.length; i++) {
+          if (parts[i] && normFormula(parts[i]) === target) return true;
+        }
+        return false;
+      }
+      function grade(q, input) {
+        if (input == null) return false;
+        var raw = String(input);
+        if (!raw.trim()) return false;
+        if (q.ratio) {
+          var nums = raw.replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).match(/\d+(\.\d+)?/g);
+          if (!nums || nums.length !== q.ratio.length) return false;
+          for (var i = 0; i < nums.length; i++) { if (parseFloat(nums[i]) !== q.ratio[i]) return false; }
+          return true;
+        }
+        if (typeof q.numeric === "number") {
+          var m = toHalf(raw).match(/\d+(\.\d+)?/);
+          return !!m && Math.abs(parseFloat(m[0]) - q.numeric) < 0.001;
+        }
+        if (q.pair) {
+          var nIn = normText(raw);
+          for (var g = 0; g < q.pair.length; g++) {
+            var isF = q.pairFormula && q.pairFormula[g];
+            var hit = false;
+            for (var j = 0; j < q.pair[g].length; j++) {
+              var v = q.pair[g][j];
+              if (isF ? formulaExactHit(raw, v) : nIn.indexOf(normText(v)) >= 0) { hit = true; break; }
+            }
+            if (!hit) return false;
+          }
+          return true;
+        }
+        if (q.formula) {
+          var fi = normFormula(raw);
+          return q.accept.some(function (v) { return fi === normFormula(v); });
+        }
+        var ni = normText(raw);
+        if (q.kw) {
+          return q.kw.every(function (k) { return ni.indexOf(normText(k)) >= 0; });
+        }
+        if (q.kwAny) {
+          return q.kwAny.some(function (k) { return ni.indexOf(normText(k)) >= 0; });
+        }
+        if (q.accept) {
+          var exact = q.accept.some(function (v) {
+            var nv = normText(v);
+            return ni === nv || (nv.length >= 3 && ni.indexOf(nv) >= 0);
+          });
+          if (exact) return true;
+          /* 2つ以上の要素からなる答えは、要素の順番が違っても正解にする
+             （例：正解「種類と数」に対して「数と種類」も○）。
+             比（ratio）・数値・化学式は順序に意味があるので、ここには来ない。 */
+          var inParts = splitParts(raw);
+          if (inParts.length >= 2) {
+            return q.accept.some(function (v) {
+              var vParts = splitParts(v);
+              if (vParts.length !== inParts.length) return false;
+              var a = inParts.slice().sort(), b = vParts.slice().sort();
+              for (var i = 0; i < a.length; i++) { if (a[i] !== b[i]) return false; }
+              return true;
+            });
+          }
+          return false;
+        }
+        return false;
+      }
+
+      /* ===== 2つ答える問題（2枠入力） =====
+         pair のある問題は入力欄を2つに分ける。採点は2枠を通して順不同：
+         どちらの枠に書いてもよく、両方の要素がそろえば正解。
+         比（ratio）・化学式単体・数値問題は対象外で、従来通り1枠。 */
+      function getPairGroups(q) {
+        if (!q || q.type !== "text") return null;
+        if (q.pair && q.pair.length === 2) return q.pair;
+        /* 苦手リストに保存済みの旧データ（pairなし）への対応：理科28番 */
+        if (!q.pair && q.a === "種類と数") return [["種類", "しゅるい"], ["数", "かず"]];
+        return null;
+      }
+      function isPairQuestion(q) { return !!getPairGroups(q); }
+      function splitAnswerParts(a) {
+        if (!a) return [];
+        var t = String(a).replace(/\s+/g, "");
+        if (t.indexOf("・") >= 0) return t.split("・").filter(function (x) { return x; });
+        if (t.indexOf("と") >= 0) return t.split("と").filter(function (x) { return x; });
+        return [t];
+      }
+      function matchOneInput(q, groupIdx, rawInput) {
+        var groups = getPairGroups(q);
+        if (!groups) return false;
+        var isF = q.pairFormula && q.pairFormula[groupIdx];
+        var nIn = normText(rawInput), fIn = normFormula(rawInput);
+        if (!nIn && !fIn) return false;
+        for (var j = 0; j < groups[groupIdx].length; j++) {
+          var v = groups[groupIdx][j];
+          /* 化学式グループは完全一致のみ（FeS2→×、CuO2→×）。
+             文章系の要素だけ部分一致の寛容さを残す。 */
+          if (isF ? formulaExactHit(rawInput, v) : (nIn.indexOf(normText(v)) >= 0)) return true;
+        }
+        return false;
+      }
+      function gradePairDetailed(q, inputs) {
+        var groups = getPairGroups(q);
+        if (!groups) return null;
+        var joined = inputs.join("、");
+        var hits = groups.map(function (_g, gi) {
+          /* まず枠ごとに照合し、見つからなければ2枠を合わせた文字列でも照合（1枠に2つ書いた場合） */
+          for (var i = 0; i < inputs.length; i++) { if (matchOneInput(q, gi, inputs[i])) return true; }
+          return matchOneInput(q, gi, joined);
+        });
+        return { hits: hits, ok: hits.every(function (h) { return h; }) };
+      }
+
+      /* ===== 画面制御 ===== */
+      var $ = function (id) { return document.getElementById(id); };
+      var screens = { home: $("screen-home"), quiz: $("screen-quiz"), result: $("screen-result") };
+      function show(name) {
+        for (var k in screens) screens[k].classList.toggle("active", k === name);
+        window.scrollTo(0, 0);
+        if (name === "home" && typeof renderWeak === "function") renderWeak();
+      }
+
+      /* ===== 苦手な問題：表示・開始・リセット ===== */
+      var resetArmed = false;
+      var resetTimer = null;
+      function renderWeak() {
+        var badge = $("weak-total-badge");
+        var emptyEl = $("weak-empty");
+        var listEl = $("weak-list");
+        var startBtn = $("weak-start-btn");
+        var resetBtn = $("weak-reset-btn");
+        if (!listEl || !emptyEl || !startBtn) return;
+        var entries = getWeakEntries();
+        var total = entries.length;
+        if (badge) badge.textContent = total ? total + "問たまっています" : "";
+        listEl.innerHTML = "";
+        if (total === 0) {
+          emptyEl.style.display = "block";
+          emptyEl.textContent = "まだ苦手な問題はありません。問題を解いて間違えると、ここにたまっていきます。";
+          startBtn.style.display = "none";
+          if (resetBtn) resetBtn.style.display = "none";
+          return;
+        }
+        emptyEl.style.display = "none";
+        startBtn.style.display = "block";
+        startBtn.textContent = "苦手な問題だけ解く（" + total + "問）";
+        if (resetBtn) resetBtn.style.display = "block";
+        entries.forEach(function (entry) {
+          var item = document.createElement("div");
+          item.className = "weak-item";
+          var main = document.createElement("div");
+          main.className = "weak-item-main";
+          var qp = document.createElement("p");
+          qp.className = "weak-item-q";
+          var label = (entry.q.tag ? entry.q.tag + " ・ " : "") + (typeof entry.q.n === "number" ? "問" + entry.q.n : String(entry.q.n)) + "　" + entry.q.q;
+          qp.textContent = label;
+          var ap = document.createElement("p");
+          ap.className = "weak-item-a";
+          ap.innerHTML = "答え：<b></b>";
+          ap.querySelector("b").textContent = entry.q.a;
+          main.appendChild(qp);
+          main.appendChild(ap);
+          var b = document.createElement("span");
+          b.className = "weak-badge" + ((entry.count || 1) >= 3 ? " hot" : "");
+          b.textContent = "× " + (entry.count || 1) + "回";
+          item.appendChild(main);
+          item.appendChild(b);
+          listEl.appendChild(item);
+        });
+      }
+      function startWeak() {
+        var entries = getWeakEntries();
+        if (!entries.length) { renderWeak(); return; }
+        var list = entries.map(function (e) { return e.q; });
+        if ($("shuffle-toggle") && $("shuffle-toggle").checked) list = shuffleArr(list);
+        session = { setIdx: -1, isWeak: true, list: list, idx: 0, results: [] };
+        show("quiz");
+        renderQuestion();
+      }
+
+      SETS.forEach(function (set, idx) {
+        var total = set.make().length;
+        var btn = document.createElement("button");
+        btn.type = "button"; btn.className = "set-btn";
+        btn.innerHTML = "<span><span class='name'></span><span class='desc'></span></span><span class='count'></span>";
+        btn.querySelector(".name").textContent = set.name;
+        btn.querySelector(".desc").textContent = set.desc;
+        btn.querySelector(".count").textContent = total + "問";
+        btn.addEventListener("click", function () { startSet(idx, null); });
+        $(set.subject === "history" ? "history-sets" : "science-sets").appendChild(btn);
+      });
+
+      var session = null;
+      function shuffleArr(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+      }
+      function startSet(setIdx, customList) {
+        var list = customList || SETS[setIdx].make();
+        if ($("shuffle-toggle").checked && !customList) list = shuffleArr(list);
+        session = { setIdx: setIdx, list: list, idx: 0, results: [] };
+        show("quiz");
+        renderQuestion();
+      }
+
+      var selectedChoice = null, orderPicked = [], graded = false;
+
+      function renderQuestion() {
+        var q = session.list[session.idx];
+        graded = false; selectedChoice = null; orderPicked = [];
+        $("progress-label").textContent = (session.idx + 1) + " / " + session.list.length + " 問";
+        $("progress-bar").style.width = ((session.idx) / session.list.length * 100) + "%";
+        $("q-tag").textContent = q.tag + " ・ " + (typeof q.n === "number" ? "問" + q.n : q.n);
+        $("q-text").textContent = q.type === "choice" ? "この作品・建造物が作られた時代はどれか。\n" + q.q : q.q;
+        $("feedback").className = "feedback";
+        $("next-btn").className = "next-btn";
+        $("next-btn").textContent = session.idx === session.list.length - 1 ? "結果を見る" : "次の問題へ";
+        $("self-fix").style.display = "none";
+        $("grade-btn").style.display = "block";
+        $("grade-btn").disabled = false;
+        $("skip-btn").style.display = "block";
+        $("skip-note").style.display = "block";
+        $("answer-input").disabled = false;
+        $("answer-input-a").disabled = false;
+        $("answer-input-b").disabled = false;
+        $("fb-pair").style.display = "none";
+        $("fb-pair").textContent = "";
+
+        $("q-input-area").style.display = q.type === "text" ? "block" : "none";
+        $("q-choice-area").style.display = q.type === "choice" ? "block" : "none";
+        $("q-order-area").style.display = q.type === "order" ? "block" : "none";
+
+        if (q.type === "text") {
+          var pairMode = isPairQuestion(q);
+          $("single-input-wrap").style.display = pairMode ? "none" : "block";
+          $("pair-input-wrap").style.display = pairMode ? "block" : "none";
+          var input = $("answer-input");
+          input.value = "";
+          $("answer-input-a").value = "";
+          $("answer-input-b").value = "";
+          if (pairMode) {
+            var hasFormula = q.pairFormula && q.pairFormula.some(function (x) { return x; });
+            $("q-hint").textContent = "答えは2つあります。1つずつ別の欄に書いてください。どちらの欄に書いても大丈夫です。ひらがなでも、読み方でもOKです。" + (hasFormula ? "化学式は FeS のように、数字をそのまま続けて書いてOKです。" : "");
+          } else {
+            $("q-hint").textContent = q.formula ? "化学式は H2O のように、数字をそのまま続けて書いてOKです。" :
+              (q.ratio ? "「4：1：5」のように、数字と「：」で書いてOKです。" : "ひらがなでも、読み方でも大丈夫です。");
+          }
+          var focusEl = pairMode ? $("answer-input-a") : input;
+          setTimeout(function () { focusEl.focus(); }, 60);
+        }
+        if (q.type === "choice") {
+          var box = $("choices"); box.innerHTML = "";
+          ERA_OPTIONS.forEach(function (opt) {
+            var b = document.createElement("button");
+            b.type = "button"; b.className = "choice-btn";
+            b.innerHTML = "<span class='key'></span><span class='lbl'></span>";
+            b.querySelector(".key").textContent = opt.key;
+            b.querySelector(".lbl").textContent = opt.label;
+            b.addEventListener("click", function () {
+              if (graded) return;
+              selectedChoice = opt.key;
+              var all = box.querySelectorAll(".choice-btn");
+              for (var i = 0; i < all.length; i++) all[i].classList.toggle("selected", all[i] === b);
+            });
+            box.appendChild(b);
+          });
+        }
+        if (q.type === "order") renderOrder();
+      }
+
+      function renderOrder() {
+        var q = session.list[session.idx];
+        var picked = $("order-picked"); picked.innerHTML = "";
+        for (var i = 0; i < q.items.length; i++) {
+          var slot = document.createElement("span");
+          slot.className = "order-slot" + (orderPicked[i] ? " filled" : "");
+          if (orderPicked[i]) {
+            var item = q.items.filter(function (x) { return x.key === orderPicked[i]; })[0];
+            slot.textContent = (i + 1) + ". " + item.key + " " + item.label;
+          } else slot.textContent = (i + 1) + ". ？";
+          picked.appendChild(slot);
+        }
+        var box = $("order-choices"); box.innerHTML = "";
+        q.items.forEach(function (item) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "choice-btn";
+          b.innerHTML = "<span class='key'></span><span class='lbl'></span>";
+          b.querySelector(".key").textContent = item.key;
+          b.querySelector(".lbl").textContent = item.label;
+          if (orderPicked.indexOf(item.key) >= 0) { b.disabled = true; b.classList.add("selected"); }
+          b.addEventListener("click", function () {
+            if (graded || orderPicked.length >= q.items.length) return;
+            orderPicked.push(item.key); renderOrder();
+          });
+          box.appendChild(b);
+        });
+      }
+      $("order-clear").addEventListener("click", function () { if (!graded) { orderPicked = []; renderOrder(); } });
+
+      $("grade-btn").addEventListener("click", doGrade);
+      $("skip-btn").addEventListener("click", doSkip);
+      $("answer-input").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
+      $("answer-input-a").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
+      $("answer-input-b").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doGrade(); } });
+
+      function currentAnswerText(q) {
+        if (q.type === "choice") {
+          if (!selectedChoice) return "";
+          var o = ERA_OPTIONS.filter(function (x) { return x.key === selectedChoice; })[0];
+          return o.key + " " + o.label;
+        }
+        if (q.type === "order") {
+          return orderPicked.map(function (k) {
+            var it = q.items.filter(function (x) { return x.key === k; })[0];
+            return it.key + " " + it.label;
+          }).join(" → ");
+        }
+        if (isPairQuestion(q)) {
+          var parts = [$("answer-input-a").value.trim(), $("answer-input-b").value.trim()].filter(function (x) { return x; });
+          return parts.join(" ／ ");
+        }
+        return $("answer-input").value;
+      }
+      function pairInputs() {
+        return [$("answer-input-a").value, $("answer-input-b").value];
+      }
+
+      function doGrade() {
+        if (graded || !session) return;
+        var q = session.list[session.idx];
+        var userText = currentAnswerText(q);
+        if (q.type === "text" && !userText.trim()) return;
+        if (q.type === "choice" && !selectedChoice) return;
+        if (q.type === "order" && orderPicked.length < q.items.length) return;
+        var ok;
+        var pairDetail = null;
+        if (q.type === "choice") ok = selectedChoice === q.correct;
+        else if (q.type === "order") ok = orderPicked.join(",") === q.correct.join(",");
+        else if (isPairQuestion(q)) {
+          pairDetail = gradePairDetailed(q, pairInputs());
+          ok = !!(pairDetail && pairDetail.ok);
+        }
+        else ok = grade(q, userText);
+        graded = true;
+        session.results.push({ q: q, user: userText, ok: ok, fixed: false, skipped: false });
+        recordResult(q, ok);
+        showFeedback(ok, userText, false, pairDetail);
+      }
+
+      function doSkip() {
+        if (graded || !session) return;
+        var q = session.list[session.idx];
+        graded = true;
+        session.results.push({ q: q, user: "わからない", ok: false, fixed: false, skipped: true });
+        recordResult(q, false);
+        showFeedback(false, "わからない", true);
+      }
+
+      function showFeedback(ok, userText, isSkip, pairDetail) {
+        var q = session.list[session.idx];
+        var fb = $("feedback");
+        fb.className = "feedback show " + (ok ? "ok" : "ng");
+        if (isSkip) $("fb-mark").textContent = "わからない — 答えを確認しよう";
+        else if (ok) $("fb-mark").textContent = "○ 正解！";
+        else if (pairDetail && pairDetail.hits && pairDetail.hits.some(function (h) { return h; })) $("fb-mark").textContent = "× あと少し（片方だけ合っています）";
+        else $("fb-mark").textContent = "× ざんねん";
+        $("fb-your").textContent = isSkip ? "わからないを選びました" : "あなたの答え：" + (userText || "（無回答）");
+        var pairEl = $("fb-pair");
+        if (pairDetail && pairDetail.hits && !isSkip) {
+          var labels = splitAnswerParts(q.a);
+          var lines = pairDetail.hits.map(function (hit, i) {
+            var lab = labels[i] || ("要素" + (i + 1));
+            return hit ? "○ 「" + lab + "」は合っていました" : "× 「" + lab + "」は違います";
+          });
+          pairEl.textContent = lines.join("　／　");
+          pairEl.style.display = "block";
+        } else {
+          pairEl.style.display = "none";
+          pairEl.textContent = "";
+        }
+        $("fb-answer").textContent = "答え：" + q.a;
+        $("fb-expl").textContent = q.ex;
+        $("grade-btn").style.display = "none";
+        $("skip-btn").style.display = "none";
+        $("skip-note").style.display = "none";
+        $("answer-input").disabled = true;
+        $("answer-input-a").disabled = true;
+        $("answer-input-b").disabled = true;
+        $("next-btn").className = "next-btn show";
+        var sf = $("self-fix");
+        if (!ok && !isSkip && q.type === "text") {
+          sf.style.display = "block"; sf.className = "self-fix"; sf.disabled = false;
+          sf.textContent = "ほんとは合ってた（自分で○にする）";
+        } else sf.style.display = "none";
+      }
+
+      $("self-fix").addEventListener("click", function () {
+        var r = session.results[session.results.length - 1];
+        if (!r || r.ok || r.skipped) return;
+        r.ok = true; r.fixed = true;
+        recordResult(r.q, true);
+        var fb = $("feedback");
+        fb.className = "feedback show ok";
+        $("fb-mark").textContent = "○ 正解に直しました";
+        var sf = $("self-fix");
+        sf.className = "self-fix done"; sf.disabled = true; sf.textContent = "○に直しました";
+      });
+
+      $("next-btn").addEventListener("click", function () {
+        if (!session) return;
+        session.idx++;
+        if (session.idx >= session.list.length) showResult();
+        else renderQuestion();
+      });
+
+      $("quit-btn").addEventListener("click", function () { session = null; show("home"); });
+
+      function showResult() {
+        $("progress-bar").style.width = "100%";
+        var total = session.results.length;
+        var correct = session.results.filter(function (r) { return r.ok; }).length;
+        var skippedList = session.results.filter(function (r) { return r.skipped; });
+        var wrongOnly = session.results.filter(function (r) { return !r.ok && !r.skipped; });
+        var retryList = session.results.filter(function (r) { return !r.ok; });
+        $("score-num").textContent = correct;
+        $("score-total").textContent = total;
+        var rate = total ? Math.round(correct / total * 100) : 0;
+        $("score-rate").textContent = rate;
+        $("score-breakdown").textContent = "正解 " + correct + "問 ・ 間違い " + wrongOnly.length + "問 ・ わからない " + skippedList.length + "問";
+        $("score-msg").textContent = rate === 100 ? "全問正解！すごい。その調子で本番もいけます。" :
+          rate >= 80 ? "よくできました。間違えた・わからなかった問題だけ、もう一度確認しましょう。" :
+          rate >= 50 ? "半分以上できています。間違えた・わからなかった問題の解説を読んでから解き直しましょう。" :
+          "まずは解説を読みながらで大丈夫。間違えた・わからなかった問題だけ解き直すと、少しずつ定着します。";
+        var area = $("wrong-area"); area.innerHTML = "";
+        if (retryList.length === 0) {
+          var d = document.createElement("div");
+          d.className = "all-ok"; d.style.marginTop = "20px";
+          d.textContent = "間違えた問題はありませんでした。";
+          area.appendChild(d);
+        } else {
+          function renderGroup(list, title, isSkipGroup) {
+            if (!list.length) return;
+            var h = document.createElement("div");
+            h.className = "wrong-head"; h.textContent = title + "（" + list.length + "問）";
+            area.appendChild(h);
+            list.forEach(function (r) {
+              var item = document.createElement("div");
+              item.className = "wrong-item";
+              item.innerHTML = "<p class='wq'></p><p class='wa'>答え：<b></b></p><p class='wy'></p>";
+              var wqEl = item.querySelector(".wq");
+              wqEl.textContent = (typeof r.q.n === "number" ? "問" + r.q.n + " " : r.q.n + " ") + r.q.q;
+              if (isSkipGroup) {
+                var badge = document.createElement("span");
+                badge.className = "skip-badge"; badge.textContent = "わからない";
+                wqEl.appendChild(badge);
+              }
+              item.querySelector(".wa b").textContent = r.q.a;
+              item.querySelector(".wy").textContent = isSkipGroup ? "わからないを選びました" : "あなたの答え：" + (r.user || "（無回答）");
+              area.appendChild(item);
+            });
+          }
+          renderGroup(wrongOnly, "間違えた問題", false);
+          renderGroup(skippedList, "わからなかった問題", true);
+        }
+        $("retry-wrong-btn").style.display = retryList.length ? "block" : "none";
+        show("result");
+      }
+
+      $("retry-wrong-btn").addEventListener("click", function () {
+        if (!session) return;
+        var wrongQs = session.results.filter(function (r) { return !r.ok; }).map(function (r) { return r.q; });
+        if (!wrongQs.length) return;
+        var setIdx = session.setIdx;
+        var wasWeak = !!session.isWeak;
+        session = { setIdx: setIdx, isWeak: wasWeak, list: wrongQs, idx: 0, results: [] };
+        show("quiz"); renderQuestion();
+      });
+      $("retry-all-btn").addEventListener("click", function () {
+        if (!session) return;
+        if (session.isWeak) { startWeak(); return; }
+        if (session.setIdx < 0) { session = null; show("home"); return; }
+        startSet(session.setIdx, null);
+      });
+      $("home-btn").addEventListener("click", function () { session = null; show("home"); });
+
+      /* 苦手モードのボタン */
+      $("weak-start-btn").addEventListener("click", function () { startWeak(); });
+      $("weak-reset-btn").addEventListener("click", function () {
+        var btn = $("weak-reset-btn");
+        if (!resetArmed) {
+          resetArmed = true;
+          btn.classList.add("armed");
+          btn.textContent = "本当に消しますか？ もう一度押すと記録をリセットします";
+          if (resetTimer) clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () {
+            resetArmed = false;
+            btn.classList.remove("armed");
+            btn.textContent = "苦手な問題の記録をリセット";
+          }, 5000);
+          return;
+        }
+        if (resetTimer) clearTimeout(resetTimer);
+        resetArmed = false;
+        btn.classList.remove("armed");
+        btn.textContent = "苦手な問題の記録をリセット";
+        try { localStorage.removeItem(MISTAKE_KEY); } catch (e) {}
+        saveMistakes({});
+        renderWeak();
+      });
+
+      /* ===== 記録のバックアップ・復元（コード方式） =====
+         ブラウザ側で記録が消えてしまった場合でも、控えたコードから戻せる。 */
+      function encodeBackup(map) {
+        var bytes = new TextEncoder().encode(JSON.stringify(map));
+        var bin = "";
+        bytes.forEach(function (b) { bin += String.fromCharCode(b); });
+        return "FJD1:" + btoa(bin);
+      }
+      function decodeBackup(code) {
+        var s = String(code || "").replace(/\s/g, "");
+        if (s.indexOf("FJD1:") === 0) s = s.slice(5);
+        var bin = atob(s);
+        var bytes = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        var obj = JSON.parse(new TextDecoder().decode(bytes));
+        if (!obj || typeof obj !== "object") throw new Error("bad code");
+        return migrateMistakes(obj).map;
+      }
+      $("backup-toggle-btn").addEventListener("click", function () {
+        var panel = $("backup-panel");
+        var openNow = panel.style.display !== "none";
+        panel.style.display = openNow ? "none" : "grid";
+        if (!openNow && !$("backup-code").value) {
+          var entries = getWeakEntries();
+          if (entries.length) $("backup-code").value = encodeBackup(loadMistakes());
+        }
+      });
+      $("backup-make-btn").addEventListener("click", function () {
+        var msg = $("backup-msg");
+        var entries = getWeakEntries();
+        if (!entries.length) { msg.textContent = "まだ記録がありません。間違えた問題がたまると、コードを出せます。"; return; }
+        $("backup-code").value = encodeBackup(loadMistakes());
+        $("backup-code").select();
+        var copied = false;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText($("backup-code").value).then(function () {
+            msg.textContent = "コードをコピーしました。メモ帳などに貼って保管してください（" + entries.length + "問分）。";
+          }, function () {
+            msg.textContent = "コードを表示しました。長押しやコピーで保管してください（" + entries.length + "問分）。";
+          });
+          copied = true;
+        }
+        if (!copied) msg.textContent = "コードを表示しました。コピーして保管してください（" + entries.length + "問分）。";
+      });
+      $("backup-restore-btn").addEventListener("click", function () {
+        var msg = $("backup-msg");
+        var code = $("backup-code").value;
+        if (!code.trim()) { msg.textContent = "先に、復元するコードを上の欄に貼ってください。"; return; }
+        try {
+          var restored = decodeBackup(code);
+          var merged = mergeMistakeMaps(loadMistakes(), restored);
+          saveMistakes(merged);
+          renderWeak();
+          var count = getWeakEntries().length;
+          msg.textContent = "復元しました。今の苦手な問題は " + count + " 問です。";
+          $("backup-code").value = encodeBackup(loadMistakes());
+        } catch (e) {
+          msg.textContent = "そのコードは読み取れませんでした。コード全体が貼れているか確認してください。";
+        }
+      });
+
+      renderWeak();
+      hydrateMistakes();
+      updateStorageWarn();
+    </script>
+  </body>
+</html>
