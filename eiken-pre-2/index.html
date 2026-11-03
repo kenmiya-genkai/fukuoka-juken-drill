@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Eiken Pre-2 Drill — 英検準2級 語彙ドリル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee; --surface:#ffffff; --surface2:#fdfbf7; --ink:#18212e; --muted:#6b7280; --line:#e6e0d6;
+  --teal:#0e6b5e; --teal2:#e6f2ef; --amber:#d97706; --amber-bg:#fef3c7; --red:#b91c1c; --red-bg:#fef2f2; --green:#15803d; --green-bg:#f0fdf4;
+  --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#12161c; --surface:#1a2029; --surface2:#1e2632; --ink:#edf2f7; --muted:#9aa4b2; --line:#2a3442; --teal:#2dd4bf; --teal2:#14332f; --amber-bg:#3a2a0a; --red-bg:#3a1717; --green-bg:#12291a; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP",system-ui,-apple-system,sans-serif;line-height:1.6}
+a{color:var(--teal)}
+.wrap{max-width:960px;margin:0 auto;padding:20px 18px 48px}
+.top{padding:28px 0 8px}
+.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;color:var(--teal);text-transform:uppercase}
+h1{font-size:38px;line-height:1.05;margin:10px 0 10px;letter-spacing:-.02em;font-weight:900}
+h1 span{font-family:"Newsreader",serif;font-weight:700;letter-spacing:0}
+.lead{font-size:15.5px;color:var(--muted);max-width:640px;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{font-size:12.5px;font-weight:700;background:var(--surface);border:1px solid var(--line);padding:7px 11px;border-radius:999px}
+.pill b{color:var(--teal)}
+.note{margin-top:14px;font-size:12.5px;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:22px}
+@media(max-width:720px){.grid{grid-template-columns:1fr} h1{font-size:32px}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.card.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(prefers-color-scheme:dark){.card.primary{background:#e8eef5;color:#12161c;border-color:#e8eef5}}
+.card h2{margin:0 0 6px;font-size:19px;line-height:1.3}
+.card p{margin:0;color:var(--muted);font-size:13.5px}
+.card.primary p{color:rgba(255,255,255,.75)}
+@media(prefers-color-scheme:dark){.card.primary p{color:#475569}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font-weight:800;font-size:14px;padding:12px 16px;border-radius:999px;background:var(--teal);color:#fff;width:100%;margin-top:14px}
+.btn.secondary{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.light{background:#fff;color:#111}
+.btn.amber{background:var(--amber);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{border:1px solid var(--line);background:var(--surface2);border-radius:14px;padding:14px;text-align:left;cursor:pointer}
+.mini strong{display:block;font-size:14px}
+.mini span{font-size:12px;color:var(--muted)}
+.section{margin-top:28px}
+.section h3{font-size:16px;margin:0 0 10px}
+.word-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--surface);padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search{flex:1;min-width:180px;padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
+.wordlist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:720px){.wordlist{grid-template-columns:1fr}}
+.witem{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.witem .en{font-family:"Newsreader",serif;font-size:20px;font-weight:700;line-height:1.1}
+.witem .meta{font-size:11px;letter-spacing:.06em;color:var(--teal);font-weight:800;text-transform:uppercase;margin-top:2px}
+.witem .ja{font-weight:700;margin-top:6px}
+.witem .ex{font-size:12.5px;color:var(--muted);margin-top:4px}
+.hidden{display:none!important}
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.progress{height:8px;background:var(--line);border-radius:999px;overflow:hidden;flex:1}
+.progress i{display:block;height:100%;background:var(--teal);transition:width .3s}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:11px;font-weight:800;letter-spacing:.05em;padding:5px 8px;border-radius:999px;background:var(--teal2);color:var(--teal)}
+.tag.amber{background:var(--amber-bg);color:#92400e}
+@media(prefers-color-scheme:dark){.tag.amber{color:#fbbf24}}
+.meaning{font-size:28px;font-weight:900;line-height:1.25;margin:6px 0 4px}
+.sentence{font-family:"Newsreader",serif;font-size:21px;line-height:1.45;font-weight:600}
+.sentence .blank{display:inline-block;min-width:92px;border-bottom:2px solid var(--ink);text-align:center;color:var(--teal)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.input{width:100%;padding:14px 14px;border-radius:12px;border:1.5px solid var(--line);font-size:18px;background:var(--surface2);color:var(--ink);outline:none}
+.input:focus{border-color:var(--teal)}
+.choices{display:grid;gap:10px;margin-top:16px}
+.choice{ text-align:left;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface2);cursor:pointer;font-size:16px;font-weight:700}
+.choice:hover{border-color:var(--teal)}
+.choice.correct{border-color:var(--green);background:var(--green-bg)}
+.choice.wrong{border-color:var(--red);background:var(--red-bg)}
+.choice:disabled{cursor:default;opacity:1}
+.feedback{margin-top:16px;border-radius:12px;padding:14px 16px;font-size:14px;display:none}
+.feedback.ok{display:block;background:var(--green-bg);border:1px solid #bbf7d0}
+.feedback.ng{display:block;background:var(--red-bg);border:1px solid #fecaca}
+.feedback strong{font-size:15px}
+.actions{display:flex;gap:10px;margin-top:16px}
+.actions .btn{margin-top:0}
+.result{text-align:center;padding:10px 0}
+.score{font-size:52px;font-weight:900;line-height:1}
+.footer{margin-top:32px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+.kbd{font-family:ui-monospace,monospace;font-size:12px;background:var(--surface);border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- HOME -->
+  <div id="view-home">
+    <div class="top">
+      <div class="eyebrow">Eiken Pre-2 • Vocabulary First</div>
+      <h1>英検準2級<br><span>Vocabulary Drill</span></h1>
+      <p class="lead">準2級で合否を分けるのは語彙。大問1の形式そのままの4択と、意味から英単語を打つタイピングで、頻出語を「見て分かる」から「書ける・使える」まで持っていくドリルです。</p>
+      <div class="stats">
+        <span class="pill">収録 <b>64語・表現</b></span>
+        <span class="pill">単語 <b>48</b> ／ 熟語 <b>16</b></span>
+        <span class="pill">形式 <b>4択 ＋ タイピング</b></span>
+        <span class="pill">福岡受験ドリルとは <b>別ページ・別記録</b></span>
+      </div>
+      <div class="note">💡 まずはタイピング10問から。スペルまで覚えると、ライティングでもそのまま使えます。間違えた問題はこの回の中で「苦手だけ」でもう一度出せるようになります。</div>
+    </div>
+
+    <div class="grid">
+      <div class="card primary">
+        <div style="font-size:11px;letter-spacing:.12em;font-weight:800;opacity:.7">RECOMMENDED — 書けるようにする</div>
+        <h2 style="margin-top:8px">単語タイピング<br>意味 → 英語で答える</h2>
+        <p>日本語の意味を見て、英単語・熟語をキーボードで入力。大文字・小文字は区別しません。準2級頻出語をランダムで出題します。</p>
+        <div class="mini-grid">
+          <button class="mini" onclick="startQuiz('typing',10)"><strong>10問</strong><span>サクッと確認</span></button>
+          <button class="mini" onclick="startQuiz('typing',20)"><strong>20問</strong><span>しっかり定着</span></button>
+        </div>
+        <button class="btn light" onclick="startQuiz('typing',64)">全64問に挑戦する →</button>
+      </div>
+
+      <div style="display:grid;gap:14px">
+        <div class="card">
+          <h2>本番形式・4択 空所補充</h2>
+          <p>大問1と同じ形式。英文の空所に入る語を選ぶ練習です。文脈で覚えるので、長文でも迷いにくくなります。</p>
+          <button class="btn" onclick="startQuiz('choice',20)">4択 20問をはじめる</button>
+          <button class="btn secondary" onclick="startQuiz('choice',64)">4択 全64問</button>
+        </div>
+        <div class="card">
+          <h2>分野別に絞る</h2>
+          <p>苦手なまとまりだけ繰り返せます。</p>
+          <div class="mini-grid">
+            <button class="mini" onclick="startFiltered('choice','phrase')"><strong>熟語だけ</strong><span>16表現・4択</span></button>
+            <button class="mini" onclick="startFiltered('typing','word')"><strong>単語だけ</strong><span>48語・タイピング</span></button>
+            <button class="mini" onclick="startFiltered('choice','env')"><strong>環境・社会</strong><span>4択で確認</span></button>
+            <button class="mini" onclick="startFiltered('choice','school')"><strong>学校・日常</strong><span>4択で確認</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>単語リスト — まず眺めてからドリルへ</h3>
+      <div class="word-tools">
+        <input class="search" id="search" placeholder="英語・日本語で検索（例：environment / 環境）" oninput="renderList()">
+        <button class="chip active" data-f="all" onclick="setFilter(this)">すべて</button>
+        <button class="chip" data-f="word" onclick="setFilter(this)">単語</button>
+        <button class="chip" data-f="phrase" onclick="setFilter(this)">熟語</button>
+        <button class="chip" data-f="env" onclick="setFilter(this)">環境・社会</button>
+        <button class="chip" data-f="daily" onclick="setFilter(this)">日常・学校</button>
+      </div>
+      <div class="wordlist" id="wordlist"></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">例文の日本語訳はタップ／ホバーではなく、最初から表示しています。意味→例文の順で声に出して読むと定着しやすくなります。</p>
+    </div>
+
+    <div class="section card" style="background:var(--surface2)">
+      <h3 style="margin-top:0">このドリルの使い方（3ステップ）</h3>
+      <ol style="margin:8px 0 0 18px;padding:0;font-size:14px">
+        <li><b>タイピングで「書ける」か確認</b> — 分からなかった語は、その場で例文ごと覚え直す</li>
+        <li><b>4択で「文脈で使える」か確認</b> — 本番の大問1対策。消去法も練習になる</li>
+        <li><b>間違えた問題だけ再挑戦</b> — 結果画面から「苦手だけ」ボタンで、その回のミスだけを繰り返せる</li>
+      </ol>
+    </div>
+    <div class="footer">収録語は英検準2級の頻出範囲（CEFR A2〜B1相当）から、環境・社会・学校・健康・文化などのテーマで選んでいます。問題・例文はこのドリル用に作成したオリジナルです。英検®は公益財団法人 日本英語検定協会の登録商標です。</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="view-quiz" class="hidden">
+    <button class="chip" onclick="goHome()">← ホームに戻る</button>
+    <div style="height:14px"></div>
+    <div class="quiz-head">
+      <strong id="q-title">タイピング</strong>
+      <span id="q-count" style="font-size:13px;color:var(--muted);font-weight:700">1 / 20</span>
+    </div>
+    <div class="progress"><i id="q-bar" style="width:0%"></i></div>
+    <div style="height:14px"></div>
+    <div class="qcard" id="qcard"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="view-result" class="hidden">
+    <div class="qcard result">
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:800;color:var(--teal)">RESULT</div>
+      <div class="score" id="r-score">0 / 0</div>
+      <p id="r-msg" style="color:var(--muted);margin:8px 0 0"></p>
+      <div id="r-missed" style="text-align:left;margin-top:18px"></div>
+      <div class="actions" style="justify-content:center;flex-wrap:wrap">
+        <button class="btn" style="width:auto" id="btn-retry-missed" onclick="retryMissed()">苦手だけもう一度</button>
+        <button class="btn secondary" style="width:auto" onclick="goHome()">ホームに戻る</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const VOCAB = [
+ // env / society
+ {w:"environment",ja:"環境",pos:"noun",cat:"env",type:"word",ex:"We must protect the ___ for future children.",exJa:"私たちは未来の子どもたちのために環境を守らなければならない。"},
+ {w:"pollution",ja:"汚染",pos:"noun",cat:"env",type:"word",ex:"Air ___ is a serious problem in big cities.",exJa:"大気汚染は大都市で深刻な問題だ。"},
+ {w:"recycle",ja:"リサイクルする",pos:"verb",cat:"env",type:"word",ex:"Please ___ plastic bottles after using them.",exJa:"ペットボトルは使ったあとリサイクルしてください。"},
+ {w:"reduce",ja:"減らす",pos:"verb",cat:"env",type:"word",ex:"We should ___ the amount of garbage.",exJa:"私たちはごみの量を減らすべきだ。"},
+ {w:"increase",ja:"増える・増やす",pos:"verb",cat:"env",type:"word",ex:"The number of tourists will ___ next year.",exJa:"観光客の数は来年増えるだろう。"},
+ {w:"prevent",ja:"防ぐ・妨げる",pos:"verb",cat:"env",type:"word",ex:"Washing hands can ___ illness.",exJa:"手洗いは病気を防ぐことができる。"},
+ {w:"protect",ja:"守る",pos:"verb",cat:"env",type:"word",ex:"Trees ___ us from strong wind.",exJa:"木々は強い風から私たちを守ってくれる。"},
+ {w:"destroy",ja:"破壊する",pos:"verb",cat:"env",type:"word",ex:"The storm may ___ many houses.",exJa:"その嵐は多くの家を破壊するかもしれない。"},
+ {w:"develop",ja:"開発する・発達する",pos:"verb",cat:"env",type:"word",ex:"They plan to ___ a new technology.",exJa:"彼らは新しい技術を開発する計画だ。"},
+ {w:"energy",ja:"エネルギー",pos:"noun",cat:"env",type:"word",ex:"Solar ___ is clean and safe.",exJa:"太陽エネルギーは清潔で安全だ。"},
+ {w:"local",ja:"地元の",pos:"adj",cat:"env",type:"word",ex:"We ate ___ fish at the restaurant.",exJa:"私たちはそのレストランで地元の魚を食べた。"},
+ {w:"public",ja:"公共の",pos:"adj",cat:"env",type:"word",ex:"Please keep ___ places clean.",exJa:"公共の場所は清潔に保ってください。"},
+ {w:"climate",ja:"気候",pos:"noun",cat:"env",type:"word",ex:"The ___ in Hokkaido is cold in winter.",exJa:"北海道の気候は冬に寒い。"},
+ // daily / school verbs
+ {w:"improve",ja:"改善する・上達する",pos:"verb",cat:"daily",type:"word",ex:"Daily practice will ___ your English.",exJa:"毎日の練習で英語が上達するだろう。"},
+ {w:"produce",ja:"生産する・作り出す",pos:"verb",cat:"daily",type:"word",ex:"This factory can ___ 1,000 cars a month.",exJa:"この工場は月に1,000台の車を生産できる。"},
+ {w:"available",ja:"利用できる・空いている",pos:"adj",cat:"daily",type:"word",ex:"This room is ___ tomorrow morning.",exJa:"この部屋は明日の午前中、利用できる。"},
+ {w:"necessary",ja:"必要な",pos:"adj",cat:"daily",type:"word",ex:"Sleep is ___ for your health.",exJa:"睡眠は健康に必要だ。"},
+ {w:"convenient",ja:"便利な",pos:"adj",cat:"daily",type:"word",ex:"The station is very ___ for shopping.",exJa:"その駅は買い物にとても便利だ。"},
+ {w:"various",ja:"さまざまな",pos:"adj",cat:"daily",type:"word",ex:"There are ___ kinds of flowers in the park.",exJa:"公園にはさまざまな種類の花がある。"},
+ {w:"especially",ja:"特に",pos:"adv",cat:"daily",type:"word",ex:"I like fruits, ___ apples.",exJa:"私は果物が好きで、特にりんごが好きだ。"},
+ {w:"recently",ja:"最近",pos:"adv",cat:"daily",type:"word",ex:"I started jogging ___.",exJa:"私は最近ジョギングを始めた。"},
+ {w:"probably",ja:"おそらく",pos:"adv",cat:"daily",type:"word",ex:"It will ___ rain tomorrow.",exJa:"明日はおそらく雨が降るだろう。"},
+ {w:"actually",ja:"実は・実際に",pos:"adv",cat:"daily",type:"word",ex:"___, I have never been to Kyoto.",exJa:"実は、私は京都に行ったことがない。",stem:"Actually"},
+ {w:"decide",ja:"決める",pos:"verb",cat:"daily",type:"word",ex:"We will ___ the date tomorrow.",exJa:"私たちは明日、日付を決める。"},
+ {w:"suggest",ja:"提案する",pos:"verb",cat:"daily",type:"word",ex:"Can you ___ a good restaurant near here?",exJa:"この近くのおすすめのレストランを提案してもらえますか？"},
+ {w:"explain",ja:"説明する",pos:"verb",cat:"daily",type:"word",ex:"Please ___ the rule again.",exJa:"そのルールをもう一度説明してください。"},
+ {w:"describe",ja:"描写する・説明する",pos:"verb",cat:"daily",type:"word",ex:"Can you ___ your hometown?",exJa:"あなたの故郷について説明できますか？"},
+ {w:"imagine",ja:"想像する",pos:"verb",cat:"daily",type:"word",ex:"___ a world without cars.",exJa:"車のない世界を想像してみて。",stem:"Imagine"},
+ {w:"allow",ja:"許可する・～させてあげる",pos:"verb",cat:"daily",type:"word",ex:"Our teacher does not ___ us to use phones in class.",exJa:"先生は授業中にスマホを使うことを許可していない。"},
+ {w:"invite",ja:"招待する",pos:"verb",cat:"daily",type:"word",ex:"I will ___ my friends to the party.",exJa:"私は友達をパーティーに招待する。"},
+ {w:"prepare",ja:"準備する",pos:"verb",cat:"daily",type:"word",ex:"We need to ___ for the test.",exJa:"私たちはテストの準備をする必要がある。"},
+ {w:"continue",ja:"続ける",pos:"verb",cat:"daily",type:"word",ex:"Please ___ reading the story.",exJa:"その物語を読み続けてください。"},
+ {w:"achieve",ja:"達成する",pos:"verb",cat:"daily",type:"word",ex:"You can ___ your goal if you work hard.",exJa:"一生懸命頑張れば目標を達成できる。"},
+ {w:"succeed",ja:"成功する",pos:"verb",cat:"daily",type:"word",ex:"I hope you will ___ in the exam.",exJa:"あなたが試験に成功することを願っている。"},
+ // health / culture
+ {w:"healthy",ja:"健康な",pos:"adj",cat:"daily",type:"word",ex:"Vegetables are ___ for you.",exJa:"野菜はあなたの健康に良い。"},
+ {w:"disease",ja:"病気",pos:"noun",cat:"daily",type:"word",ex:"Exercise can prevent many ___s.",exJa:"運動は多くの病気を防ぐことができる。"},
+ {w:"medicine",ja:"薬",pos:"noun",cat:"daily",type:"word",ex:"Take this ___ after dinner.",exJa:"夕食後にこの薬を飲んでください。"},
+ {w:"temperature",ja:"温度・気温",pos:"noun",cat:"daily",type:"word",ex:"The ___ will rise this afternoon.",exJa:"気温は今日の午後上がるだろう。"},
+ {w:"culture",ja:"文化",pos:"noun",cat:"daily",type:"word",ex:"We should learn about other ___s.",exJa:"私たちは他の文化について学ぶべきだ。"},
+ {w:"traditional",ja:"伝統的な",pos:"adj",cat:"daily",type:"word",ex:"This is a ___ Japanese festival.",exJa:"これは伝統的な日本の祭りだ。"},
+ {w:"foreign",ja:"外国の",pos:"adj",cat:"daily",type:"word",ex:"She speaks two ___ languages.",exJa:"彼女は2つの外国語を話す。"},
+ {w:"finally",ja:"ついに・最後に",pos:"adv",cat:"daily",type:"word",ex:"___, we arrived at the island.",exJa:"ついに、私たちは島に到着した。",stem:"Finally"},
+ {w:"remember",ja:"覚えている・思い出す",pos:"verb",cat:"daily",type:"word",ex:"I still ___ that day clearly.",exJa:"私は今でもその日をはっきり覚えている。"},
+ {w:"forget",ja:"忘れる",pos:"verb",cat:"daily",type:"word",ex:"Don't ___ your umbrella.",exJa:"傘を忘れないで。"},
+ {w:"practice",ja:"練習する",pos:"verb",cat:"daily",type:"word",ex:"We ___ soccer every day.",exJa:"私たちは毎日サッカーを練習する。"},
+ {w:"exercise",ja:"運動",pos:"noun",cat:"daily",type:"word",ex:"Daily ___ is good for your body.",exJa:"毎日の運動は体に良い。"},
+ {w:"season",ja:"季節",pos:"noun",cat:"daily",type:"word",ex:"Spring is my favorite ___.",exJa:"春は私の好きな季節だ。"},
+ {w:"opinion",ja:"意見",pos:"noun",cat:"daily",type:"word",ex:"Please tell me your ___ about this plan.",exJa:"この計画についてのあなたの意見を教えてください。"},
+ // phrases
+ {w:"look forward to",ja:"～を楽しみに待つ",pos:"phrase",cat:"daily",type:"phrase",ex:"I ___ seeing you again.",exJa:"あなたにまた会えるのを楽しみにしています。",stem:"look forward to"},
+ {w:"take care of",ja:"～の世話をする",pos:"phrase",cat:"daily",type:"phrase",ex:"She ___ her little brother.",exJa:"彼女は弟の世話をしている。",stem:"takes care of"},
+ {w:"be interested in",ja:"～に興味がある",pos:"phrase",cat:"daily",type:"phrase",ex:"He ___ science.",exJa:"彼は科学に興味がある。",stem:"is interested in",display:"be interested in"},
+ {w:"be good at",ja:"～が得意である",pos:"phrase",cat:"daily",type:"phrase",ex:"My sister ___ cooking.",exJa:"私の姉／妹は料理が得意だ。",stem:"is good at",display:"be good at"},
+ {w:"be different from",ja:"～と異なる",pos:"phrase",cat:"daily",type:"phrase",ex:"This town ___ my hometown.",exJa:"この町は私の故郷と異なる。",stem:"is different from",display:"be different from"},
+ {w:"take part in",ja:"～に参加する",pos:"phrase",cat:"daily",type:"phrase",ex:"Many students will ___ the contest.",exJa:"多くの生徒がそのコンテストに参加するだろう。",stem:"take part in"},
+ {w:"in addition",ja:"そのうえ・さらに",pos:"phrase",cat:"daily",type:"phrase",ex:"___, we need more time.",exJa:"さらに、私たちにはもっと時間が必要だ。",stem:"In addition"},
+ {w:"for example",ja:"たとえば",pos:"phrase",cat:"daily",type:"phrase",ex:"___, apples and oranges are fruits.",exJa:"たとえば、りんごとオレンジは果物だ。",stem:"For example"},
+ {w:"at least",ja:"少なくとも",pos:"phrase",cat:"daily",type:"phrase",ex:"Please sleep ___ seven hours.",exJa:"少なくとも7時間は寝てください。",stem:"at least"},
+ {w:"in the future",ja:"将来・未来に",pos:"phrase",cat:"daily",type:"phrase",ex:"I want to be a teacher ___.",exJa:"私は将来、先生になりたい。",stem:"in the future"},
+ {w:"as soon as",ja:"～するとすぐに",pos:"phrase",cat:"daily",type:"phrase",ex:"Call me ___ you arrive.",exJa:"到着したらすぐに電話して。",stem:"as soon as"},
+ {w:"because of",ja:"～のために（理由）",pos:"phrase",cat:"env",type:"phrase",ex:"The game was canceled ___ the rain.",exJa:"試合は雨のために中止になった。",stem:"because of"},
+ {w:"instead of",ja:"～の代わりに",pos:"phrase",cat:"daily",type:"phrase",ex:"Let's walk ___ taking the bus.",exJa:"バスに乗る代わりに歩こう。",stem:"instead of"},
+ {w:"a lot of",ja:"たくさんの",pos:"phrase",cat:"daily",type:"phrase",ex:"There are ___ tourists in summer.",exJa:"夏にはたくさんの観光客がいる。",stem:"a lot of"},
+ {w:"get along with",ja:"～と仲良くする",pos:"phrase",cat:"daily",type:"phrase",ex:"He ___ his classmates well.",exJa:"彼はクラスメートと仲良くしている。",stem:"gets along with",display:"get along with"},
+ {w:"make sure",ja:"確認する・確かめる",pos:"phrase",cat:"daily",type:"phrase",ex:"___ to lock the door.",exJa:"ドアに鍵をかけるのを確かめて。",stem:"Make sure"},
+];
+VOCAB.forEach((v,i)=>v.id=i);
+
+let listFilter='all';
+function setFilter(el){ document.querySelectorAll('.chip[data-f]').forEach(c=>c.classList.remove('active')); el.classList.add('active'); listFilter=el.dataset.f; renderList(); }
+function catLabel(c){ return c==='env'?'環境・社会':'日常・学校'; }
+function renderList(){
+  const q=(document.getElementById('search').value||'').trim().toLowerCase();
+  const box=document.getElementById('wordlist');
+  const items=VOCAB.filter(v=>{
+    if(listFilter==='word' && v.type!=='word') return false;
+    if(listFilter==='phrase' && v.type!=='phrase') return false;
+    if(listFilter==='env' && v.cat!=='env') return false;
+    if(listFilter==='daily' && v.cat!=='daily') return false;
+    if(q && !(v.w.toLowerCase().includes(q)||v.ja.includes(q))) return false;
+    return true;
+  });
+  if(!items.length){ box.innerHTML='<p style="color:var(--muted)">見つかりませんでした。検索語を変えてみてください。</p>'; return; }
+  box.innerHTML=items.map(v=>`
+    <div class="witem">
+      <div class="en">${v.display||v.w}</div>
+      <div class="meta">${v.pos} • ${catLabel(v.cat)} • ${v.type==='phrase'?'熟語':'単語'}</div>
+      <div class="ja">${v.ja}</div>
+      <div class="ex">${v.ex.replace('___','<b>'+(v.stem||v.w)+'</b>')} — ${v.exJa}</div>
+    </div>`).join('');
+}
+renderList();
+
+// Quiz state (in-memory only for this session)
+let quiz={mode:'typing',list:[],idx:0,score:0,missed:[],answered:false,choices:[]};
+
+function shuffle(a){ const x=[...a]; for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [x[i],x[j]]=[x[j],x[i]]; } return x; }
+function show(id){ ['view-home','view-quiz','view-result'].forEach(v=>document.getElementById(v).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
+function goHome(){ show('view-home'); }
+
+function startQuiz(mode,n){
+  const pool=shuffle(VOCAB).slice(0, Math.min(n, VOCAB.length));
+  begin(mode, pool);
+}
+function startFiltered(mode, kind){
+  let pool;
+  if(kind==='phrase') pool=VOCAB.filter(v=>v.type==='phrase');
+  else if(kind==='word') pool=VOCAB.filter(v=>v.type==='word');
+  else if(kind==='env') pool=VOCAB.filter(v=>v.cat==='env');
+  else if(kind==='school') pool=VOCAB.filter(v=>v.cat==='daily');
+  else pool=VOCAB;
+  begin(mode, shuffle(pool));
+}
+function begin(mode, list){
+  quiz={mode, list, idx:0, score:0, missed:[], answered:false, choices:[]};
+  show('view-quiz');
+  renderQ();
+}
+function normalize(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
+function acceptedAnswers(v){
+  const base=[v.w, v.stem, v.display].filter(Boolean).map(normalize);
+  // also accept base verb forms for suggest / allow examples are handled via showing full sentence, but typing asks for dictionary form
+  return [...new Set(base)];
+}
+function renderQ(){
+  quiz.answered=false;
+  const v=quiz.list[quiz.idx];
+  document.getElementById('q-title').textContent = quiz.mode==='typing' ? 'タイピング — 意味から英語へ' : '4択 — 本番形式 空所補充';
+  document.getElementById('q-count').textContent = (quiz.idx+1)+' / '+quiz.list.length+'　・　正解 '+quiz.score;
+  document.getElementById('q-bar').style.width = ((quiz.idx)/quiz.list.length*100)+'%';
+  const card=document.getElementById('qcard');
+  const tags=`<div class="qmeta"><span class="tag">${catLabel(v.cat)}</span><span class="tag amber">${v.type==='phrase'?'熟語':'単語'} • ${v.pos}</span></div>`;
+  if(quiz.mode==='typing'){
+    const hintWord=v.display||v.w;
+    const letters=hintWord.replace(/ /g,'').length;
+    card.innerHTML=`
+      ${tags}
+      <div style="font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--muted)">この意味の英語は？</div>
+      <div class="meaning">${v.ja}</div>
+      <p class="hint">ヒント： ${hintWord[0].toUpperCase()} から始まる ・ ${hintWord.includes(' ')? hintWord.split(' ').length+'語':' '+letters+'文字'}　／　例文訳：${v.exJa}</p>
+      <input class="input" id="ans" placeholder="英語で入力してください" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <div class="feedback" id="fb"></div>
+      <div class="actions"><button class="btn" id="btn-check" onclick="checkTyping()">答え合わせ</button><button class="btn secondary" id="btn-next" onclick="nextQ()" disabled>次へ →</button></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Enterキーでも答え合わせできます。大文字・小文字は区別しません。</p>
+    `;
+    const inp=document.getElementById('ans'); inp.focus();
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ if(!quiz.answered) checkTyping(); else nextQ(); }});
+  } else {
+    // build choices: correct is stem or w
+    const correct=v.stem||v.w;
+    const others=shuffle(VOCAB.filter(x=>x.id!==v.id).map(x=>x.stem||x.w)).slice(0,3);
+    quiz.choices=shuffle([correct,...others]);
+    quiz.correct=correct;
+    const sentenceHtml=v.ex.replace('___','<span class="blank">( &nbsp; )</span>');
+    card.innerHTML=`
+      ${tags}
+      <div style="font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--muted)">空所に入る最も適切なものを選んでください</div>
+      <p class="sentence" style="margin:10px 0 4px">${sentenceHtml}</p>
+      <p class="hint">${v.exJa}</p>
+      <div class="choices">${quiz.choices.map((c,i)=>`<button class="choice" onclick="checkChoice(this,'${c.replace(/'/g,"\\'")}')">${String.fromCharCode(65+i)}. &nbsp;${c}</button>`).join('')}</div>
+      <div class="feedback" id="fb"></div>
+      <div class="actions"><button class="btn" id="btn-next" onclick="nextQ()" disabled>次へ →</button></div>
+    `;
+  }
+}
+function showFeedback(ok, v){
+  const fb=document.getElementById('fb');
+  const full=v.ex.replace('___', v.stem||v.w);
+  fb.className='feedback '+(ok?'ok':'ng');
+  fb.innerHTML= ok
+    ? `<strong>⭕ 正解！</strong>　<b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>`
+    : `<strong>❌ 不正解</strong>　正解は <b>${v.display||v.w}</b> ＝ ${v.ja}<br><span style="color:var(--muted)">${full} — ${v.exJa}</span>${v.note?'<br><span style="font-size:12px">'+v.note+'</span>':''}`;
+  const next=document.getElementById('btn-next'); if(next) next.disabled=false;
+  const chk=document.getElementById('btn-check'); if(chk) chk.disabled=true;
+}
+function checkTyping(){
+  if(quiz.answered) return;
+  const v=quiz.list[quiz.idx];
+  const val=normalize(document.getElementById('ans').value);
+  if(!val){ document.getElementById('ans').focus(); return; }
+  const ok=acceptedAnswers(v).includes(val);
+  quiz.answered=true;
+  if(ok) quiz.score++; else quiz.missed.push(v);
+  showFeedback(ok, v);
+  document.getElementById('q-count').textContent=(quiz.idx+1)+' / '+quiz.list.length+'　・　正解 '+quiz.score;
+}
+function checkChoice(btn, chosen){
+  if(quiz.answered) return;
+  const v=quiz.list[quiz.idx];
+  const ok=normalize(chosen)===normalize(quiz.correct);
+  quiz.answered=true;
+  document.querySelectorAll('.choice').forEach(b=>{
+    b.disabled=true;
+    if(normalize(b.textContent.replace(/^[A-D]\.\s*/,''))===normalize(quiz.correct)) b.classList.add('correct');
+    else if(b===btn && !ok) b.classList.add('wrong');
+  });
+  if(ok) quiz.score++; else quiz.missed.push(v);
+  showFeedback(ok, v);
+  document.getElementById('q-count').textContent=(quiz.idx+1)+' / '+quiz.list.length+'　・　正解 '+quiz.score;
+}
+function nextQ(){
+  if(quiz.idx+1>=quiz.list.length){ showResult(); return; }
+  quiz.idx++; renderQ();
+}
+function showResult(){
+  document.getElementById('q-bar').style.width='100%';
+  show('view-result');
+  const total=quiz.list.length;
+  document.getElementById('r-score').textContent=quiz.score+' / '+total;
+  const rate= total? Math.round(quiz.score/total*100):0;
+  let msg='';
+  if(rate===100) msg='全問正解！この調子で次のセットへ。ライティングでも使える語ばかりです。';
+  else if(rate>=80) msg='よくできています。間違えた語だけもう一度やると、すぐに満点圏内です。';
+  else if(rate>=50) msg='半分以上は定着しています。苦手だけを繰り返すのが一番の近道です。';
+  else msg='ここからが伸びどころ。単語リストで例文ごと眺めてから、もう一度挑戦してみてください。';
+  document.getElementById('r-msg').textContent=msg+'（正解率 '+rate+'%）';
+  const missedBox=document.getElementById('r-missed');
+  if(quiz.missed.length){
+    missedBox.innerHTML='<h4 style="margin:0 0 8px">今回まちがえた語（'+quiz.missed.length+'）</h4>'+quiz.missed.map(v=>`<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;background:var(--surface2)"><b style="font-family:Newsreader,serif;font-size:17px">${v.display||v.w}</b> — ${v.ja}<br><span style="font-size:12.5px;color:var(--muted)">${v.ex.replace('___', v.stem||v.w)} — ${v.exJa}</span></div>`).join('');
+    document.getElementById('btn-retry-missed').style.display='inline-flex';
+  } else {
+    missedBox.innerHTML='<p style="text-align:center;color:var(--muted)">間違えた問題はありませんでした。</p>';
+    document.getElementById('btn-retry-missed').style.display='none';
+  }
+}
+function retryMissed(){
+  if(!quiz.missed.length) return;
+  const mode=quiz.mode;
+  begin(mode, shuffle(quiz.missed));
+}
+</script>
+</body>
+</html>
