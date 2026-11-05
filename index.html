@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex" />
     <link rel="icon" href="data:," />
     <title>福岡受験ドリル</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -309,6 +310,9 @@
         flex: none; font-size: 13px; font-weight: 700; color: var(--primary);
         background: var(--primary-soft); border-radius: 999px; padding: 4px 12px;
       }
+      .chooser-prog { display: block; font-size: 12px; font-weight: 700; color: var(--primary); margin-top: 3px; }
+      .chooser-prog:empty { display: none; }
+      .screen-prog { font-size: 14.5px; font-weight: 700; color: var(--primary); margin: 10px 0 8px; }
       .back-btn {
         background: none; border: none; font: inherit; font-size: 14.5px; font-weight: 700;
         color: var(--primary); cursor: pointer; padding: 6px 4px 6px 0; text-decoration: underline;
@@ -328,53 +332,44 @@
       <!-- ホーム -->
       <section id="screen-home" class="screen active">
         <h1>福岡受験ドリル</h1>
-        <p class="sub">福岡県公立高校入試対策 ・ 一問一答（歴史・文化芸術／歴史・横断問題／時期特定・誤文選択／公民・人権と選挙・政治のしくみ・経済・国際社会・計算ドント式・誤文選択 ／ 理科・化学・物理・生物・地学）と記述問題（歴史・地理・理科）、資料読み取り（社会・理科）</p>
 
-        <div class="shuffle-row">
-          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
-          <label class="switch">
-            <input type="checkbox" id="shuffle-toggle" checked aria-label="シャッフル出題" />
-          </label>
-        </div>
-
-        <div class="weak-card" id="weak-card">
-          <div class="weak-top"><h2>苦手な問題</h2><span class="weak-total" id="weak-total-badge"></span></div>
-          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
-          <div class="weak-empty" id="weak-empty">まだ苦手な問題はありません。問題を解いて間違えると、ここにたまっていきます。</div>
-          <div class="weak-list" id="weak-list"></div>
-          <button class="btn weak-start" id="weak-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
-          <button class="reset-btn" id="weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
-          <p class="storage-warn" id="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
-          <div class="backup-area">
-            <button class="reset-btn" id="backup-toggle-btn" type="button">記録のバックアップ・復元</button>
-            <div class="backup-panel" id="backup-panel" style="display:none">
-              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
-              <textarea class="backup-code" id="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
-              <button class="reset-btn" id="backup-make-btn" type="button">コードを出す</button>
-              <button class="reset-btn" id="backup-restore-btn" type="button">このコードで復元する</button>
-              <p class="backup-msg" id="backup-msg"></p>
-            </div>
-          </div>
-          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
+        <div style="margin-bottom:22px">
+          <button class="btn" id="go-daily" type="button" style="width:100%">今日の10問</button>
+          <p class="note" style="margin-top:8px">全教科の中から、その日ごとに決まる10問です。同じ日は何度開いても同じ10問が出て、翌日になると新しい10問に変わります。</p>
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>教科を選ぶ</h2><span>全609問</span></div>
+          <div class="subject-head"><h2>教科を選ぶ</h2><span>全873問</span></div>
           <div class="chooser">
+            <button class="chooser-btn" id="go-kokugo" type="button">
+              <span class="chooser-name">国語</span>
+              <span class="chooser-desc">漢字 ・ 語彙と慣用句 ・ 文法 ・ 古文単語<span class="chooser-prog" id="prog-home-kokugo"></span></span>
+              <span class="chooser-count">全100問</span>
+            </button>
+            <button class="chooser-btn" id="go-math" type="button">
+              <span class="chooser-name">数学</span>
+              <span class="chooser-desc">計算 ・ 方程式 ・ 展開と因数分解 ・ 関数 ・ 確率と資料 ・ 図形の計算<span class="chooser-prog" id="prog-home-math"></span></span>
+              <span class="chooser-count">全100問</span>
+            </button>
             <button class="chooser-btn" id="go-social" type="button">
               <span class="chooser-name">社会</span>
-              <span class="chooser-desc">歴史 ・ 公民 ・ 地理 ・ 資料読み取り</span>
+              <span class="chooser-desc">歴史 ・ 公民 ・ 地理 ・ 資料読み取り<span class="chooser-prog" id="prog-home-social"></span></span>
               <span class="chooser-count">全361問</span>
             </button>
             <button class="chooser-btn" id="go-science" type="button">
               <span class="chooser-name">理科</span>
-              <span class="chooser-desc">化学 ・ 物理 ・ 生物 ・ 地学 ・ 資料読み取り ・ 記述と実験</span>
+              <span class="chooser-desc">化学 ・ 物理 ・ 生物 ・ 地学 ・ 資料読み取り ・ 記述と実験<span class="chooser-prog" id="prog-home-science"></span></span>
               <span class="chooser-count">全248問</span>
+            </button>
+            <button class="chooser-btn" id="go-english" type="button">
+              <span class="chooser-name">英語</span>
+              <span class="chooser-desc">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現<span class="chooser-prog" id="prog-home-english"></span></span>
+              <span class="chooser-count">全64問</span>
             </button>
           </div>
         </div>
 
-        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。時期特定は、年表の区切り（ア〜エ）のどこで出来事が起きたかを選ぶ問題です。誤文選択は、4つの説明文から正しいもの（または誤っているもの）を1つ選ぶ問題で、問題文の指示をよく読んでください。公民は、人権の種類（自由権・平等権・社会権・参政権・請求権）と選挙の原則・しくみを取り違えやすいので、解説で「どの権利か」「どの選挙制度か」を確認しながら進めてください。計算問題（ドント式）は、比例代表の議席配分を計算する問題です。各党の得票数を1、2、3…で割った商を大きい順に並べ、定数の数だけ上から議席を与えます。各党の議席数を数字で入力してください（合計は定数と一致します）。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。記述問題は、福岡の入試で中心の「まとめ文の〔　〕を完成させる」形式が中心で、指定語句や書き出しの指定がついた問題もあります。資料（文章や数値）を読んでから、文章で書いてください。字数指定は本番同様ありません（目安の字数だけ表示しています）。答えたら模範解答とキーワードのチェックが出るので、最後は自分で「できた／惜しい／できなかった」を正直に判定してください。「惜しい」「できなかった」は苦手な問題に残ります。資料読み取りは、問題文の中の表や数値を見て答える問題です。数値は問題の中にすべて書いてあるので、表のどこを見るか（行と列の交わり）を意識して解いてください。理科の記述・実験も、模範解答とキーワードを見て自己判定する形式です。</p>
+        <p class="note" style="margin-top:28px; font-size:12px">このドリルは、個人が作成した学習用の問題集です。公式の問題や教材ではありません。問題や答えに間違いが含まれている可能性がありますので、学習の参考として、自己責任でご利用ください。</p>
       </section>
 
       <!-- 社会のセット一覧 -->
@@ -382,12 +377,37 @@
         <button class="back-btn" id="back-from-social" type="button">← 教科選択に戻る</button>
         <h1 class="screen-title">社会</h1>
         <p class="sub">歴史 ・ 公民 ・ 地理 ・ 資料読み取り（全361問）</p>
+        <p class="screen-prog" id="prog-screen-social"></p>
+        <button class="reset-btn prog-reset-btn" data-prog-reset="social" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">横断問題の並べ替えは、古いと思う順にタップして答えてください（間違えたら「選び直す」でやり直せます）。時期特定は、年表の区切り（ア〜エ）のどこで出来事が起きたかを選ぶ問題です。誤文選択は、4つの説明文から正しいもの（または誤っているもの）を1つ選ぶ問題で、問題文の指示をよく読んでください。公民は、人権の種類（自由権・平等権・社会権・参政権・請求権）と選挙の原則・しくみを取り違えやすいので、解説で「どの権利か」「どの選挙制度か」を確認しながら進めてください。計算問題（ドント式）は、比例代表の議席配分を計算する問題です。各党の得票数を1、2、3…で割った商を大きい順に並べ、定数の数だけ上から議席を与えます。各党の議席数を数字で入力してください（合計は定数と一致します）。記述問題は、福岡の入試で中心の「まとめ文の〔　〕を完成させる」形式が中心で、指定語句や書き出しの指定がついた問題もあります。資料（文章や数値）を読んでから、文章で書いてください。字数指定は本番同様ありません（目安の字数だけ表示しています）。答えたら模範解答とキーワードのチェックが出るので、最後は自分で「できた／惜しい／できなかった」を正直に判定してください。「惜しい」「できなかった」は苦手な問題に残ります。資料読み取りは、問題文の中の表や数値を見て答える問題です。数値は問題の中にすべて書いてあるので、表のどこを見るか（行と列の交わり）を意識して解いてください。</p>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" class="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
 
         <div class="weak-card">
           <div class="weak-top"><h2>社会の苦手な問題</h2><span class="weak-total" id="weak-social-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
           <div class="weak-empty" id="weak-social-empty">社会の苦手な問題はまだありません。</div>
           <div class="weak-list" id="weak-social-list"></div>
           <button class="btn weak-start" id="weak-social-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
         </div>
 
         <div class="subject">
@@ -416,12 +436,37 @@
         <button class="back-btn" id="back-from-science" type="button">← 教科選択に戻る</button>
         <h1 class="screen-title">理科</h1>
         <p class="sub">化学 ・ 物理 ・ 生物 ・ 地学 ・ 資料読み取り ・ 記述と実験（全248問）</p>
+        <p class="screen-prog" id="prog-screen-science"></p>
+        <button class="reset-btn prog-reset-btn" data-prog-reset="science" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">資料読み取りは、問題文の中の表や数値を見て答える問題です。数値は問題の中にすべて書いてあるので、表のどこを見るか（行と列の交わり）を意識して解いてください。理科の記述・実験も、模範解答とキーワードを見て自己判定する形式です。答えたら模範解答とキーワードのチェックが出るので、最後は自分で「できた／惜しい／できなかった」を正直に判定してください。「惜しい」「できなかった」は苦手な問題に残ります。</p>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" class="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
 
         <div class="weak-card">
           <div class="weak-top"><h2>理科の苦手な問題</h2><span class="weak-total" id="weak-science-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
           <div class="weak-empty" id="weak-science-empty">理科の苦手な問題はまだありません。</div>
           <div class="weak-list" id="weak-science-list"></div>
           <button class="btn weak-start" id="weak-science-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
         </div>
 
         <div class="subject">
@@ -452,6 +497,153 @@
         <div class="subject">
           <div class="subject-head"><h2>記述・実験</h2><span>全24問</span></div>
           <div class="set-list" id="science-exp-sets"></div>
+        </div>
+      </section>
+
+      <!-- 国語のセット一覧 -->
+      <section id="screen-kokugo" class="screen">
+        <button class="back-btn" id="back-from-kokugo" type="button">← 教科選択に戻る</button>
+        <h1 class="screen-title">国語</h1>
+        <p class="sub">漢字 ・ 語彙と慣用句 ・ 文法 ・ 古文単語（全100問）</p>
+        <p class="screen-prog" id="prog-screen-kokugo"></p>
+        <button class="reset-btn prog-reset-btn" data-prog-reset="kokugo" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">漢字の読みは、ひらがなで答えてください。書き取りは、文中のひらがなの部分を漢字に直して答えます。語彙は慣用句・ことわざ・四字熟語の意味や使い方、文法は選択式が中心です。古文単語は、頻出の古語の現代語訳を答えます。長文読解は入れていないので、1セットを短時間でくり返し解けます。</p>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" class="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
+
+        <div class="weak-card">
+          <div class="weak-top"><h2>国語の苦手な問題</h2><span class="weak-total" id="weak-kokugo-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
+          <div class="weak-empty" id="weak-kokugo-empty">国語の苦手な問題はまだありません。</div>
+          <div class="weak-list" id="weak-kokugo-list"></div>
+          <button class="btn weak-start" id="weak-kokugo-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>漢字（読み・書き取り）</h2><span>全40問</span></div>
+          <div class="set-list" id="kokugo-kanji-sets"></div>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>語彙・文法・古文</h2><span>全60問</span></div>
+          <div class="set-list" id="kokugo-lang-sets"></div>
+        </div>
+      </section>
+
+      <!-- 数学のセット一覧 -->
+      <section id="screen-math" class="screen">
+        <button class="back-btn" id="back-from-math" type="button">← 教科選択に戻る</button>
+        <h1 class="screen-title">数学</h1>
+        <p class="sub">計算 ・ 方程式 ・ 展開と因数分解 ・ 関数 ・ 確率と資料 ・ 図形の計算（全100問）</p>
+        <p class="screen-prog" id="prog-screen-math"></p>
+        <button class="reset-btn prog-reset-btn" data-prog-reset="math" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">証明問題は入れていないので、計算中心で短時間で解けます。答えは数字で入力してください。確率の答えは「1/6」のような分数でも、「6分の1」という書き方でも大丈夫です。マイナスの答えは「-5」のように書いてください。解が2つある問題（連立方程式・二次方程式・因数分解の一部）は入力欄が2つに分かれます。</p>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" class="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
+
+        <div class="weak-card">
+          <div class="weak-top"><h2>数学の苦手な問題</h2><span class="weak-total" id="weak-math-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
+          <div class="weak-empty" id="weak-math-empty">数学の苦手な問題はまだありません。</div>
+          <div class="weak-list" id="weak-math-list"></div>
+          <button class="btn weak-start" id="weak-math-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>計算と式</h2><span>全52問</span></div>
+          <div class="set-list" id="math-calc-sets"></div>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>関数・確率と資料・図形</h2><span>全48問</span></div>
+          <div class="set-list" id="math-app-sets"></div>
+        </div>
+      </section>
+
+      <!-- 英語のセット一覧 -->
+      <section id="screen-english" class="screen">
+        <button class="back-btn" id="back-from-english" type="button">← 教科選択に戻る</button>
+        <h1 class="screen-title">英語</h1>
+        <p class="sub">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現（全64問）</p>
+        <p class="screen-prog" id="prog-screen-english"></p>
+        <button class="reset-btn prog-reset-btn" data-prog-reset="english" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
+        <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
+        <p class="note">文法と会話表現は4択の穴埋め、単語と熟語は意味から英語を入力する問題と4択を混ぜています。整序は、語句を正しいと思う順にタップして文を組み立てる形式です（間違えたら「選び直す」でやり直せます）。英語は大文字・小文字のどちらで入力しても大丈夫です。長文読解は入れていないので、短時間でくり返し解けます。</p>
+
+        <div class="shuffle-row">
+          <div class="lbl">シャッフル出題<small>問題の順番をランダムにする</small></div>
+          <label class="switch">
+            <input type="checkbox" class="shuffle-toggle" checked aria-label="シャッフル出題" />
+          </label>
+        </div>
+
+        <div class="weak-card">
+          <div class="weak-top"><h2>英語の苦手な問題</h2><span class="weak-total" id="weak-english-total-badge"></span></div>
+          <p class="weak-desc">間違えた問題と「わからない」にした問題を、この端末に覚えています。</p>
+          <div class="weak-empty" id="weak-english-empty">英語の苦手な問題はまだありません。</div>
+          <div class="weak-list" id="weak-english-list"></div>
+          <button class="btn weak-start" id="weak-english-start-btn" type="button" style="display:none">苦手な問題だけ解く</button>
+          <button class="reset-btn weak-reset-btn" type="button" style="display:none">苦手な問題の記録をリセット</button>
+          <p class="storage-warn">今の開き方では、記録を保存できませんでした。リンクをSafari（またはChrome）で直接開いてから解いてみてください。</p>
+          <div class="backup-area">
+            <button class="reset-btn backup-toggle-btn" type="button">記録のバックアップ・復元</button>
+            <div class="backup-panel" style="display:none">
+              <p class="weak-note" style="margin-top:0">記録をコードにしておくと、万一消えてしまっても、このコードを貼るだけで元に戻せます。コードを出すと下の欄に出ます。復元するときは、コードを貼って「復元する」を押してください。</p>
+              <textarea class="backup-code" rows="3" placeholder="ここにバックアップコードが出ます／復元するコードを貼ってください"></textarea>
+              <button class="reset-btn backup-make-btn" type="button">コードを出す</button>
+              <button class="reset-btn backup-restore-btn" type="button">このコードで復元する</button>
+              <p class="backup-msg"></p>
+            </div>
+          </div>
+          <p class="weak-note">記録はこの端末の中だけに保存されます（外には送られません）。別のスマホやタブレットには引き継がれません。正解できると回数が1つ減り、0になると記録から外れます。アプリの中のブラウザで開くと、閉じたときに記録が消えることがあるので、SafariやChromeで直接開くのがおすすめです。</p>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>文法・単語</h2><span>全40問</span></div>
+          <div class="set-list" id="eng-base-sets"></div>
+        </div>
+
+        <div class="subject">
+          <div class="subject-head"><h2>整序・会話</h2><span>全24問</span></div>
+          <div class="set-list" id="eng-use-sets"></div>
         </div>
       </section>
 
@@ -1713,6 +1905,357 @@
         { n: "理基10", q: "試験管を加熱するとき、試験管の口はどちらの方向に向けてはいけないか。「人」の語句を使って答えよ。", a: "人のいる方向に向けてはいけない", kwAny: ["人"], ex: "加熱中の試験管の口は、人がいる方向に向けません。液体が突沸（急に沸騰）して飛び出すことがあるためです。口を人のいない方向に向けるのが安全の基本です。" }
       ];
 
+      /* ===== 国語・漢字の読み =====
+         入試で問われやすい、読みにくい漢字・音訓の取り違えに注意した読み問題。
+         解答はひらがな（読み方）で照合する。 */
+      var KOKUGO_READ = [
+        { n: "読1", q: "次の漢字の読みを、ひらがなで答えよ。『相槌』", a: "あいづち", accept: ["あいづち", "あいずち"], ex: "「相槌を打つ」の相槌。会話でうなずきながら聞くことです。「づ」の音で読みます。" },
+        { n: "読2", q: "次の漢字の読みを、ひらがなで答えよ。『拝借』", a: "はいしゃく", accept: ["はいしゃく"], ex: "「拝借」は「借りる」の謙譲の言い方。読みは「はいしゃく」です。" },
+        { n: "読3", q: "次の漢字の読みを、ひらがなで答えよ。『悪寒』", a: "おかん", accept: ["おかん"], ex: "発熱の前ぶれに感じる寒けのこと。「あっかん」とは読まず、「おかん」が決まった読みです。" },
+        { n: "読4", q: "次の漢字の読みを、ひらがなで答えよ。『早急』", a: "さっきゅう", accept: ["さっきゅう"], ex: "「早急」は「さっきゅう」が正しい読みです。「そうきゅう」と読むのは誤りとされるので注意。" },
+        { n: "読5", q: "次の漢字の読みを、ひらがなで答えよ。『依存』", a: "いぞん", accept: ["いぞん", "いそん"], ex: "標準の読みは「いぞん」。「いそん」と読む人もいますが、入試では「いぞん」を覚えておきましょう。" },
+        { n: "読6", q: "次の漢字の読みを、ひらがなで答えよ。『欠伸』", a: "あくび", accept: ["あくび"], ex: "眠いときなどに出る「あくび」を漢字で書くと「欠伸」。字からは想像しにくい読みです。" },
+        { n: "読7", q: "次の漢字の読みを、ひらがなで答えよ。『一昨年』", a: "おととし", accept: ["おととし"], ex: "「おととし」は漢字で「一昨年」と書きます。「いっさくねん」と読んでも同じ年を指します。" },
+        { n: "読8", q: "次の漢字の読みを、ひらがなで答えよ。『間髪』", a: "かんぱつ", accept: ["かんぱつ"], ex: "「間髪を入れず」の間髪。「かんはつ」ではなく「かんぱつ」と濁らずに読みます（髪＝ぱつ）。" },
+        { n: "読9", q: "次の漢字の読みを、ひらがなで答えよ。『完遂』", a: "かんすい", accept: ["かんすい"], ex: "「完遂」は最後までやり遂げること。「遂」は「すい」と読みます。" },
+        { n: "読10", q: "次の漢字の読みを、ひらがなで答えよ。『遵守』", a: "じゅんしゅ", accept: ["じゅんしゅ"], ex: "規則などを固く守ること。「遵」は「じゅん」と読みます。「そんしゅ」と読まないように。" },
+        { n: "読11", q: "次の漢字の読みを、ひらがなで答えよ。『漸く』", a: "ようやく", accept: ["ようやく"], ex: "「漸く」で「ようやく」。送りがなの「く」は読みに含めません。" },
+        { n: "読12", q: "次の漢字の読みを、ひらがなで答えよ。『暫く』", a: "しばらく", accept: ["しばらく"], ex: "「暫く」で「しばらく」。「ざんく」とは読みません。" },
+        { n: "読13", q: "次の漢字の読みを、ひらがなで答えよ。『甚だ』", a: "はなはだ", accept: ["はなはだ"], ex: "「甚だ」で「はなはだ」。程度が非常に大きいことを表します。" },
+        { n: "読14", q: "次の漢字の読みを、ひらがなで答えよ。『僅か』", a: "わずか", accept: ["わずか"], ex: "「僅か」で「わずか」。少しだけ、という意味です。" },
+        { n: "読15", q: "次の漢字の読みを、ひらがなで答えよ。『曖昧』", a: "あいまい", accept: ["あいまい"], ex: "「曖昧」は、はっきりしない様子。どちらの字にも「あい／まい」の音が入っています。" },
+        { n: "読16", q: "次の漢字の読みを、ひらがなで答えよ。『辻褄』", a: "つじつま", accept: ["つじつま"], ex: "「辻褄が合う」の辻褄。話の筋道が合うことを表す言葉です。" },
+        { n: "読17", q: "次の漢字の読みを、ひらがなで答えよ。『模倣』", a: "もほう", accept: ["もほう"], ex: "「模倣」はまねをすること。「倣」は「ほう」と読みます。" },
+        { n: "読18", q: "次の漢字の読みを、ひらがなで答えよ。『建立』", a: "こんりゅう", accept: ["こんりゅう"], ex: "寺院などの建物を建てること。「建立」は「こんりゅう」という特別な読みをします。「けんりつ」と読まないように。" },
+        { n: "読19", q: "次の漢字の読みを、ひらがなで答えよ。『重複』", a: "ちょうふく", accept: ["ちょうふく", "じゅうふく"], ex: "標準の読みは「ちょうふく」。慣用読みの「じゅうふく」も広く使われていますが、入試では「ちょうふく」が正解とされます。" },
+        { n: "読20", q: "次の漢字の読みを、ひらがなで答えよ。『惜敗』", a: "せきはい", accept: ["せきはい"], ex: "「惜敗」は、力の差がわずかで惜しくも負けること。「惜」は「せき」と読みます。" }
+      ];
+
+      /* ===== 国語・漢字の書き取り =====
+         文中のひらがな部分を漢字に直す問題。解答は漢字でのみ判定する。 */
+      var KOKUGO_WRITE = [
+        { n: "書1", q: "次の文の「かんしん」を漢字に直して答えよ。「彼の努力には、かんしんした。」", a: "感心", accept: ["感心"], ex: "「感心」は、心に深く感じること。「関心」（興味を持つこと）と区別しましょう。" },
+        { n: "書2", q: "次の文の「ふくざつ」を漢字に直して答えよ。「手続きがふくざつで分かりにくい。」", a: "複雑", accept: ["複雑"], ex: "「複雑」の「複」は、重なる・入り組むという意味です。" },
+        { n: "書3", q: "次の文の「きょうちょう」を漢字に直して答えよ。「安全の大切さをきょうちょうする。」", a: "強調", accept: ["強調"], ex: "「強調」は、特に強く主張すること。「協調」（力を合わせること）と区別しましょう。" },
+        { n: "書4", q: "次の文の「しょうめい」を漢字に直して答えよ。「身分をしょうめいする書類を見せる。」", a: "証明", accept: ["証明"], ex: "「証明」は、証拠をあげて明らかにすること。" },
+        { n: "書5", q: "次の文の「けんきょ」を漢字に直して答えよ。「けんきょな態度で話を聞く。」", a: "謙虚", accept: ["謙虚"], ex: "「謙虚」の「謙」は、へりくだるという意味です。" },
+        { n: "書6", q: "次の文の「いちじるしい」を漢字に直して答えよ。「いちじるしい成長を見せた。」", a: "著しい", accept: ["著しい"], ex: "「著しい」は、目立ってはっきりしている様子。" },
+        { n: "書7", q: "次の文の「あいまい」を漢字に直して答えよ。「あいまいな返事でごまかす。」", a: "曖昧", accept: ["曖昧"], ex: "「曖昧」は、はっきりしない様子。読み問題でもよく出ます。" },
+        { n: "書8", q: "次の文の「かんかく」を漢字に直して答えよ。「等しいかんかくで木を植える。」", a: "間隔", accept: ["間隔"], ex: "「間隔」は、物と物とのあいだの距離や時間のこと。「感覚」（感じ取る働き）と区別しましょう。" },
+        { n: "書9", q: "次の文の「せいじゃく」を漢字に直して答えよ。「夜のせいじゃくが心地よい。」", a: "静寂", accept: ["静寂"], ex: "「静寂」は、静まりかえっていること。「寂」は「じゃく」と読みます。" },
+        { n: "書10", q: "次の文の「ゆうえき」を漢字に直して答えよ。「ゆうえきな情報を集める。」", a: "有益", accept: ["有益"], ex: "「有益」は、役に立つこと。「益」は利益の「益」です。" },
+        { n: "書11", q: "次の文の「ふんがい」を漢字に直して答えよ。「不当な扱いにふんがいする。」", a: "憤慨", accept: ["憤慨"], ex: "「憤慨」は、強く怒ること。「慨」は嘆くという意味の字です。" },
+        { n: "書12", q: "次の文の「きんちょう」を漢字に直して答えよ。「試合前にきんちょうする。」", a: "緊張", accept: ["緊張"], ex: "「緊張」の「緊」は、引き締まるという意味です。" },
+        { n: "書13", q: "次の文の「しょうがい」を漢字に直して答えよ。「しょうがい学び続ける決意をした。」", a: "生涯", accept: ["生涯"], ex: "「生涯」は、一生・生きている間のこと。「障害」（妨げ）と区別しましょう。" },
+        { n: "書14", q: "次の文の「しゅうちゃく」を漢字に直して答えよ。「結果にしゅうちゃくしすぎる。」", a: "執着", accept: ["執着"], ex: "「執着」は、一つのことに心がとらわれること。" },
+        { n: "書15", q: "次の文の「ぜったい」を漢字に直して答えよ。「ぜったいの信頼を寄せる。」", a: "絶対", accept: ["絶対"], ex: "「絶対」は、他と比べて変わらないこと・この上ないこと。" },
+        { n: "書16", q: "次の文の「そんちょう」を漢字に直して答えよ。「相手の意見をそんちょうする。」", a: "尊重", accept: ["尊重"], ex: "「尊重」は、大切にあつかうこと。" },
+        { n: "書17", q: "次の文の「ふへん」を漢字に直して答えよ。「ふへん的な価値を持つ作品だ。」", a: "普遍", accept: ["普遍"], ex: "「普遍」は、すべてのものに共通すること。「遍」はあまねく、という意味です。" },
+        { n: "書18", q: "次の文の「きょぜつ」を漢字に直して答えよ。「申し出をきょぜつする。」", a: "拒絶", accept: ["拒絶"], ex: "「拒絶」は、はっきり断ること。「拒」は「きょ」と読みます。" },
+        { n: "書19", q: "次の文の「ぼうだい」を漢字に直して答えよ。「ぼうだいな資料を読み込む。」", a: "膨大", accept: ["膨大"], ex: "「膨大」は、ふくれて非常に大きいこと。「膨」はふくれるという意味です。" },
+        { n: "書20", q: "次の文の「れいせい」を漢字に直して答えよ。「れいせいに状況を判断する。」", a: "冷静", accept: ["冷静"], ex: "「冷静」は、落ち着いて物事を判断できる様子。" }
+      ];
+
+      /* ===== 国語・語彙と慣用句 =====
+         前半は意味を選ぶ選択式（statement形式）、後半は空所補完と類義語・対義語の入力式。 */
+      var KOKUGO_VOCAB = [
+        { n: "語1", type: "statement", q: "次の言葉の意味として正しいものを選べ。『目に余る』", a: "イ 見ていられないほどひどい", correct: "イ", choices: [{ key: "ア", label: "目が疲れている" }, { key: "イ", label: "見ていられないほどひどい" }, { key: "ウ", label: "目立つほど美しい" }, { key: "エ", label: "目が離せないほど見事だ" }], ex: "「目に余る」は、ひどすぎて見ていられないという意味の慣用句です。" },
+        { n: "語2", type: "statement", q: "次の言葉の意味として正しいものを選べ。『天地無用』", a: "ウ 上下を逆さまにしてはいけない", correct: "ウ", choices: [{ key: "ア", label: "天地に感謝すること" }, { key: "イ", label: "上下を逆さまにしてもよい" }, { key: "ウ", label: "上下を逆さまにしてはいけない" }, { key: "エ", label: "天地の区別がないこと" }], ex: "荷物に書かれる「天地無用」は「上下逆さ厳禁」の意味。「無用」は「してはいけない」という意味で使う点に注意。" },
+        { n: "語3", type: "statement", q: "次の四字熟語の意味として正しいものを選べ。『一期一会』", a: "ア 一生に一度だけの出会い", correct: "ア", choices: [{ key: "ア", label: "一生に一度だけの出会い" }, { key: "イ", label: "一度会えば一生の友になる" }, { key: "ウ", label: "一つの目標に一心に取り組む" }, { key: "エ", label: "一生に一度の大きな勝負" }], ex: "「一期一会」は茶道の心得から生まれた言葉で、その出会いを一生に一度のものとして大切にするという意味です。" },
+        { n: "語4", type: "statement", q: "次の言葉の意味として正しいものを選べ。『馬耳東風』", a: "エ 人の意見や忠告を聞き流すこと", correct: "エ", choices: [{ key: "ア", label: "春の穏やかな風のこと" }, { key: "イ", label: "馬が風の音に驚くこと" }, { key: "ウ", label: "人の話を熱心に聞くこと" }, { key: "エ", label: "人の意見や忠告を聞き流すこと" }], ex: "「馬耳東風」は、馬に東風（春風）が吹いても気づかないように、人の言うことを聞き流す様子です。" },
+        { n: "語5", type: "statement", q: "次のことわざの意味として正しいものを選べ。『石の上にも三年』", a: "イ 辛抱強く続ければ、やがて成功する", correct: "イ", choices: [{ key: "ア", label: "石は三年で温かくなる" }, { key: "イ", label: "辛抱強く続ければ、やがて成功する" }, { key: "ウ", label: "三年たてば何でも忘れられる" }, { key: "エ", label: "努力しても無駄である" }], ex: "冷たい石の上でも三年座り続ければ暖まるように、辛抱強く続ければ成功するという意味です。" },
+        { n: "語6", type: "statement", q: "次のことわざの意味として正しいものを選べ。『棚からぼた餅』", a: "ウ 思いがけない幸運が転がり込むこと", correct: "ウ", choices: [{ key: "ア", label: "努力の成果が実ること" }, { key: "イ", label: "ぼた餅は棚に置くものだということ" }, { key: "ウ", label: "思いがけない幸運が転がり込むこと" }, { key: "エ", label: "油断すると失敗すること" }], ex: "棚の下で口を開けていたら、ぼた餅が落ちてきたという話から、努力なしに幸運を得ることです。" },
+        { n: "語7", type: "statement", q: "次の言葉の意味として正しいものを選べ。『青天の霹靂』", a: "ア 突然起きた衝撃的な出来事", correct: "ア", choices: [{ key: "ア", label: "突然起きた衝撃的な出来事" }, { key: "イ", label: "晴れた日の美しい景色" }, { key: "ウ", label: "雷が鳴る天気のこと" }, { key: "エ", label: "長い間の悩みが晴れること" }], ex: "「霹靂」は雷のこと。晴れた空に突然雷が落ちるように、思いもよらない出来事を表します。" },
+        { n: "語8", type: "statement", q: "次の言葉の意味として正しいものを選べ。『破天荒』", a: "エ だれも成し遂げたことのないことを成し遂げること", correct: "エ", choices: [{ key: "ア", label: "豪快で型破りな様子" }, { key: "イ", label: "天を破るような大きな音" }, { key: "ウ", label: "規則を破って暴れること" }, { key: "エ", label: "だれも成し遂げたことのないことを成し遂げること" }], ex: "「破天荒」は「前人未到のことを成し遂げる」が本来の意味です。「豪快な様子」という使い方は誤用とされます。" },
+        { n: "語9", type: "statement", q: "次の言葉の意味として正しいものを選べ。『背水の陣』", a: "イ 退路を断ち、必死の覚悟で臨むこと", correct: "イ", choices: [{ key: "ア", label: "水辺に陣を構えること" }, { key: "イ", label: "退路を断ち、必死の覚悟で臨むこと" }, { key: "ウ", label: "水を背にして休むこと" }, { key: "エ", label: "敵を水際で迎え撃つこと" }], ex: "川を背に陣を敷くと退却できないことから、一歩も引けない覚悟で臨むことです。" },
+        { n: "語10", type: "statement", q: "次の言葉の意味として正しいものを選べ。『推敲』", a: "ウ 文章を何度も練り直して整えること", correct: "ウ", choices: [{ key: "ア", label: "文章を素早く書き上げること" }, { key: "イ", label: "門を推したり敲いたりすること" }, { key: "ウ", label: "文章を何度も練り直して整えること" }, { key: "エ", label: "他人の文章を批評すること" }], ex: "詩人が「推す」と「敲く」のどちらの語を使うか門前で悩んだという故事から生まれた言葉です。" },
+        { n: "語11", q: "慣用句の（　）に入る漢字1字を答えよ。「（　）に油を注ぐ」（事態をさらに悪化させる）", a: "火", accept: ["火", "ひ"], ex: "「火に油を注ぐ」は、勢いのあるものをさらに激しくさせるたとえです。" },
+        { n: "語12", q: "慣用句の（　）に入る言葉をひらがなで答えよ。「胸を（　）おろす」（ほっとして安心する）", a: "なでおろす", accept: ["なでおろす"], ex: "「胸をなでおろす」は、心配がなくなって安心することです。" },
+        { n: "語13", q: "慣用句の（　）に入る言葉を答えよ。「足を（　）」（人の迷惑になる）", a: "引っ張る", accept: ["引っ張る", "ひっぱる"], ex: "「足を引っ張る」は、人のすることを邪魔して迷惑をかけることです。" },
+        { n: "語14", q: "「開始」と反対の意味の言葉（対義語）を答えよ。", a: "終了", accept: ["終了", "しゅうりょう"], ex: "開始⇔終了。「始まる」の反対の意味の言葉のペアです。" },
+        { n: "語15", q: "「具体的」と反対の意味の言葉（対義語）を答えよ。", a: "抽象的", accept: ["抽象的", "抽象", "ちゅうしょうてき", "ちゅうしょう"], ex: "具体的⇔抽象的。物事をはっきり示すか、おおまかにとらえるかの対比です。" },
+        { n: "語16", q: "「熱心」と似た意味の言葉（類義語）を答えよ。", a: "一生懸命", accept: ["一生懸命", "いっしょうけんめい"], ex: "「熱心」と同じく、物事に夢中になって取り組む様子を表す言葉です。" },
+        { n: "語17", q: "四字熟語の（　）に入る漢字2字を答えよ。「以心（　）（　）」（言葉にしなくても心が通じ合うこと）", a: "伝心", accept: ["伝心", "でんしん"], ex: "「以心伝心」は、言葉を使わなくても心が通じ合うことです。" },
+        { n: "語18", q: "四字熟語の（　）に入る漢字2字を答えよ。「一石（　）（　）」（一つのことで二つの利益を得ること）", a: "二鳥", accept: ["二鳥", "にちょう"], ex: "「一石二鳥」は、石を投げて二羽の鳥を一度に仕留めることから生まれた言葉です。" },
+        { n: "語19", q: "慣用句の（　）に入る漢字1字を答えよ。「（　）から火が出る」（とても恥ずかしい）", a: "顔", accept: ["顔", "かお"], ex: "「顔から火が出る」は、恥ずかしくて顔が真っ赤になる様子です。" },
+        { n: "語20", q: "ことわざの（　）に入る言葉を答えよ。「（　）も積もれば山となる」（小さなものでも積もれば大きくなる）", a: "塵", accept: ["塵", "ちり"], ex: "「塵も積もれば山となる」は、小さな努力の積み重ねの大切さを説くことわざです。" }
+      ];
+
+      /* ===== 国語・文法 =====
+         品詞の識別、敬語、文節と文の成分。選択式（statement形式）中心。 */
+      var KOKUGO_GRAMMAR = [
+        { n: "文1", type: "statement", q: "次の文の「美しい」の品詞として正しいものを選べ。「空が美しい。」", a: "ア 形容詞", correct: "ア", choices: [{ key: "ア", label: "形容詞" }, { key: "イ", label: "形容動詞" }, { key: "ウ", label: "副詞" }, { key: "エ", label: "連体詞" }], ex: "「美しい」は「い」で終わる言い切りの形が特徴の形容詞です。" },
+        { n: "文2", type: "statement", q: "次の文の「静かだ」の品詞として正しいものを選べ。「部屋が静かだ。」", a: "イ 形容動詞", correct: "イ", choices: [{ key: "ア", label: "形容詞" }, { key: "イ", label: "形容動詞" }, { key: "ウ", label: "動詞" }, { key: "エ", label: "副詞" }], ex: "「静かだ」は「だ」で言い切る形容動詞。「美しい」の形容詞と区別しましょう。" },
+        { n: "文3", type: "statement", q: "次の文の「飛ぶ」の品詞として正しいものを選べ。「鳥が空を飛ぶ。」", a: "ウ 動詞", correct: "ウ", choices: [{ key: "ア", label: "名詞" }, { key: "イ", label: "形容詞" }, { key: "ウ", label: "動詞" }, { key: "エ", label: "助動詞" }], ex: "「飛ぶ」は動作を表す動詞です。" },
+        { n: "文4", type: "statement", q: "次の文の「を」の品詞として正しいものを選べ。「本を読む。」", a: "エ 助詞", correct: "エ", choices: [{ key: "ア", label: "助動詞" }, { key: "イ", label: "副詞" }, { key: "ウ", label: "接続詞" }, { key: "エ", label: "助詞" }], ex: "「を」は格助詞。言葉と言葉の関係を示し、付属語の一つです。" },
+        { n: "文5", type: "statement", q: "次の文の「私」の品詞として正しいものを選べ。「私の本です。」", a: "ア 代名詞", correct: "ア", choices: [{ key: "ア", label: "代名詞" }, { key: "イ", label: "名詞" }, { key: "ウ", label: "連体詞" }, { key: "エ", label: "助詞" }], ex: "「私」は人称代名詞。名詞の仲間ですが、代名詞として区別します。" },
+        { n: "文6", type: "statement", q: "次の文の「この」の品詞として正しいものを選べ。「この本を読む。」", a: "イ 連体詞", correct: "イ", choices: [{ key: "ア", label: "副詞" }, { key: "イ", label: "連体詞" }, { key: "ウ", label: "助詞" }, { key: "エ", label: "形容詞" }], ex: "「この」は体言（名詞）だけを修飾する連体詞。活用しません。" },
+        { n: "文7", type: "statement", q: "次の文の「ああ」の品詞として正しいものを選べ。「ああ、きれいだ。」", a: "ウ 感動詞", correct: "ウ", choices: [{ key: "ア", label: "副詞" }, { key: "イ", label: "接続詞" }, { key: "ウ", label: "感動詞" }, { key: "エ", label: "助詞" }], ex: "「ああ」は感動を表す感動詞。単独で文節になることができます。" },
+        { n: "文8", type: "statement", q: "次の文の「ない」の品詞として正しいものを選べ。「山は動かない。」", a: "エ 助動詞", correct: "エ", choices: [{ key: "ア", label: "形容詞" }, { key: "イ", label: "動詞" }, { key: "ウ", label: "助詞" }, { key: "エ", label: "助動詞" }], ex: "「動かない」の「ない」は打ち消しの助動詞。「持っていない」の「ない」（形容詞）と区別しましょう。" },
+        { n: "文9", type: "statement", q: "次の文を文節に分けたものとして正しいものを選べ。「花が咲く。」", a: "ア 花が／咲く", correct: "ア", choices: [{ key: "ア", label: "花が／咲く" }, { key: "イ", label: "花／が咲く" }, { key: "ウ", label: "花が咲／く" }, { key: "エ", label: "花／が／咲く" }], ex: "文節は「…が」「…は」などを含む、意味の切れる単位。「ね」を入れて自然に切れるところが区切りです。" },
+        { n: "文10", type: "statement", q: "次の文の主語として正しいものを選べ。「鳥が空を飛ぶ。」", a: "イ 鳥が", correct: "イ", choices: [{ key: "ア", label: "空を" }, { key: "イ", label: "鳥が" }, { key: "ウ", label: "飛ぶ" }, { key: "エ", label: "空" }], ex: "主語は「何が」にあたる部分。述語「飛ぶ」に対して「鳥が」が主語です。" },
+        { n: "文11", type: "statement", q: "次の文の述語として正しいものを選べ。「弟は静かに本を読む。」", a: "ウ 読む", correct: "ウ", choices: [{ key: "ア", label: "弟は" }, { key: "イ", label: "静かに" }, { key: "ウ", label: "読む" }, { key: "エ", label: "本を" }], ex: "述語は「どうする・何だ・どんなだ」にあたる部分で、文の最後に来ることが多いです。" },
+        { n: "文12", type: "statement", q: "次の文で、用言「読む」を修飾している語（連用修飾語）として正しいものを選べ。「弟は静かに本を読む。」", a: "ア 静かに", correct: "ア", choices: [{ key: "ア", label: "静かに" }, { key: "イ", label: "弟は" }, { key: "ウ", label: "本を" }, { key: "エ", label: "弟" }], ex: "「静かに」は「読む」の様子を説明する連用修飾語です。" },
+        { n: "文13", type: "statement", q: "次の文の「おっしゃる」は何語か。「先生がおっしゃる。」", a: "イ 尊敬語", correct: "イ", choices: [{ key: "ア", label: "謙譲語" }, { key: "イ", label: "尊敬語" }, { key: "ウ", label: "丁寧語" }, { key: "エ", label: "美化語" }], ex: "「おっしゃる」は「言う」の尊敬語。相手（先生）の動作を高めています。" },
+        { n: "文14", type: "statement", q: "次の文の「参る」は何語か。「私が参ります。」", a: "ア 謙譲語", correct: "ア", choices: [{ key: "ア", label: "謙譲語" }, { key: "イ", label: "尊敬語" }, { key: "ウ", label: "丁寧語" }, { key: "エ", label: "美化語" }], ex: "「参る」は「行く・来る」の謙譲語。自分の動作をへりくだって言います。" },
+        { n: "文15", type: "statement", q: "次の文の「です」は何語か。「これは本です。」", a: "ウ 丁寧語", correct: "ウ", choices: [{ key: "ア", label: "尊敬語" }, { key: "イ", label: "謙譲語" }, { key: "ウ", label: "丁寧語" }, { key: "エ", label: "美化語" }], ex: "「です・ます」は丁寧語。聞き手に対して丁寧に述べる言葉です。" },
+        { n: "文16", type: "statement", q: "次の文の「ご覧になる」は何語か。「部長がご覧になる。」", a: "エ 尊敬語", correct: "エ", choices: [{ key: "ア", label: "謙譲語" }, { key: "イ", label: "丁寧語" }, { key: "ウ", label: "美化語" }, { key: "エ", label: "尊敬語" }], ex: "「ご覧になる」は「見る」の尊敬語。「拝見する」（謙譲語）と対で覚えましょう。" },
+        { n: "文17", type: "statement", q: "次の文の「いたす」は何語か。「私がいたします。」", a: "ア 謙譲語", correct: "ア", choices: [{ key: "ア", label: "謙譲語" }, { key: "イ", label: "尊敬語" }, { key: "ウ", label: "丁寧語" }, { key: "エ", label: "美化語" }], ex: "「いたす」は「する」の謙譲語です。" },
+        { n: "文18", type: "statement", q: "次の文の「召し上がる」は何語か。「どうぞ召し上がってください。」", a: "イ 尊敬語", correct: "イ", choices: [{ key: "ア", label: "謙譲語" }, { key: "イ", label: "尊敬語" }, { key: "ウ", label: "丁寧語" }, { key: "エ", label: "美化語" }], ex: "「召し上がる」は「食べる・飲む」の尊敬語です。" },
+        { n: "文19", type: "statement", q: "次の文で、体言「本」を修飾している部分（連体修飾語）として正しいものを選べ。「昨日買った本を読む。」", a: "ウ 昨日買った", correct: "ウ", choices: [{ key: "ア", label: "昨日" }, { key: "イ", label: "買った" }, { key: "ウ", label: "昨日買った" }, { key: "エ", label: "読む" }], ex: "「本」を修飾しているのは「昨日買った」という文節のまとまり全体です。" },
+        { n: "文20", type: "statement", q: "次の文の述語として正しいものを選べ。「水がとても冷たい。」", a: "エ 冷たい", correct: "エ", choices: [{ key: "ア", label: "水が" }, { key: "イ", label: "とても" }, { key: "ウ", label: "水" }, { key: "エ", label: "冷たい" }], ex: "「冷たい」は形容詞で、この文の述語です。「とても」は「冷たい」を修飾する連用修飾語。" }
+      ];
+
+      /* ===== 国語・古文単語 =====
+         頻出古語の現代語訳（キーワード判定で寛容に採点）と、係り結び・助動詞の基礎（選択式）。 */
+      var KOKUGO_KOBUN = [
+        { n: "古1", q: "次の古語の現代語訳を答えよ。「あはれ」", a: "深く心が動かされること・しみじみとした趣", kwAny: ["趣", "しみじみ", "感動", "心が動"], ex: "「あはれ」は、深く心に感じる情感のこと。古文で最も大切な言葉の一つです。" },
+        { n: "古2", q: "次の古語の現代語訳を答えよ。「をかし」", a: "明るく趣がある・おもしろい", kwAny: ["趣", "明るい", "おもしろい", "風情", "美しい"], ex: "「をかし」は明るい美しさや趣を表します。「あはれ」（しみじみ）との違いがよく問われます。" },
+        { n: "古3", q: "次の古語の現代語訳を答えよ。「いと」", a: "とても・非常に", accept: ["とても", "非常に", "たいへん", "大変"], ex: "「いと」は程度を強める副詞で「とても」の意味。現代語の「いと」と同じ読みで混乱しやすい語です。" },
+        { n: "古4", q: "次の古語の現代語訳を答えよ。「つとめて」", a: "早朝・翌朝", kwAny: ["早朝", "翌朝", "あさ"], ex: "「つとめて」は「翌朝・早朝」の意味。動詞の「つとめる」とは別物です。" },
+        { n: "古5", q: "次の古語の現代語訳を答えよ。「かたはらいたし」", a: "そばで見ていて恥ずかしい・きまりが悪い", kwAny: ["恥ずかし", "きまりが悪", "ばつが悪", "いたたまれ"], ex: "「かたはらいたし」は、そばで見ているこちらが恥ずかしくなる、という意味です。" },
+        { n: "古6", q: "次の古語の現代語訳を答えよ。「あさまし」", a: "驚きあきれる・思いがけない", kwAny: ["驚きあきれる", "驚き", "あきれる", "思いがけない"], ex: "「あさまし」は、驚いてあきれる様子。現代語の「浅ましい（卑しい）」とは意味が違います。" },
+        { n: "古7", q: "次の古語の現代語訳を答えよ。「うつくし」", a: "かわいい", kwAny: ["かわいい", "可愛い", "愛らしい"], ex: "「うつくし」は「かわいい」の意味。現代語の「美しい」とはニュアンスが違います。" },
+        { n: "古8", q: "次の古語の現代語訳を答えよ。「めでたし」", a: "すばらしい・立派だ", kwAny: ["すばらし", "立派", "りっぱ"], ex: "「めでたし」は「すばらしい」の意味。現代語の「おめでたい（慶事）」とは少し違います。" },
+        { n: "古9", q: "次の古語の現代語訳を答えよ。「おどろく」", a: "目を覚ます・はっと気づく", kwAny: ["目を覚ま", "目覚め", "目が覚め", "眠りから覚め"], ex: "古文の「おどろく」は「目を覚ます」の意味。現代語の「驚く」とは意味が違います。" },
+        { n: "古10", q: "次の古語の現代語訳を答えよ。「ありがたし」", a: "めったにない・珍しい", kwAny: ["めったにない", "珍し", "まれ", "滅多にない"], ex: "「ありがたし」は「有り難し（存在しにくい）」から「めったにない・珍しい」の意味です。" },
+        { n: "古11", q: "次の古語の現代語訳を答えよ。「あやし」", a: "不思議だ・変だ（身分が低い、の意味もある）", kwAny: ["不思議", "変だ", "怪し", "身分が低い"], ex: "「あやし」は「不思議だ・変だ」のほか、「身分が低い」という意味もあります。文脈で判断しましょう。" },
+        { n: "古12", q: "次の古語の現代語訳を答えよ。「げに」", a: "本当に・実に", accept: ["本当に", "まことに", "実に", "本当"], ex: "「げに」は「本当に・なるほど」の意味です。" },
+        { n: "古13", q: "次の古語の現代語訳を答えよ。「やがて」", a: "そのまま・まもなく", accept: ["そのまま", "まもなく", "すぐに", "間もなく"], ex: "古文の「やがて」は「そのまま・すぐに」の意味。「やがて（いずれ）」だけではない点に注意。" },
+        { n: "古14", q: "次の古語の現代語訳を答えよ。「いみじ」", a: "とても（すばらしい・ひどい）", kwAny: ["とても", "すばらし", "ひど", "はなはだし", "非常"], ex: "「いみじ」は程度がはなはだしいこと。良い意味にも悪い意味にも使われます。" },
+        { n: "古15", q: "次の古語の現代語訳を答えよ。「こころもとなし」", a: "不安だ・待ち遠しい", kwAny: ["不安", "心配", "待ち遠し", "じれった"], ex: "「こころもとなし」は、心が定まらず不安な様子や、待ち遠しい様子を表します。" },
+        { n: "古16", q: "次の古語の現代語訳を答えよ。「ゆかし」", a: "見たい・知りたい（心がひかれる）", kwAny: ["見たい", "知りたい", "心がひかれ", "興味", "見たく"], ex: "「ゆかし」は、何かに心がひかれて「見たい・知りたい」という意味です。" },
+        { n: "古17", q: "次の古語の現代語訳を答えよ。「いたづらなり」", a: "むだだ・役に立たない", kwAny: ["むだ", "無駄", "役に立た", "つまらな"], ex: "「いたづらなり」は「むだだ・役に立たない」という意味。現代語の「いたずら（悪戯）」とは違います。" },
+        { n: "古18", type: "statement", q: "係り結びの決まりについて、「なむ」が係助詞として使われるとき、結びの語はどの活用形になるか。", a: "イ 連体形", correct: "イ", choices: [{ key: "ア", label: "終止形" }, { key: "イ", label: "連体形" }, { key: "ウ", label: "已然形" }, { key: "エ", label: "命令形" }], ex: "「ぞ・なむ・や・か」は結びが連体形、「こそ」は結びが已然形になります。" },
+        { n: "古19", type: "statement", q: "係り結びの決まりについて、「こそ」が係助詞として使われるとき、結びの語はどの活用形になるか。", a: "ウ 已然形", correct: "ウ", choices: [{ key: "ア", label: "終止形" }, { key: "イ", label: "連体形" }, { key: "ウ", label: "已然形" }, { key: "エ", label: "未然形" }], ex: "「こそ」の結びは已然形。係り結びの中でも特に決まりが独立しているので、よく問われます。" },
+        { n: "古20", type: "statement", q: "「いとあはれなり。」の「なり」は何の助動詞か。", a: "ア 断定", correct: "ア", choices: [{ key: "ア", label: "断定" }, { key: "イ", label: "推量" }, { key: "ウ", label: "過去" }, { key: "エ", label: "完了" }], ex: "体言に付く「なり」は断定の助動詞です（「…である」の意味）。" }
+      ];
+
+      /* ===== 数学・計算の基礎 =====
+         正負の数、文字式、式の計算、平方根。数値判定（numeric）を中心に、
+         マイナスの答えは式判定（formula）で符号まで正確に照合する。 */
+      var MATH_HINT_NUM = "数字で答えてください。";
+      var MATH_HINT_MINUS = "数字で答えてください。マイナスの答えは「-5」のように書いてください。";
+      var MATH_HINT_PAIR = "答えは2つあります。1つずつ別の欄に書いてください。どちらの欄に書いても大丈夫です。マイナスは「-」で書いてください。";
+      var MATH_HINT_FRAC = "分数で答えてください。「1/6」のように書いても、「6分の1」と書いてもOKです。";
+      var MATH_HINT_ROOT = "「3√2」のように書いてOKです。「3ルート2」でも正解になります。";
+      var MATH_CALC = [
+        { n: "数計1", q: "(-5) + 8 を計算せよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "符号の違う2数の和は、絶対値の大きい方から小さい方を引いて、大きい方の符号を付けます。8 - 5 = 3 で符号は + です。" },
+        { n: "数計2", q: "(-7) - (-2) を計算せよ。", a: "-5", formula: true, accept: ["-5"], hintText: MATH_HINT_MINUS, ex: "マイナスの数を引くことは、プラスの数を足すことと同じです。(-7) + 2 = -5。" },
+        { n: "数計3", q: "(-3) × (-4) を計算せよ。", a: "12", numeric: 12, hintText: MATH_HINT_NUM, ex: "マイナス同士のかけ算はプラスになります。3 × 4 = 12。" },
+        { n: "数計4", q: "(-12) ÷ 3 を計算せよ。", a: "-4", formula: true, accept: ["-4"], hintText: MATH_HINT_MINUS, ex: "符号の違う2数の商はマイナスです。12 ÷ 3 = 4 で、符号は - になります。" },
+        { n: "数計5", q: "(-2)³ を計算せよ。", a: "-8", formula: true, accept: ["-8"], hintText: MATH_HINT_MINUS, ex: "(-2)³ = (-2) × (-2) × (-2) = -8。マイナスの累乗は、指数が奇数ならマイナス、偶数ならプラスです。" },
+        { n: "数計6", q: "5 + (-3) × 2 を計算せよ。", a: "-1", formula: true, accept: ["-1"], hintText: MATH_HINT_MINUS, ex: "かけ算を先に計算します。(-3) × 2 = -6 なので、5 + (-6) = -1。" },
+        { n: "数計7", q: "3x + 5x を計算すると □x になる。□に入る数を答えよ。", a: "8", numeric: 8, hintText: MATH_HINT_NUM, ex: "同じ文字の項は係数どうしを足します。3 + 5 = 8。" },
+        { n: "数計8", q: "5a - 3a は □a と表せる。□に入る数を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "係数どうしを引きます。5 - 3 = 2。" },
+        { n: "数計9", q: "2(x + 4) を展開した式の定数項を答えよ。", a: "8", numeric: 8, hintText: MATH_HINT_NUM, ex: "2(x + 4) = 2x + 8。文字を含まない定数項は 8 です。" },
+        { n: "数計10", q: "3a × 2 を計算すると □a になる。□に入る数を答えよ。", a: "6", numeric: 6, hintText: MATH_HINT_NUM, ex: "数字どうしを先に掛けます。3 × 2 = 6。" },
+        { n: "数計11", q: "2x + 3y - (x - 2y) を計算すると x + □y になる。□に入る数を答えよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "かっこを外すと 2x + 3y - x + 2y。y の係数は 3 + 2 = 5。かっこの前のマイナスに注意。" },
+        { n: "数計12", q: "x = 3 のとき、2x² の値を求めよ。", a: "18", numeric: 18, hintText: MATH_HINT_NUM, ex: "x² = 9 なので、2 × 9 = 18。累乗を先に計算します。" },
+        { n: "数計13", q: "x = -2 のとき、x² + 1 の値を求めよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "(-2)² = 4 なので、4 + 1 = 5。マイナスの2乗はプラスです。" },
+        { n: "数計14", q: "√16 の値を求めよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "√16 は、2乗すると16になる正の数、つまり 4 です。" },
+        { n: "数計15", q: "√3 × √6 を計算せよ。", a: "3√2", accept: ["3√2", "3ルート2"], hintText: MATH_HINT_ROOT, ex: "√3 × √6 = √18。18 = 9 × 2 なので、√18 = 3√2 と簡単にできます。" },
+        { n: "数計16", q: "√50 を a√b の形に直すとき、a の値を答えよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "50 = 25 × 2 なので、√50 = 5√2。よって a = 5。" },
+        { n: "数計17", q: "√27 - √3 を計算すると □√3 になる。□に入る数を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "√27 = 3√3 なので、3√3 - √3 = 2√3。√の中が同じ数のときは、係数どうしで計算できます。" },
+        { n: "数計18", q: "(√5)² の値を求めよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "(√a)² = a です。よって (√5)² = 5。" },
+        { n: "数計19", q: "5/√5 の分母を有理化せよ。", a: "√5", accept: ["√5", "ルート5"], hintText: MATH_HINT_ROOT, ex: "分母と分子に √5 を掛けると、5√5 / 5 = √5 になります。" },
+        { n: "数計20", q: "√2 × √8 を計算せよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "√2 × √8 = √16 = 4。√の中で掛けてから簡単にすると速いです。" }
+      ];
+
+      /* ===== 数学・方程式 =====
+         一次方程式は数値・式判定、連立方程式と二次方程式の2つの解はペア入力
+         （pairFormula で符号まで完全一致で照合）。 */
+      var MATH_EQ = [
+        { n: "数方1", q: "方程式 x + 7 = 12 の解を求めよ。", a: "x = 5", numeric: 5, hintText: MATH_HINT_NUM, ex: "7 を右辺に移項すると x = 12 - 7 = 5。" },
+        { n: "数方2", q: "方程式 3x = 21 の解を求めよ。", a: "x = 7", numeric: 7, hintText: MATH_HINT_NUM, ex: "両辺を 3 で割ると x = 7。" },
+        { n: "数方3", q: "方程式 2x + 5 = 13 の解を求めよ。", a: "x = 4", numeric: 4, hintText: MATH_HINT_NUM, ex: "2x = 13 - 5 = 8。両辺を 2 で割って x = 4。" },
+        { n: "数方4", q: "方程式 5x - 3 = 2x + 9 の解を求めよ。", a: "x = 4", numeric: 4, hintText: MATH_HINT_NUM, ex: "文字の項を左辺、数字を右辺に集めると 3x = 12。よって x = 4。" },
+        { n: "数方5", q: "方程式 x/2 + 1 = 5 の解を求めよ。", a: "x = 8", numeric: 8, hintText: MATH_HINT_NUM, ex: "x/2 = 4。両辺を 2 倍して x = 8。" },
+        { n: "数方6", q: "方程式 4(x - 2) = 12 の解を求めよ。", a: "x = 5", numeric: 5, hintText: MATH_HINT_NUM, ex: "両辺を 4 で割ると x - 2 = 3。よって x = 5。" },
+        { n: "数方7", q: "方程式 -2x = 10 の解を求めよ。", a: "x = -5", formula: true, accept: ["-5"], hintText: MATH_HINT_MINUS, ex: "両辺を -2 で割ると x = -5。マイナスで割ると符号が変わります。" },
+        { n: "数方8", q: "方程式 3x - 7 = x + 5 の解を求めよ。", a: "x = 6", numeric: 6, hintText: MATH_HINT_NUM, ex: "2x = 12 となるので x = 6。" },
+        { n: "数方9", q: "連立方程式 x + y = 5、x - y = 1 の解 x、y を答えよ。", a: "x=3・y=2", pair: [["3"], ["2"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "2式を足すと 2x = 6 となり x = 3。これを代入して y = 2。" },
+        { n: "数方10", q: "連立方程式 x + y = 7、2x - y = 2 の解 x、y を答えよ。", a: "x=3・y=4", pair: [["3"], ["4"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "2式を足すと 3x = 9 となり x = 3。これを代入して y = 4。" },
+        { n: "数方11", q: "連立方程式 3x + 2y = 12、x + y = 5 の解 x、y を答えよ。", a: "x=2・y=3", pair: [["2"], ["3"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "2番目の式を2倍して引くと x = 2。これを代入して y = 3。" },
+        { n: "数方12", q: "連立方程式 y = 2x、x + y = 9 の解 x、y を答えよ。", a: "x=3・y=6", pair: [["3"], ["6"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "y = 2x を代入すると x + 2x = 9 で x = 3。よって y = 6（代入法）。" },
+        { n: "数方13", q: "二次方程式 x² = 16 の解のうち、正の数を答えよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "x² = 16 の解は x = ±4。そのうち正の数は 4 です。" },
+        { n: "数方14", q: "二次方程式 (x - 3)(x + 2) = 0 の解を2つ答えよ。", a: "-2・3", pair: [["-2"], ["3"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "積が0になるのは、x - 3 = 0 または x + 2 = 0 のとき。解は x = 3 と x = -2 です。" },
+        { n: "数方15", q: "二次方程式 x² - 5x + 6 = 0 の解を2つ答えよ。", a: "2・3", pair: [["2"], ["3"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "左辺を因数分解すると (x - 2)(x - 3) = 0。解は x = 2 と x = 3 です。" },
+        { n: "数方16", q: "二次方程式 x² + 4x + 4 = 0 の解を求めよ。", a: "x = -2", formula: true, accept: ["-2"], hintText: MATH_HINT_MINUS, ex: "左辺は (x + 2)² と因数分解できます。解は x = -2 の1つだけ（重解）です。" }
+      ];
+
+      /* ===== 数学・展開と因数分解 =====
+         展開は係数・定数項を答える形式、因数分解は係数 a、b を答える形式にする。 */
+      var MATH_EXPAND = [
+        { n: "数展1", q: "(x + 2)(x + 3) を展開した式で、x の係数を答えよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "展開すると x² + 5x + 6。x の係数は 2 + 3 = 5 です。" },
+        { n: "数展2", q: "(x + 4)² を展開した式の定数項を答えよ。", a: "16", numeric: 16, hintText: MATH_HINT_NUM, ex: "(x + 4)² = x² + 8x + 16。定数項は 4² = 16。" },
+        { n: "数展3", q: "(x - 5)(x + 5) を展開すると x² - □ になる。□に入る数を答えよ。", a: "25", numeric: 25, hintText: MATH_HINT_NUM, ex: "(a - b)(a + b) = a² - b² の公式を使います。5² = 25。" },
+        { n: "数展4", q: "(2x + 1)(x + 3) を展開した式で、x の係数を答えよ。", a: "7", numeric: 7, hintText: MATH_HINT_NUM, ex: "x の項は 2x × 3 と 1 × x の和で、6x + x = 7x。係数は 7。" },
+        { n: "数展5", q: "(x + 6)² を展開した式で、x の係数を答えよ。", a: "12", numeric: 12, hintText: MATH_HINT_NUM, ex: "(x + a)² の x の係数は 2a。2 × 6 = 12。" },
+        { n: "数展6", q: "x = 49 のとき、x² + 2x + 1 の値を求めよ。（(x + 1)² と変形すると速く計算できる）", a: "2500", numeric: 2500, hintText: MATH_HINT_NUM, ex: "x² + 2x + 1 = (x + 1)² なので、(49 + 1)² = 50² = 2500。そのまま代入するより速く正確です。" },
+        { n: "数展7", q: "x = 3、y = -1 のとき、x² - xy の値を求めよ。", a: "12", numeric: 12, hintText: MATH_HINT_NUM, ex: "代入すると 9 - 3 × (-1) = 9 + 3 = 12。符号に注意。" },
+        { n: "数展8", q: "x² + 5x + 6 を因数分解すると (x + a)(x + b)（a < b）になる。a と b を答えよ。", a: "2・3", pair: [["2"], ["3"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "足して 5、掛けて 6 になる2数は 2 と 3 です。" },
+        { n: "数展9", q: "x² - 7x + 12 を因数分解すると (x - a)(x - b)（a < b）になる。a と b を答えよ。", a: "3・4", pair: [["3"], ["4"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "足して 7、掛けて 12 になる2数は 3 と 4。真ん中の符号がマイナスなので、かっこの中は両方とも引き算です。" },
+        { n: "数展10", q: "x² - 9 を因数分解すると (x + 3)(x - □) になる。□に入る数を答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "a² - b² = (a + b)(a - b) の公式。9 = 3² なので □ = 3。" },
+        { n: "数展11", q: "x² - 16 = (x + a)(x - a) と因数分解できる。a を答えよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "16 = 4² なので a = 4。" },
+        { n: "数展12", q: "x² + 6x + 9 = (x + a)² と因数分解できる。a を答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "x² + 2ax + a² の形。2a = 6、a² = 9 なので a = 3。" },
+        { n: "数展13", q: "2x² + 4x を因数分解すると 2x(x + a) になる。a を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "共通因数 2x をくくり出します。4x ÷ 2x = 2 なので a = 2。" },
+        { n: "数展14", q: "x² - 2x - 8 を因数分解すると (x + a)(x - b) になる。a と b を答えよ。", a: "a=2・b=4", pair: [["2"], ["4"]], pairFormula: [true, true], hintText: MATH_HINT_PAIR, ex: "掛けて -8、足して -2 になる2数は 2 と -4。よって (x + 2)(x - 4) となり、a = 2、b = 4。" },
+        { n: "数展15", q: "(x + a)(x + 2) を展開すると x² + 5x + 6 になる。a を答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "x の係数は a + 2 = 5 なので、a = 3。定数項 2a = 6 でも確かめられます。" },
+        { n: "数展16", q: "6x² - 3x を因数分解すると 3x(2x - □) になる。□に入る数を答えよ。", a: "1", numeric: 1, hintText: MATH_HINT_NUM, ex: "共通因数 3x をくくり出すと、残りは 2x - 1。よって □ = 1。" }
+      ];
+
+      /* ===== 数学・関数 =====
+         傾き・切片・変化の割合・関数の値など、数値で答えられるものだけ。 */
+      var MATH_FUNC = [
+        { n: "数関1", q: "一次関数 y = 3x + 2 の傾きを答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "y = ax + b の a が傾きです。" },
+        { n: "数関2", q: "一次関数 y = -2x + 5 の切片を答えよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "y = ax + b の b が切片（x = 0 のときの y の値）です。" },
+        { n: "数関3", q: "比例 y = ax のグラフが点 (2, 6) を通るとき、a の値を答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "x = 2、y = 6 を代入すると 6 = 2a。よって a = 3。" },
+        { n: "数関4", q: "2点 (0, 1)、(2, 7) を通る一次関数の傾きを答えよ。", a: "3", numeric: 3, hintText: MATH_HINT_NUM, ex: "傾きは (y の増加量) ÷ (x の増加量) = (7 - 1) ÷ (2 - 0) = 3。" },
+        { n: "数関5", q: "ある一次関数で、x が 1 から 3 まで増加すると、y は 3 から 7 まで増加した。変化の割合を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "変化の割合 = (y の増加量) ÷ (x の増加量) = 4 ÷ 2 = 2。" },
+        { n: "数関6", q: "y = 2x² について、x = 3 のときの y の値を答えよ。", a: "18", numeric: 18, hintText: MATH_HINT_NUM, ex: "x = 3 を代入すると 2 × 9 = 18。" },
+        { n: "数関7", q: "y = -x² について、x = -4 のときの y の値を答えよ。", a: "-16", formula: true, accept: ["-16"], hintText: MATH_HINT_MINUS, ex: "(-4)² = 16 なので、y = -16。マイナスは x² の外に付いています。" },
+        { n: "数関8", q: "y = ax² のグラフが点 (2, 8) を通るとき、a の値を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "x = 2、y = 8 を代入すると 8 = 4a。よって a = 2。" },
+        { n: "数関9", q: "y = 5x - 3 について、x = 4 のときの y の値を答えよ。", a: "17", numeric: 17, hintText: MATH_HINT_NUM, ex: "5 × 4 - 3 = 17。" },
+        { n: "数関10", q: "反比例 y = 12/x について、x = 3 のときの y の値を答えよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "12 ÷ 3 = 4。反比例は x と y の積が一定です。" },
+        { n: "数関11", q: "直線 y = -3x + b が点 (1, 2) を通るとき、b の値を答えよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "代入すると 2 = -3 + b。よって b = 5。" },
+        { n: "数関12", q: "一次関数のグラフは、x = 0 のとき y = -2、x = 2 のとき y = 2 である。この関数の傾きを答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "傾き = (y の増加量) ÷ (x の増加量) = (2 - (-2)) ÷ 2 = 2。グラフの2点の値から読み取る問題です。" },
+        { n: "数関13", q: "y = x² について、x = -3 のときの y の値を答えよ。", a: "9", numeric: 9, hintText: MATH_HINT_NUM, ex: "(-3)² = 9。マイナスの2乗はプラスです。" },
+        { n: "数関14", q: "y = 2x について、-1 ≦ x ≦ 3 のとき、y の最大値を答えよ。", a: "6", numeric: 6, hintText: MATH_HINT_NUM, ex: "y = 2x は x が大きいほど y も大きいので、最大値は x = 3 のとき 6。" },
+        { n: "数関15", q: "y = x² について、x が 1 から 3 まで増加するときの変化の割合を答えよ。", a: "4", numeric: 4, hintText: MATH_HINT_NUM, ex: "y は 1 から 9 まで増加。変化の割合 = (9 - 1) ÷ (3 - 1) = 4。二次関数の変化の割合は区間で変わります。" },
+        { n: "数関16", q: "2直線 y = x + 1 と y = -x + 5 の交点の x 座標を答えよ。", a: "2", numeric: 2, hintText: MATH_HINT_NUM, ex: "交点では y の値が等しいので x + 1 = -x + 5。解くと x = 2。" }
+      ];
+
+      /* ===== 数学・確率と資料 =====
+         確率は分数の入力、資料は中央値・最頻値・平均値・四分位範囲・相対度数。
+         箱ひげ図とヒストグラムは数値で読み取る形式。 */
+      var MATH_PROB = [
+        { n: "数確1", q: "1個のサイコロを投げるとき、3 の目が出る確率を求めよ。", a: "1/6", accept: ["1/6", "6分の1"], hintText: MATH_HINT_FRAC, ex: "サイコロの目は6通りで、3 の目は1通り。確率は 1/6 です。" },
+        { n: "数確2", q: "1個のサイコロを投げるとき、偶数の目が出る確率を求めよ。", a: "1/2", accept: ["1/2", "2分の1", "3/6"], hintText: MATH_HINT_FRAC, ex: "偶数の目は 2、4、6 の3通り。3/6 を約分して 1/2 です。" },
+        { n: "数確3", q: "硬貨を2枚同時に投げるとき、2枚とも表が出る確率を求めよ。", a: "1/4", accept: ["1/4", "4分の1"], hintText: MATH_HINT_FRAC, ex: "出方は（表・表）（表・裏）（裏・表）（裏・裏）の4通りで、2枚とも表は1通り。よって 1/4。" },
+        { n: "数確4", q: "赤玉3個、白玉2個が入った袋から玉を1個取り出すとき、赤玉が出る確率を求めよ。", a: "3/5", accept: ["3/5", "5分の3"], hintText: MATH_HINT_FRAC, ex: "玉は全部で5個、そのうち赤玉は3個。確率は 3/5 です。" },
+        { n: "数確5", q: "2個のサイコロを同時に投げるとき、出る目の和が 7 になる確率を求めよ。", a: "1/6", accept: ["1/6", "6分の1", "6/36"], hintText: MATH_HINT_FRAC, ex: "出方は全部で36通り。和が7になるのは (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) の6通り。6/36 = 1/6。" },
+        { n: "数確6", q: "10本のうち当たりが3本のくじを1本引くとき、当たる確率を求めよ。", a: "3/10", accept: ["3/10", "10分の3"], hintText: MATH_HINT_FRAC, ex: "くじは全部で10本、当たりは3本。確率は 3/10 です。" },
+        { n: "数確7", q: "52枚のトランプから1枚引くとき、ハートのカードが出る確率を求めよ。", a: "1/4", accept: ["1/4", "4分の1", "13/52"], hintText: MATH_HINT_FRAC, ex: "ハートは13枚。13/52 を約分して 1/4 です。" },
+        { n: "数確8", q: "1個のサイコロを投げるとき、5 以上の目が出る確率を求めよ。", a: "1/3", accept: ["1/3", "3分の1", "2/6"], hintText: MATH_HINT_FRAC, ex: "5 以上の目は 5 と 6 の2通り。2/6 を約分して 1/3 です。" },
+        { n: "数確9", q: "データ 3、5、7、9、11 の中央値を求めよ。", a: "7", numeric: 7, hintText: MATH_HINT_NUM, ex: "中央値は、データを順に並べたときの真ん中の値。5個のデータの真ん中は3番目の 7 です。" },
+        { n: "数確10", q: "データ 2、4、6、8 の中央値を求めよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "データが偶数個のときは、真ん中の2つの値 4 と 6 の平均が中央値。(4 + 6) ÷ 2 = 5。" },
+        { n: "数確11", q: "データ 5、7、7、8、7、9 の最頻値を求めよ。", a: "7", numeric: 7, hintText: MATH_HINT_NUM, ex: "最頻値は、最も多く現れる値。7 は3回現れるので最頻値は 7 です。" },
+        { n: "数確12", q: "データ 6、8、10、12 の平均値を求めよ。", a: "9", numeric: 9, hintText: MATH_HINT_NUM, ex: "合計は 36。36 ÷ 4 = 9。" },
+        { n: "数確13", q: "40人の中で、ある項目に当てはまる人が8人いた。この項目の相対度数を求めよ。", a: "0.2", numeric: 0.2, hintText: MATH_HINT_NUM, ex: "相対度数 = その度数 ÷ 度数の合計。8 ÷ 40 = 0.2。" },
+        { n: "数確14", q: "あるデータの第1四分位数は 5、第3四分位数は 14 である。四分位範囲を求めよ。", a: "9", numeric: 9, hintText: MATH_HINT_NUM, ex: "四分位範囲 = 第3四分位数 - 第1四分位数 = 14 - 5 = 9。箱ひげ図の箱の長さにあたります。" },
+        { n: "数確15", q: "生徒20人の通学時間のヒストグラムで、15分以上20分未満の階級の度数は 9 である。この階級の相対度数を求めよ。", a: "0.45", numeric: 0.45, hintText: MATH_HINT_NUM, ex: "相対度数 = 9 ÷ 20 = 0.45。ヒストグラムでは、一番背の高い階級が一番度数が大きい階級です。" },
+        { n: "数確16", q: "5回のテストの点数が 72、84、78、90、76 のとき、平均点を求めよ。", a: "80", numeric: 80, hintText: MATH_HINT_NUM, ex: "合計は 400 点。400 ÷ 5 = 80 点。" }
+      ];
+
+      /* ===== 数学・図形の計算 =====
+         角度・面積・体積・円周角と中心角・三平方の定理。証明は入れない。
+         円周率を使う問題は、□π の □ を答える形式にする。 */
+      var MATH_FIG = [
+        { n: "数図1", q: "三角形の2つの内角が 55° と 75° のとき、残りの内角の大きさを求めよ。", a: "50°", numeric: 50, hintText: MATH_HINT_NUM, ex: "三角形の内角の和は 180°。180 - 55 - 75 = 50°。" },
+        { n: "数図2", q: "五角形の内角の和を求めよ。", a: "540°", numeric: 540, hintText: MATH_HINT_NUM, ex: "n 角形の内角の和は 180° × (n - 2)。五角形は 180 × 3 = 540°。" },
+        { n: "数図3", q: "正六角形の1つの内角の大きさを求めよ。", a: "120°", numeric: 120, hintText: MATH_HINT_NUM, ex: "六角形の内角の和は 180 × 4 = 720°。正六角形は720 ÷ 6 = 120°。" },
+        { n: "数図4", q: "円で、中心角が 80° のとき、その弧に対する円周角の大きさを求めよ。", a: "40°", numeric: 40, hintText: MATH_HINT_NUM, ex: "円周角は中心角の半分。80 ÷ 2 = 40°。" },
+        { n: "数図5", q: "円で、円周角が 35° のとき、その弧に対する中心角の大きさを求めよ。", a: "70°", numeric: 70, hintText: MATH_HINT_NUM, ex: "中心角は円周角の2倍。35 × 2 = 70°。" },
+        { n: "数図6", q: "半径 5cm の円の円周の長さは □π cm である。□に入る数を答えよ。", a: "10", numeric: 10, hintText: MATH_HINT_NUM, ex: "円周 = 直径 × π = 10 × π。よって □ = 10。" },
+        { n: "数図7", q: "半径 4cm の円の面積は □π cm² である。□に入る数を答えよ。", a: "16", numeric: 16, hintText: MATH_HINT_NUM, ex: "円の面積 = 半径 × 半径 × π = 4 × 4 × π。よって □ = 16。" },
+        { n: "数図8", q: "底辺 8cm、高さ 5cm の三角形の面積を求めよ。", a: "20", numeric: 20, hintText: MATH_HINT_NUM, ex: "三角形の面積 = 底辺 × 高さ ÷ 2 = 8 × 5 ÷ 2 = 20 cm²。" },
+        { n: "数図9", q: "底辺 7cm、高さ 4cm の平行四辺形の面積を求めよ。", a: "28", numeric: 28, hintText: MATH_HINT_NUM, ex: "平行四辺形の面積 = 底辺 × 高さ = 7 × 4 = 28 cm²（2で割らない点に注意）。" },
+        { n: "数図10", q: "縦 3cm、横 4cm、高さ 5cm の直方体の体積を求めよ。", a: "60", numeric: 60, hintText: MATH_HINT_NUM, ex: "直方体の体積 = 縦 × 横 × 高さ = 3 × 4 × 5 = 60 cm³。" },
+        { n: "数図11", q: "底面の半径が 2cm、高さが 5cm の円柱の体積は □π cm³ である。□に入る数を答えよ。", a: "20", numeric: 20, hintText: MATH_HINT_NUM, ex: "円柱の体積 = 底面積 × 高さ = (2 × 2 × π) × 5 = 20π。よって □ = 20。" },
+        { n: "数図12", q: "直角三角形で、直角をはさむ2辺が 3cm と 4cm のとき、斜辺の長さを求めよ。", a: "5", numeric: 5, hintText: MATH_HINT_NUM, ex: "三平方の定理より、斜辺² = 3² + 4² = 25。よって斜辺は 5 cm。" },
+        { n: "数図13", q: "直角三角形で、斜辺が 10cm、1辺が 6cm のとき、もう1辺の長さを求めよ。", a: "8", numeric: 8, hintText: MATH_HINT_NUM, ex: "もう1辺² = 10² - 6² = 64。よって 8 cm。3：4：5 の比の拡大形です。" },
+        { n: "数図14", q: "直角をはさむ2辺が 5cm と 12cm の直角三角形の斜辺の長さを求めよ。", a: "13", numeric: 13, hintText: MATH_HINT_NUM, ex: "斜辺² = 5² + 12² = 169。よって斜辺は 13 cm。5：12：13 の組み合わせは入試頻出です。" },
+        { n: "数図15", q: "直線上の1点でできる2つの角のうち、一方が 115° のとき、もう一方の大きさを求めよ。", a: "65°", numeric: 65, hintText: MATH_HINT_NUM, ex: "直線は 180°。180 - 115 = 65°。" },
+        { n: "数図16", q: "半径 3cm の球の体積は □π cm³ である。□に入る数を答えよ。", a: "36", numeric: 36, hintText: MATH_HINT_NUM, ex: "球の体積 = (4/3) × π × 半径³ = (4/3) × π × 27 = 36π。よって □ = 36。" }
+      ];
+
+      /* ===== 英語・文法 =====
+         4択の穴埋め（statement形式）。時制・受動態・比較・不定詞と動名詞・
+         関係代名詞の基礎・接続詞など、高校入試の頻出文法。 */
+      var ENG_GRAMMAR = [
+        { n: "英文1", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI (　) to school every day.", a: "ア go", correct: "ア", choices: [{ key: "ア", label: "go" }, { key: "イ", label: "goes" }, { key: "ウ", label: "went" }, { key: "エ", label: "going" }], ex: "every day（毎日）があるので現在形。主語が I のときは動詞の原形 go を使います。" },
+        { n: "英文2", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nShe (　) English now.", a: "ウ is studying", correct: "ウ", choices: [{ key: "ア", label: "study" }, { key: "イ", label: "studies" }, { key: "ウ", label: "is studying" }, { key: "エ", label: "studied" }], ex: "now（今）があるので現在進行形。be動詞 + 〜ing で「今〜しているところ」です。" },
+        { n: "英文3", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis book (　) by many people.", a: "イ is read", correct: "イ", choices: [{ key: "ア", label: "reads" }, { key: "イ", label: "is read" }, { key: "ウ", label: "reading" }, { key: "エ", label: "to read" }], ex: "「多くの人に読まれている」という受動態。be動詞 + 過去分詞（read の過去分詞は read）で表します。" },
+        { n: "英文4", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe is (　) than me.", a: "エ taller", correct: "エ", choices: [{ key: "ア", label: "tall" }, { key: "イ", label: "tallest" }, { key: "ウ", label: "more tall" }, { key: "エ", label: "taller" }], ex: "than があるので比較級。tall の比較級は taller です。" },
+        { n: "英文5", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nI want (　) a doctor.", a: "ア to be", correct: "ア", choices: [{ key: "ア", label: "to be" }, { key: "イ", label: "be" }, { key: "ウ", label: "being" }, { key: "エ", label: "am" }], ex: "want to 〜 で「〜したい」。将来の夢は I want to be 〜. の形で表します。" },
+        { n: "英文6", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI enjoy (　) soccer.", a: "イ playing", correct: "イ", choices: [{ key: "ア", label: "play" }, { key: "イ", label: "playing" }, { key: "ウ", label: "to play" }, { key: "エ", label: "played" }], ex: "enjoy のあとは動名詞（〜ing）。enjoy 〜ing で「〜することを楽しむ」です。" },
+        { n: "英文7", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis is the book (　) I bought yesterday.", a: "ア which", correct: "ア", choices: [{ key: "ア", label: "which" }, { key: "イ", label: "who" }, { key: "ウ", label: "whose" }, { key: "エ", label: "where" }], ex: "先行詞が物（book）のときは関係代名詞 which（that でも可）。who は人のときに使います。" },
+        { n: "英文8", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI was tired, (　) I went to bed early.", a: "ウ so", correct: "ウ", choices: [{ key: "ア", label: "because" }, { key: "イ", label: "but" }, { key: "ウ", label: "so" }, { key: "エ", label: "if" }], ex: "「疲れていた、だから早く寝た」という結果のつながりなので so（だから）。" },
+        { n: "英文9", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nYou (　) run in the hallway.", a: "イ mustn't", correct: "イ", choices: [{ key: "ア", label: "can" }, { key: "イ", label: "mustn't" }, { key: "ウ", label: "may" }, { key: "エ", label: "will" }], ex: "「廊下を走ってはいけない」という禁止は mustn't（〜してはいけない）。don't have to（〜しなくてよい）と区別しましょう。" },
+        { n: "英文10", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nTom (　) in Fukuoka since 2020.", a: "エ has lived", correct: "エ", choices: [{ key: "ア", label: "lives" }, { key: "イ", label: "lived" }, { key: "ウ", label: "is living" }, { key: "エ", label: "has lived" }], ex: "since 2020（2020年からずっと）があるので現在完了の継続。has lived 〜 で「ずっと住んでいる」です。" },
+        { n: "英文11", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThe letter was (　) in English.", a: "ア written", correct: "ア", choices: [{ key: "ア", label: "written" }, { key: "イ", label: "wrote" }, { key: "ウ", label: "write" }, { key: "エ", label: "writing" }], ex: "受動態は be動詞 + 過去分詞。write の過去分詞は written です。" },
+        { n: "英文12", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nMt. Fuji is the (　) mountain in Japan.", a: "イ highest", correct: "イ", choices: [{ key: "ア", label: "high" }, { key: "イ", label: "highest" }, { key: "ウ", label: "higher" }, { key: "エ", label: "more high" }], ex: "the + 最上級。「日本で一番高い」は the highest です。" },
+        { n: "英文13", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nI don't know how (　) this machine.", a: "ウ to use", correct: "ウ", choices: [{ key: "ア", label: "use" }, { key: "イ", label: "using" }, { key: "ウ", label: "to use" }, { key: "エ", label: "used" }], ex: "how to 〜 で「〜のしかた」。I don't know how to use 〜. は入試頻出の形です。" },
+        { n: "英文14", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nLet's (　) soccer together.", a: "エ play", correct: "エ", choices: [{ key: "ア", label: "plays" }, { key: "イ", label: "played" }, { key: "ウ", label: "playing" }, { key: "エ", label: "play" }], ex: "Let's のあとは動詞の原形。「一緒に〜しましょう」です。" },
+        { n: "英文15", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nShe (　) her homework before dinner yesterday.", a: "ア finished", correct: "ア", choices: [{ key: "ア", label: "finished" }, { key: "イ", label: "finishes" }, { key: "ウ", label: "finish" }, { key: "エ", label: "finishing" }], ex: "yesterday（昨日）があるので過去形 finished です。" },
+        { n: "英文16", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThere (　) a park near my house.", a: "イ is", correct: "イ", choices: [{ key: "ア", label: "are" }, { key: "イ", label: "is" }, { key: "ウ", label: "am" }, { key: "エ", label: "be" }], ex: "There is 〜 のあとは単数の名詞（a park）が来るので is を使います。" },
+        { n: "英文17", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nEnglish is (　) in many countries.", a: "ウ spoken", correct: "ウ", choices: [{ key: "ア", label: "speak" }, { key: "イ", label: "speaks" }, { key: "ウ", label: "spoken" }, { key: "エ", label: "speaking" }], ex: "「英語は多くの国で話されている」という受動態。speak の過去分詞は spoken です。" },
+        { n: "英文18", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe ran (　) than anyone else.", a: "エ faster", correct: "エ", choices: [{ key: "ア", label: "fast" }, { key: "イ", label: "fastest" }, { key: "ウ", label: "more fast" }, { key: "エ", label: "faster" }], ex: "than があるので比較級。fast の比較級は faster です。" },
+        { n: "英文19", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI have a friend (　) lives in Canada.", a: "ア who", correct: "ア", choices: [{ key: "ア", label: "who" }, { key: "イ", label: "which" }, { key: "ウ", label: "whose" }, { key: "エ", label: "where" }], ex: "先行詞が人（friend）で、主格の関係代名詞は who です。" },
+        { n: "英文20", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis cake was made (　) my mother.", a: "イ by", correct: "イ", choices: [{ key: "ア", label: "of" }, { key: "イ", label: "by" }, { key: "ウ", label: "from" }, { key: "エ", label: "at" }], ex: "受動態で動作主を示すときは by。「母によって作られた」となります。" }
+      ];
+
+      /* ===== 英語・単語と熟語 =====
+         前半は意味から英語を入力する形式、後半は意味を選ぶ4択。高校入試頻出の単語・熟語。 */
+      var ENG_HINT_WORD = "英語で入力してください（大文字・小文字はどちらでも大丈夫です）。";
+      var ENG_WORDS = [
+        { n: "英単1", q: "次の日本語を英語で書け。「図書館」", a: "library", accept: ["library"], hintText: ENG_HINT_WORD, ex: "library は「図書館」。book の借りる場所です。" },
+        { n: "英単2", q: "次の日本語を英語で書け。「有名な」", a: "famous", accept: ["famous"], hintText: ENG_HINT_WORD, ex: "famous は「有名な」。be famous for 〜 で「〜で有名だ」となります。" },
+        { n: "英単3", q: "次の日本語を英語で書け。「環境」", a: "environment", accept: ["environment"], hintText: ENG_HINT_WORD, ex: "environment は「環境」。つづりが長いので、en-vi-ron-ment と区切って覚えましょう。" },
+        { n: "英単4", q: "次の日本語を英語で書け。「将来」", a: "future", accept: ["future"], hintText: ENG_HINT_WORD, ex: "future は「将来・未来」。in the future で「将来は」となります。" },
+        { n: "英単5", q: "次の日本語を英語で書け。「経験」", a: "experience", accept: ["experience"], hintText: ENG_HINT_WORD, ex: "experience は「経験」。動詞では「経験する」という意味にもなります。" },
+        { n: "英単6", q: "次の日本語を英語で書け。「重要な・大切な」", a: "important", accept: ["important"], hintText: ENG_HINT_WORD, ex: "important は入試最頻出の形容詞の一つ。「大切な・重要な」という意味です。" },
+        { n: "英単7", q: "次の日本語を英語で書け。「旅行」", a: "trip", accept: ["trip", "travel", "journey"], hintText: ENG_HINT_WORD, ex: "trip は短い旅行、travel は旅行全般を指す言葉です。どちらも正解です。" },
+        { n: "英単8", q: "次の日本語を英語で書け。「文化」", a: "culture", accept: ["culture"], hintText: ENG_HINT_WORD, ex: "culture は「文化」。Japanese culture で「日本の文化」です。" },
+        { n: "英単9", q: "次の日本語を英語で書け。「危険な」", a: "dangerous", accept: ["dangerous"], hintText: ENG_HINT_WORD, ex: "dangerous は「危険な」。名詞の danger（危険）からできた形容詞です。" },
+        { n: "英単10", q: "次の日本語を英語で書け。「健康な」", a: "healthy", accept: ["healthy"], hintText: ENG_HINT_WORD, ex: "healthy は「健康な」。名詞は health（健康）です。" },
+        { n: "英単11", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be good at 〜』", a: "イ 〜が得意である", correct: "イ", choices: [{ key: "ア", label: "〜が好きである" }, { key: "イ", label: "〜が得意である" }, { key: "ウ", label: "〜で有名である" }, { key: "エ", label: "〜に興味がある" }], ex: "be good at 〜 は「〜が得意だ」。反対は be poor at 〜（〜が苦手だ）です。" },
+        { n: "英単12", type: "statement", q: "次の熟語の意味として正しいものを選べ。『look forward to 〜』", a: "ウ 〜を楽しみに待つ", correct: "ウ", choices: [{ key: "ア", label: "〜を前方に見る" }, { key: "イ", label: "〜を探す" }, { key: "ウ", label: "〜を楽しみに待つ" }, { key: "エ", label: "〜をあきらめる" }], ex: "look forward to 〜 は「〜を楽しみに待つ」。to のあとには名詞か動名詞が来ます。" },
+        { n: "英単13", type: "statement", q: "次の単語の意味として正しいものを選べ。『arrive』", a: "ア 到着する", correct: "ア", choices: [{ key: "ア", label: "到着する" }, { key: "イ", label: "出発する" }, { key: "ウ", label: "到着した" }, { key: "エ", label: "案内する" }], ex: "arrive は「到着する」。arrive at the station で「駅に着く」です。" },
+        { n: "英単14", type: "statement", q: "次の単語の意味として正しいものを選べ。『decide』", a: "エ 決める・決心する", correct: "エ", choices: [{ key: "ア", label: "説明する" }, { key: "イ", label: "集める" }, { key: "ウ", label: "続ける" }, { key: "エ", label: "決める・決心する" }], ex: "decide は「決める」。decide to 〜 で「〜することに決める」となります。" },
+        { n: "英単15", type: "statement", q: "次の単語の意味として正しいものを選べ。『borrow』", a: "イ （人から）借りる", correct: "イ", choices: [{ key: "ア", label: "（人に）貸す" }, { key: "イ", label: "（人から）借りる" }, { key: "ウ", label: "買う" }, { key: "エ", label: "返す" }], ex: "borrow は「借りる」、lend は「貸す」。取り違えが入試でよく狙われます。" },
+        { n: "英単16", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be interested in 〜』", a: "ウ 〜に興味がある", correct: "ウ", choices: [{ key: "ア", label: "〜が得意である" }, { key: "イ", label: "〜で有名である" }, { key: "ウ", label: "〜に興味がある" }, { key: "エ", label: "〜を楽しみに待つ" }], ex: "be interested in 〜 は「〜に興味がある」。I am interested in music. のように使います。" },
+        { n: "英単17", type: "statement", q: "次の熟語の意味として正しいものを選べ。『take care of 〜』", a: "ア 〜の世話をする", correct: "ア", choices: [{ key: "ア", label: "〜の世話をする" }, { key: "イ", label: "〜に気をつける" }, { key: "ウ", label: "〜を持ち運ぶ" }, { key: "エ", label: "〜を取り除く" }], ex: "take care of 〜 は「〜の世話をする・面倒を見る」。単独の Take care. は「元気でね」というあいさつにもなります。" },
+        { n: "英単18", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be famous for 〜』", a: "エ 〜で有名である", correct: "エ", choices: [{ key: "ア", label: "〜に興味がある" }, { key: "イ", label: "〜が得意である" }, { key: "ウ", label: "〜を楽しみに待つ" }, { key: "エ", label: "〜で有名である" }], ex: "be famous for 〜 は「〜で有名だ」。This town is famous for its fish. のように使います。" },
+        { n: "英単19", type: "statement", q: "次の単語の意味として正しいものを選べ。『information』", a: "イ 情報", correct: "イ", choices: [{ key: "ア", label: "招待" }, { key: "イ", label: "情報" }, { key: "ウ", label: "紹介" }, { key: "エ", label: "発明" }], ex: "information は「情報」。a piece of information のように数えます。" },
+        { n: "英単20", type: "statement", q: "次の熟語の意味として正しいものを選べ。『each other』", a: "ウ お互いに", correct: "ウ", choices: [{ key: "ア", label: "それぞれ" }, { key: "イ", label: "もう一方" }, { key: "ウ", label: "お互いに" }, { key: "エ", label: "一緒に" }], ex: "each other は「お互いに」。We help each other. で「私たちは助け合います」となります。" }
+      ];
+
+      /* ===== 英語・整序 =====
+         既存の並べ替え形式（タップ順）。語句のまとまりを正しい順に並べる。 */
+      var ENG_ORDER = [
+        { n: "英序1", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は毎朝7時に起きます。", a: "I get up at seven every morning.", items: [{ key: "A", label: "every morning" }, { key: "B", label: "I" }, { key: "C", label: "at seven" }, { key: "D", label: "get up" }], correct: ["B", "D", "C", "A"], ex: "起きる時刻（at seven）のあとに、頻度（every morning）が来ます。" },
+        { n: "英序2", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n彼女はテニスをすることが好きです。", a: "She likes playing tennis.", items: [{ key: "A", label: "playing tennis" }, { key: "B", label: "She" }, { key: "C", label: "likes" }], correct: ["B", "C", "A"], ex: "like 〜ing で「〜することが好き」。She likes playing tennis. となります。" },
+        { n: "英序3", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこの本は彼によって書かれました。", a: "This book was written by him.", items: [{ key: "A", label: "was written" }, { key: "B", label: "by him" }, { key: "C", label: "This book" }], correct: ["C", "A", "B"], ex: "受動態は This book was written by 〜. の語順です。" },
+        { n: "英序4", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は京都を訪れたいです。", a: "I want to visit Kyoto.", items: [{ key: "A", label: "to visit Kyoto" }, { key: "B", label: "want" }, { key: "C", label: "I" }], correct: ["C", "B", "A"], ex: "want to 〜 で「〜したい」。I want to visit Kyoto. となります。" },
+        { n: "英序5", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n彼はトムより背が高いです。", a: "He is taller than Tom.", items: [{ key: "A", label: "than Tom" }, { key: "B", label: "is taller" }, { key: "C", label: "He" }], correct: ["C", "B", "A"], ex: "比較級の文は He is taller than 〜. の語順です。" },
+        { n: "英序6", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nあなたはこの歌を知っていますか。", a: "Do you know this song?", items: [{ key: "A", label: "this song?" }, { key: "B", label: "Do" }, { key: "C", label: "you know" }], correct: ["B", "C", "A"], ex: "疑問文は Do you 〜? で始めます。" },
+        { n: "英序7", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は3年間、福岡に住んでいます。", a: "I have lived in Fukuoka for three years.", items: [{ key: "A", label: "for three years" }, { key: "B", label: "in Fukuoka" }, { key: "C", label: "I" }, { key: "D", label: "have lived" }], correct: ["C", "D", "B", "A"], ex: "現在完了の継続は have lived。場所（in Fukuoka）のあとに期間（for three years）が来ます。" },
+        { n: "英序8", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n放課後、サッカーをしましょう。", a: "Let's play soccer after school.", items: [{ key: "A", label: "after school" }, { key: "B", label: "play soccer" }, { key: "C", label: "Let's" }], correct: ["C", "B", "A"], ex: "Let's 〜 after school. の語順。「放課後」は文末に置きます。" },
+        { n: "英序9", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n母は私にケーキを作ってくれました。", a: "My mother made me a cake.", items: [{ key: "A", label: "me a cake" }, { key: "B", label: "made" }, { key: "C", label: "My mother" }], correct: ["C", "B", "A"], ex: "make + 人 + 物 で「人に物を作ってあげる」。made me a cake となります。" },
+        { n: "英序10", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nその猫はテーブルの下で眠っています。", a: "The cat is sleeping under the table.", items: [{ key: "A", label: "is sleeping" }, { key: "B", label: "The cat" }, { key: "C", label: "under the table" }], correct: ["B", "A", "C"], ex: "現在進行形 is sleeping のあとに、場所を表す under the table が来ます。" },
+        { n: "英序11", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は泳ぎ方がわかりません。", a: "I don't know how to swim.", items: [{ key: "A", label: "how to swim" }, { key: "B", label: "don't know" }, { key: "C", label: "I" }], correct: ["C", "B", "A"], ex: "how to 〜 で「〜のしかた」。I don't know how to swim. となります。" },
+        { n: "英序12", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこれは私が昨日なくしたペンです。", a: "This is the pen I lost yesterday.", items: [{ key: "A", label: "the pen" }, { key: "B", label: "I lost yesterday" }, { key: "C", label: "This is" }], correct: ["C", "A", "B"], ex: "the pen のあとに I lost yesterday（私が昨日なくした）が続き、ペンを説明します。関係代名詞が省略された文です。" }
+      ];
+
+      /* ===== 英語・会話表現 =====
+         短い会話の応答を選ぶ4択（statement形式）。長文は入れない。 */
+      var ENG_CONV = [
+        { n: "英会1", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How are you?\nB: (　)", a: "ア I'm fine, thank you.", correct: "ア", choices: [{ key: "ア", label: "I'm fine, thank you." }, { key: "イ", label: "I'm a student." }, { key: "ウ", label: "It's sunny today." }, { key: "エ", label: "See you tomorrow." }], ex: "How are you?（元気？）への答えは I'm fine, thank you. が基本です。" },
+        { n: "英会2", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Thank you very much.\nB: (　)", a: "イ You're welcome.", correct: "イ", choices: [{ key: "ア", label: "I'm sorry." }, { key: "イ", label: "You're welcome." }, { key: "ウ", label: "That's right." }, { key: "エ", label: "Never mind." }], ex: "お礼への返事は You're welcome.（どういたしまして）。" },
+        { n: "英会3", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Would you like some tea?\nB: (　)", a: "ウ Yes, please.", correct: "ウ", choices: [{ key: "ア", label: "Yes, I do." }, { key: "イ", label: "No, I don't." }, { key: "ウ", label: "Yes, please." }, { key: "エ", label: "Yes, I am." }], ex: "Would you like 〜?（〜はいかがですか）への答えは Yes, please. / No, thank you. です。" },
+        { n: "英会4", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: (　)\nB: I have a headache.", a: "エ What's the matter?", correct: "エ", choices: [{ key: "ア", label: "How are you?" }, { key: "イ", label: "What's your name?" }, { key: "ウ", label: "How old are you?" }, { key: "エ", label: "What's the matter?" }], ex: "「頭が痛い」という答えを引き出す質問は What's the matter?（どうしたのですか）です。" },
+        { n: "英会5", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: May I help you?\nB: (　)", a: "ア I'm looking for a bag.", correct: "ア", choices: [{ key: "ア", label: "I'm looking for a bag." }, { key: "イ", label: "Yes, you may." }, { key: "ウ", label: "I can help you." }, { key: "エ", label: "Help me, please." }], ex: "店員の May I help you?（いらっしゃいませ）には、探している物を I'm looking for 〜. と答えます。" },
+        { n: "英会6", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How about going to the movies?\nB: (　)", a: "イ That sounds good.", correct: "イ", choices: [{ key: "ア", label: "You're welcome." }, { key: "イ", label: "That sounds good." }, { key: "ウ", label: "It is a movie." }, { key: "エ", label: "I went there." }], ex: "提案への賛成は That sounds good.（いいですね）。How about 〜? は「〜しませんか」です。" },
+        { n: "英会7", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: I'm sorry I'm late.\nB: (　)", a: "ウ That's all right.", correct: "ウ", choices: [{ key: "ア", label: "Thank you." }, { key: "イ", label: "Me, too." }, { key: "ウ", label: "That's all right." }, { key: "エ", label: "You are late." }], ex: "謝罪への返事は That's all right.（大丈夫です・気にしないで）。" },
+        { n: "英会8", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Can I use your pen?\nB: (　)", a: "エ Sure. Here you are.", correct: "エ", choices: [{ key: "ア", label: "Yes, I do." }, { key: "イ", label: "No, I'm not." }, { key: "ウ", label: "It's my pen." }, { key: "エ", label: "Sure. Here you are." }], ex: "許可を求める質問には Sure.（もちろん）と答え、物を渡すときは Here you are.（はい、どうぞ）と言います。" },
+        { n: "英会9", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Happy birthday!\nB: (　)", a: "ア Thank you.", correct: "ア", choices: [{ key: "ア", label: "Thank you." }, { key: "イ", label: "You're welcome." }, { key: "ウ", label: "Same to you." }, { key: "エ", label: "I'm happy." }], ex: "祝いの言葉には Thank you. と感謝で返します。" },
+        { n: "英会10", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How long does it take to the station?\nB: (　)", a: "イ About ten minutes.", correct: "イ", choices: [{ key: "ア", label: "About two kilometers." }, { key: "イ", label: "About ten minutes." }, { key: "ウ", label: "Ten o'clock." }, { key: "エ", label: "By bus." }], ex: "How long does it take? は所要時間を聞く表現。答えは時間（ten minutes）で返します。距離や時刻と取り違えないように。" },
+        { n: "英会11", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Whose bag is this?\nB: (　)", a: "ウ It's mine.", correct: "ウ", choices: [{ key: "ア", label: "It's a bag." }, { key: "イ", label: "This is a bag." }, { key: "ウ", label: "It's mine." }, { key: "エ", label: "I have a bag." }], ex: "Whose 〜?（だれの〜ですか）への答えは It's mine.（私のです）のように所有を答えます。" },
+        { n: "英会12", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Let's meet at the station at nine.\nB: (　)", a: "エ OK. See you then.", correct: "エ", choices: [{ key: "ア", label: "Yes, I am." }, { key: "イ", label: "No, I don't." }, { key: "ウ", label: "It's nine o'clock." }, { key: "エ", label: "OK. See you then." }], ex: "待ち合わせの提案には OK. と答え、See you then.（じゃあ、そのときに）で締めます。" }
+      ];
+
       /* ===== セット定義 ===== */
       function tagQ(list, tag) {
         return list.map(function (item) {
@@ -1768,7 +2311,22 @@
         { subject: "dataSocial", name: "社会 ・ 資料読み取り（記述）", desc: "資料をもとに、指定語句でまとめ文を完成させる6問。模範解答と比べて自己判定する", make: function () { return tagQ(DATA_SOCIAL_ESSAY, "資料読み取り 記述"); } },
         { subject: "science", name: "理科 ・ 資料読み取り", desc: "測定値・記録の表から読み取り・計算する16問", make: function () { return tagQ(DATA_SCIENCE_QA, "理科・資料読み取り"); } },
         { subject: "science", name: "理科 ・ 記述と実験考察", desc: "実験の考察と理由を文章で答える14問。模範解答と比べて自己判定する", make: function () { return tagQ(SCIENCE_ESSAY, "理科・記述実験"); } },
-        { subject: "science", name: "理科 ・ 実験の基礎", desc: "実験器具の使い方と手順の基本10問", make: function () { return tagQ(SCIENCE_LAB_QA, "理科・実験基礎"); } }
+        { subject: "science", name: "理科 ・ 実験の基礎", desc: "実験器具の使い方と手順の基本10問", make: function () { return tagQ(SCIENCE_LAB_QA, "理科・実験基礎"); } },
+        { subject: "kokugoKanji", name: "国語 ・ 漢字の読み", desc: "入試頻出の読みにくい漢字の読みをひらがなで答える", make: function () { return tagQ(KOKUGO_READ, "国語 漢字読み"); } },
+        { subject: "kokugoKanji", name: "国語 ・ 漢字の書き取り", desc: "文中のひらがな部分を漢字に直して答える", make: function () { return tagQ(KOKUGO_WRITE, "国語 漢字書き"); } },
+        { subject: "kokugoLang", name: "国語 ・ 語彙と慣用句", desc: "慣用句・ことわざ・四字熟語の意味と、類義語・対義語", make: function () { return tagQ(KOKUGO_VOCAB, "国語 語彙"); } },
+        { subject: "kokugoLang", name: "国語 ・ 文法", desc: "品詞の識別・敬語・文節と文の成分（選択式中心）", make: function () { return tagQ(KOKUGO_GRAMMAR, "国語 文法"); } },
+        { subject: "kokugoLang", name: "国語 ・ 古文単語", desc: "頻出古語の現代語訳と、係り結びなど古文の基礎", make: function () { return tagQ(KOKUGO_KOBUN, "国語 古文"); } },
+        { subject: "mathCalc", name: "数学 ・ 計算の基礎", desc: "正負の数・文字式・式の計算・平方根の計算", make: function () { return tagQ(MATH_CALC, "数学 計算"); } },
+        { subject: "mathCalc", name: "数学 ・ 方程式", desc: "一次方程式・連立方程式（解は2枠入力）・二次方程式", make: function () { return tagQ(MATH_EQ, "数学 方程式"); } },
+        { subject: "mathCalc", name: "数学 ・ 展開と因数分解", desc: "展開の係数・定数項、因数分解の係数、式の値", make: function () { return tagQ(MATH_EXPAND, "数学 展開因数分解"); } },
+        { subject: "mathApp", name: "数学 ・ 関数", desc: "一次関数の傾き・切片、変化の割合、二次関数の値", make: function () { return tagQ(MATH_FUNC, "数学 関数"); } },
+        { subject: "mathApp", name: "数学 ・ 確率と資料", desc: "確率（分数で入力）、中央値・最頻値・平均値、箱ひげ図とヒストグラムの読み取り", make: function () { return tagQ(MATH_PROB, "数学 確率資料"); } },
+        { subject: "mathApp", name: "数学 ・ 図形の計算", desc: "角度・面積・体積、円周角と中心角、三平方の定理（証明なし）", make: function () { return tagQ(MATH_FIG, "数学 図形"); } },
+        { subject: "engBase", name: "英語 ・ 文法", desc: "時制・受動態・比較・不定詞と動名詞・関係代名詞（4択の穴埋め）", make: function () { return tagQ(ENG_GRAMMAR, "英語 文法"); } },
+        { subject: "engBase", name: "英語 ・ 単語と熟語", desc: "意味から英語を入力する問題と、意味を選ぶ4択", make: function () { return tagQ(ENG_WORDS, "英語 単語熟語"); } },
+        { subject: "engUse", name: "英語 ・ 整序", desc: "語句をタップした順に並べ替えて文を組み立てる", make: function () { return tagQ(ENG_ORDER, "英語 整序"); } },
+        { subject: "engUse", name: "英語 ・ 会話表現", desc: "短い会話の応答を選ぶ（4択）", make: function () { return tagQ(ENG_CONV, "英語 会話"); } }
       ];
 
       /* ===== 間違いの記録（この端末の中だけに保存・サーバー送信なし） =====
@@ -1929,10 +2487,9 @@
         } catch (e) { return false; }
       }
       function updateStorageWarn() {
-        var warn = document.getElementById("storage-warn");
-        if (!warn) return;
+        var warns = document.querySelectorAll(".storage-warn");
         storageWritable = probeStorage();
-        warn.className = "storage-warn" + (storageWritable ? "" : " show");
+        for (var wi = 0; wi < warns.length; wi++) warns[wi].className = "storage-warn" + (storageWritable ? "" : " show");
       }
       /* 埋め込み表示で保存が制限される環境向け：タップをきっかけに保存の許可を取り、
          ブラウザに「この保存を消さないで」と申請する */
@@ -2161,11 +2718,11 @@
 
       /* ===== 画面制御 ===== */
       var $ = function (id) { return document.getElementById(id); };
-      var screens = { home: $("screen-home"), social: $("screen-social"), science: $("screen-science"), quiz: $("screen-quiz"), result: $("screen-result") };
+      var screens = { home: $("screen-home"), social: $("screen-social"), science: $("screen-science"), kokugo: $("screen-kokugo"), math: $("screen-math"), english: $("screen-english"), quiz: $("screen-quiz"), result: $("screen-result") };
       function show(name) {
         for (var k in screens) screens[k].classList.toggle("active", k === name);
         window.scrollTo(0, 0);
-        if ((name === "home" || name === "social" || name === "science") && typeof renderWeak === "function") renderWeak();
+        if ((name === "home" || name === "social" || name === "science" || name === "kokugo" || name === "math" || name === "english") && typeof renderWeak === "function") renderWeak();
       }
 
       /* ===== 苦手な問題：表示・開始・リセット ===== */
@@ -2173,7 +2730,12 @@
       var resetTimer = null;
       /* 教科の判定はタグだけから行う（記録の構造・キーは変更しない） */
       function weakSubjectOf(tag) {
-        return String(tag || "").indexOf("理科") === 0 ? "science" : "social";
+        var t = String(tag || "");
+        if (t.indexOf("理科") === 0) return "science";
+        if (t.indexOf("国語") === 0) return "kokugo";
+        if (t.indexOf("数学") === 0) return "math";
+        if (t.indexOf("英語") === 0) return "english";
+        return "social";
       }
       function getWeakEntriesFor(subjectKey) {
         if (!subjectKey) return getWeakEntries();
@@ -2200,14 +2762,21 @@
         item.appendChild(b);
         return item;
       }
+      var SUBJECT_WEAK = [["social", "社会"], ["science", "理科"], ["kokugo", "国語"], ["math", "数学"], ["english", "英語"]];
       function renderSubjectWeak() {
-        [["social", "社会"], ["science", "理科"]].forEach(function (pair) {
+        var globalTotal = getWeakEntries().length;
+        SUBJECT_WEAK.forEach(function (pair) {
           var key = pair[0];
           var badge = $("weak-" + key + "-total-badge");
           var emptyEl = $("weak-" + key + "-empty");
           var listEl = $("weak-" + key + "-list");
           var startBtn = $("weak-" + key + "-start-btn");
           if (!listEl || !emptyEl || !startBtn) return;
+          var card = listEl.closest ? listEl.closest(".weak-card") : null;
+          if (card) {
+            var resetBtn = card.querySelector(".weak-reset-btn");
+            if (resetBtn) resetBtn.style.display = globalTotal ? "block" : "none";
+          }
           var entries = getWeakEntriesFor(key);
           var total = entries.length;
           if (badge) badge.textContent = total ? total + "問たまっています" : "";
@@ -2224,58 +2793,12 @@
           entries.forEach(function (entry) { listEl.appendChild(buildWeakItem(entry)); });
         });
       }
-      function renderWeak() {
-        var badge = $("weak-total-badge");
-        var emptyEl = $("weak-empty");
-        var listEl = $("weak-list");
-        var startBtn = $("weak-start-btn");
-        var resetBtn = $("weak-reset-btn");
-        if (!listEl || !emptyEl || !startBtn) return;
-        var entries = getWeakEntries();
-        var total = entries.length;
-        if (badge) badge.textContent = total ? total + "問たまっています" : "";
-        listEl.innerHTML = "";
-        if (total === 0) {
-          emptyEl.style.display = "block";
-          emptyEl.textContent = "まだ苦手な問題はありません。問題を解いて間違えると、ここにたまっていきます。";
-          startBtn.style.display = "none";
-          if (resetBtn) resetBtn.style.display = "none";
-          renderSubjectWeak();
-          return;
-        }
-        emptyEl.style.display = "none";
-        startBtn.style.display = "block";
-        startBtn.textContent = "苦手な問題だけ解く（" + total + "問）";
-        if (resetBtn) resetBtn.style.display = "block";
-        entries.forEach(function (entry) {
-          var item = document.createElement("div");
-          item.className = "weak-item";
-          var main = document.createElement("div");
-          main.className = "weak-item-main";
-          var qp = document.createElement("p");
-          qp.className = "weak-item-q";
-          var label = (entry.q.tag ? entry.q.tag + " ・ " : "") + (typeof entry.q.n === "number" ? "問" + entry.q.n : String(entry.q.n)) + "　" + (entry.q.short || entry.q.q);
-          qp.textContent = label;
-          var ap = document.createElement("p");
-          ap.className = "weak-item-a";
-          ap.innerHTML = "答え：<b></b>";
-          ap.querySelector("b").textContent = entry.q.a;
-          main.appendChild(qp);
-          main.appendChild(ap);
-          var b = document.createElement("span");
-          b.className = "weak-badge" + ((entry.count || 1) >= 3 ? " hot" : "");
-          b.textContent = "× " + (entry.count || 1) + "回";
-          item.appendChild(main);
-          item.appendChild(b);
-          listEl.appendChild(item);
-        });
-        renderSubjectWeak();
-      }
+      function renderWeak() { renderSubjectWeak(); }
       function startWeak(subjectKey) {
         var entries = getWeakEntriesFor(subjectKey || null);
         if (!entries.length) { renderWeak(); return; }
         var list = entries.map(function (e) { return e.q; });
-        if ($("shuffle-toggle") && $("shuffle-toggle").checked) list = shuffleArr(list);
+        if (shuffleOn()) list = shuffleArr(list);
         session = { setIdx: -1, isWeak: true, weakFilter: subjectKey || null, list: list, idx: 0, results: [] };
         show("quiz");
         renderQuestion();
@@ -2290,7 +2813,7 @@
         btn.querySelector(".desc").textContent = set.desc;
         btn.querySelector(".count").textContent = total + "問";
         btn.addEventListener("click", function () { startSet(idx, null); });
-        var containerId = { history: "history-sets", civics: "civics-sets", geography: "geography-sets", dataSocial: "data-social-sets" }[set.subject];
+        var containerId = { history: "history-sets", civics: "civics-sets", geography: "geography-sets", dataSocial: "data-social-sets", kokugoKanji: "kokugo-kanji-sets", kokugoLang: "kokugo-lang-sets", mathCalc: "math-calc-sets", mathApp: "math-app-sets", engBase: "eng-base-sets", engUse: "eng-use-sets" }[set.subject];
         if (set.subject === "science") {
           var firstTag = "";
           try { var fl = set.make(); if (fl.length) firstTag = fl[0].tag || ""; } catch (e) {}
@@ -2316,7 +2839,7 @@
       }
       function startSet(setIdx, customList) {
         var list = customList || SETS[setIdx].make();
-        if ($("shuffle-toggle").checked && !customList) list = shuffleArr(list);
+        if (shuffleOn() && !customList) list = shuffleArr(list);
         session = { setIdx: setIdx, list: list, idx: 0, results: [] };
         show("quiz");
         renderQuestion();
@@ -2405,10 +2928,12 @@
           $("answer-input-b").value = "";
           if (pairMode) {
             var hasFormula = q.pairFormula && q.pairFormula.some(function (x) { return x; });
-            $("q-hint").textContent = "答えは2つあります。1つずつ別の欄に書いてください。どちらの欄に書いても大丈夫です。ひらがなでも、読み方でもOKです。" + (hasFormula ? "化学式は FeS のように、数字をそのまま続けて書いてOKです。" : "");
+            $("q-hint").textContent = q.hintText ? q.hintText :
+              ("答えは2つあります。1つずつ別の欄に書いてください。どちらの欄に書いても大丈夫です。ひらがなでも、読み方でもOKです。" + (hasFormula ? "化学式は FeS のように、数字をそのまま続けて書いてOKです。" : ""));
           } else {
-            $("q-hint").textContent = q.formula ? "化学式は H2O のように、数字をそのまま続けて書いてOKです。" :
-              (q.ratio ? "「4：1：5」のように、数字と「：」で書いてOKです。" : "ひらがなでも、読み方でも大丈夫です。");
+            $("q-hint").textContent = q.hintText ? q.hintText :
+              (q.formula ? "化学式は H2O のように、数字をそのまま続けて書いてOKです。" :
+                (q.ratio ? "「4：1：5」のように、数字と「：」で書いてOKです。" : "ひらがなでも、読み方でも大丈夫です。"));
           }
           var focusEl = pairMode ? $("answer-input-a") : input;
           setTimeout(function () { focusEl.focus(); }, 60);
@@ -2567,6 +3092,7 @@
         graded = true;
         session.results.push({ q: q, user: userText, ok: ok, fixed: false, skipped: false });
         recordResult(q, ok);
+        recordProgress(q, ok);
         showFeedback(ok, userText, false, pairDetail, calcDetail);
       }
 
@@ -2624,6 +3150,7 @@
           graded = true;
           session.results.push({ q: q, user: $("essay-input").value, ok: ok, fixed: false, skipped: false, judged: level });
           recordResult(q, ok);
+          recordProgress(q, ok);
           $("self-judge").className = "self-judge";
           var fb = $("feedback");
           fb.className = "feedback show " + (ok ? "ok" : "ng");
@@ -2639,6 +3166,7 @@
         graded = true;
         session.results.push({ q: q, user: "わからない", ok: false, fixed: false, skipped: true });
         recordResult(q, false);
+        recordProgress(q, false);
         showFeedback(false, "わからない", true);
       }
 
@@ -2697,6 +3225,7 @@
         if (!r || r.ok || r.skipped) return;
         r.ok = true; r.fixed = true;
         recordResult(r.q, true);
+        recordProgressFix(r.q);
         var fb = $("feedback");
         fb.className = "feedback show ok";
         $("fb-mark").textContent = "○ 正解に直しました";
@@ -2770,12 +3299,14 @@
         if (!wrongQs.length) return;
         var setIdx = session.setIdx;
         var wasWeak = !!session.isWeak;
-        session = { setIdx: setIdx, isWeak: wasWeak, weakFilter: session.weakFilter || null, list: wrongQs, idx: 0, results: [] };
+        var wasDaily = !!session.isDaily;
+        session = { setIdx: setIdx, isWeak: wasWeak, isDaily: wasDaily, weakFilter: session.weakFilter || null, list: wrongQs, idx: 0, results: [] };
         show("quiz"); renderQuestion();
       });
       $("retry-all-btn").addEventListener("click", function () {
         if (!session) return;
         if (session.isWeak) { startWeak(session.weakFilter || null); return; }
+        if (session.isDaily) { startDaily(); return; }
         if (session.setIdx < 0) { session = null; show("home"); return; }
         startSet(session.setIdx, null);
       });
@@ -2784,37 +3315,69 @@
       /* 教科選択（2段階ナビ）のボタン */
       $("go-social").addEventListener("click", function () { show("social"); });
       $("go-science").addEventListener("click", function () { show("science"); });
+      $("go-kokugo").addEventListener("click", function () { show("kokugo"); });
+      $("go-math").addEventListener("click", function () { show("math"); });
+      $("go-english").addEventListener("click", function () { show("english"); });
       $("back-from-social").addEventListener("click", function () { show("home"); });
       $("back-from-science").addEventListener("click", function () { show("home"); });
+      $("back-from-kokugo").addEventListener("click", function () { show("home"); });
+      $("back-from-math").addEventListener("click", function () { show("home"); });
+      $("back-from-english").addEventListener("click", function () { show("home"); });
 
-      /* 苦手モードのボタン */
-      $("weak-start-btn").addEventListener("click", function () { startWeak(); });
+      /* 苦手モードのボタン（各教科画面） */
       $("weak-social-start-btn").addEventListener("click", function () { startWeak("social"); });
       $("weak-science-start-btn").addEventListener("click", function () { startWeak("science"); });
-      $("weak-reset-btn").addEventListener("click", function () {
-        var btn = $("weak-reset-btn");
-        if (!resetArmed) {
-          resetArmed = true;
-          btn.classList.add("armed");
-          btn.textContent = "本当に消しますか？ もう一度押すと記録をリセットします";
-          if (resetTimer) clearTimeout(resetTimer);
-          resetTimer = setTimeout(function () {
-            resetArmed = false;
-            btn.classList.remove("armed");
-            btn.textContent = "苦手な問題の記録をリセット";
-          }, 5000);
-          return;
+      $("weak-kokugo-start-btn").addEventListener("click", function () { startWeak("kokugo"); });
+      $("weak-math-start-btn").addEventListener("click", function () { startWeak("math"); });
+      $("weak-english-start-btn").addEventListener("click", function () { startWeak("english"); });
+
+      /* シャッフル設定は全教科共通の1つの設定（どの画面で切り替えても連動する） */
+      var shuffleToggles = document.querySelectorAll(".shuffle-toggle");
+      function shuffleOn() { return shuffleToggles.length ? !!shuffleToggles[0].checked : true; }
+      for (var sti = 0; sti < shuffleToggles.length; sti++) {
+        shuffleToggles[sti].addEventListener("change", function () {
+          var v = this.checked;
+          for (var sj = 0; sj < shuffleToggles.length; sj++) shuffleToggles[sj].checked = v;
+        });
+      }
+
+      /* リセットは全教科分の記録に対する操作（従来どおり）。ボタンは各教科画面にある */
+      function disarmResetBtns() {
+        var btns = document.querySelectorAll(".weak-reset-btn");
+        for (var di = 0; di < btns.length; di++) {
+          btns[di].classList.remove("armed");
+          btns[di].textContent = "苦手な問題の記録をリセット";
         }
-        if (resetTimer) clearTimeout(resetTimer);
-        resetArmed = false;
-        btn.classList.remove("armed");
-        btn.textContent = "苦手な問題の記録をリセット";
-        try { localStorage.removeItem(MISTAKE_KEY); } catch (e) {}
-        saveMistakes({});
-        renderWeak();
-      });
+      }
+      var resetBtns = document.querySelectorAll(".weak-reset-btn");
+      for (var rbi = 0; rbi < resetBtns.length; rbi++) {
+        (function (btn) {
+          var armed = false, timer = null;
+          btn.addEventListener("click", function () {
+            if (!armed) {
+              armed = true;
+              btn.classList.add("armed");
+              btn.textContent = "本当に消しますか？ もう一度押すと記録をリセットします";
+              if (timer) clearTimeout(timer);
+              timer = setTimeout(function () {
+                armed = false;
+                btn.classList.remove("armed");
+                btn.textContent = "苦手な問題の記録をリセット";
+              }, 5000);
+              return;
+            }
+            if (timer) clearTimeout(timer);
+            armed = false;
+            try { localStorage.removeItem(MISTAKE_KEY); } catch (e) {}
+            saveMistakes({});
+            disarmResetBtns();
+            renderWeak();
+          });
+        })(resetBtns[rbi]);
+      }
 
       /* ===== 記録のバックアップ・復元（コード方式） =====
+         対象は全教科分の記録（従来どおり）。ボタンとパネルは各教科画面にある。
          ブラウザ側で記録が消えてしまった場合でも、控えたコードから戻せる。 */
       function encodeBackup(map) {
         var bytes = new TextEncoder().encode(JSON.stringify(map));
@@ -2832,51 +3395,271 @@
         if (!obj || typeof obj !== "object") throw new Error("bad code");
         return migrateMistakes(obj).map;
       }
-      $("backup-toggle-btn").addEventListener("click", function () {
-        var panel = $("backup-panel");
-        var openNow = panel.style.display !== "none";
-        panel.style.display = openNow ? "none" : "grid";
-        if (!openNow && !$("backup-code").value) {
-          var entries = getWeakEntries();
-          if (entries.length) $("backup-code").value = encodeBackup(loadMistakes());
-        }
-      });
-      $("backup-make-btn").addEventListener("click", function () {
-        var msg = $("backup-msg");
-        var entries = getWeakEntries();
-        if (!entries.length) { msg.textContent = "まだ記録がありません。間違えた問題がたまると、コードを出せます。"; return; }
-        $("backup-code").value = encodeBackup(loadMistakes());
-        $("backup-code").select();
-        var copied = false;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText($("backup-code").value).then(function () {
-            msg.textContent = "コードをコピーしました。メモ帳などに貼って保管してください（" + entries.length + "問分）。";
-          }, function () {
-            msg.textContent = "コードを表示しました。長押しやコピーで保管してください（" + entries.length + "問分）。";
+      function backupAreaOf(el) { return el && el.closest ? el.closest(".backup-area") : null; }
+      var backupToggles = document.querySelectorAll(".backup-toggle-btn");
+      for (var bti = 0; bti < backupToggles.length; bti++) {
+        (function (btn) {
+          btn.addEventListener("click", function () {
+            var area = backupAreaOf(btn);
+            if (!area) return;
+            var panel = area.querySelector(".backup-panel");
+            var codeEl = area.querySelector(".backup-code");
+            var openNow = panel.style.display !== "none";
+            panel.style.display = openNow ? "none" : "grid";
+            if (!openNow && codeEl && !codeEl.value) {
+              if (getWeakEntries().length) codeEl.value = encodeBackup(loadMistakes());
+            }
           });
-          copied = true;
-        }
-        if (!copied) msg.textContent = "コードを表示しました。コピーして保管してください（" + entries.length + "問分）。";
-      });
-      $("backup-restore-btn").addEventListener("click", function () {
-        var msg = $("backup-msg");
-        var code = $("backup-code").value;
-        if (!code.trim()) { msg.textContent = "先に、復元するコードを上の欄に貼ってください。"; return; }
+        })(backupToggles[bti]);
+      }
+      var backupMakes = document.querySelectorAll(".backup-make-btn");
+      for (var bmi = 0; bmi < backupMakes.length; bmi++) {
+        (function (btn) {
+          btn.addEventListener("click", function () {
+            var area = backupAreaOf(btn);
+            if (!area) return;
+            var codeEl = area.querySelector(".backup-code");
+            var msg = area.querySelector(".backup-msg");
+            var entries = getWeakEntries();
+            if (!entries.length) { msg.textContent = "まだ記録がありません。間違えた問題がたまると、コードを出せます。"; return; }
+            codeEl.value = encodeBackup(loadMistakes());
+            codeEl.select();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(codeEl.value).then(function () {
+                msg.textContent = "コードをコピーしました。メモ帳などに貼って保管してください（" + entries.length + "問分）。";
+              }, function () {
+                msg.textContent = "コードを表示しました。長押しやコピーで保管してください（" + entries.length + "問分）。";
+              });
+            } else {
+              msg.textContent = "コードを表示しました。コピーして保管してください（" + entries.length + "問分）。";
+            }
+          });
+        })(backupMakes[bmi]);
+      }
+      var backupRestores = document.querySelectorAll(".backup-restore-btn");
+      for (var bri = 0; bri < backupRestores.length; bri++) {
+        (function (btn) {
+          btn.addEventListener("click", function () {
+            var area = backupAreaOf(btn);
+            if (!area) return;
+            var codeEl = area.querySelector(".backup-code");
+            var msg = area.querySelector(".backup-msg");
+            var code = codeEl.value;
+            if (!code.trim()) { msg.textContent = "先に、復元するコードを上の欄に貼ってください。"; return; }
+            try {
+              var restored = decodeBackup(code);
+              var merged = mergeMistakeMaps(loadMistakes(), restored);
+              saveMistakes(merged);
+              renderWeak();
+              var count = getWeakEntries().length;
+              msg.textContent = "復元しました。今の苦手な問題は " + count + " 問です。";
+              codeEl.value = encodeBackup(loadMistakes());
+            } catch (e) {
+              msg.textContent = "そのコードは読み取れませんでした。コード全体が貼れているか確認してください。";
+            }
+          });
+        })(backupRestores[bri]);
+      }
+
+      /* ===== 教科ごとの進み具合（進捗） =====
+         解いた問題数と正解数を教科ごとに、この端末の中だけに保存する
+         （外部送信なし）。苦手記録とは別の独立したキーで保存し、
+         バックアップ・復元の対象にも含めない。この機能の導入後から数える。 */
+      var PROGRESS_KEY = "fukuoka-juken-drill-progress-v1";
+      var PROGRESS_SUBJECTS = ["social", "science", "kokugo", "math", "english"];
+      var progressCache = {};
+      function parseProgressJson(raw) {
+        if (!raw) return null;
         try {
-          var restored = decodeBackup(code);
-          var merged = mergeMistakeMaps(loadMistakes(), restored);
-          saveMistakes(merged);
-          renderWeak();
-          var count = getWeakEntries().length;
-          msg.textContent = "復元しました。今の苦手な問題は " + count + " 問です。";
-          $("backup-code").value = encodeBackup(loadMistakes());
-        } catch (e) {
-          msg.textContent = "そのコードは読み取れませんでした。コード全体が貼れているか確認してください。";
+          var obj = JSON.parse(raw);
+          if (!obj || typeof obj !== "object") return null;
+          var out = {};
+          PROGRESS_SUBJECTS.forEach(function (k) {
+            var e = obj[k];
+            if (e && typeof e.done === "number" && typeof e.correct === "number") {
+              out[k] = { done: Math.max(0, Math.floor(e.done)), correct: Math.max(0, Math.floor(e.correct)) };
+            }
+          });
+          return out;
+        } catch (e) { return null; }
+      }
+      function readLocalProgress() {
+        try { return parseProgressJson(localStorage.getItem(PROGRESS_KEY)); } catch (e) { return null; }
+      }
+      function writeLocalProgress() {
+        try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(progressCache)); } catch (e) {}
+      }
+      function idbWriteProgress() {
+        idbOpen().then(function (db) {
+          if (!db) return;
+          try {
+            var tx = db.transaction(MISTAKE_STORE, "readwrite");
+            tx.objectStore(MISTAKE_STORE).put(JSON.stringify(progressCache), PROGRESS_KEY);
+            tx.oncomplete = function () { try { db.close(); } catch (e) {} };
+            tx.onerror = function () { try { db.close(); } catch (e) {} };
+          } catch (e) {}
+        });
+      }
+      function idbReadProgress() {
+        return idbOpen().then(function (db) {
+          if (!db) return null;
+          return new Promise(function (resolve) {
+            try {
+              var tx = db.transaction(MISTAKE_STORE, "readonly");
+              var req = tx.objectStore(MISTAKE_STORE).get(PROGRESS_KEY);
+              req.onsuccess = function () {
+                var v = req.result;
+                try { db.close(); } catch (e) {}
+                resolve(typeof v === "string" ? parseProgressJson(v) : null);
+              };
+              req.onerror = function () { try { db.close(); } catch (e) {} resolve(null); };
+            } catch (e) { resolve(null); }
+          });
+        });
+      }
+      /* 2か所の保存内容を合わせる：教科ごとに、解いた数の多い方を残す */
+      function mergeProgress(a, b) {
+        var out = {};
+        PROGRESS_SUBJECTS.forEach(function (k) {
+          var x = a && a[k], y = b && b[k];
+          if (x && y) out[k] = (y.done > x.done || (y.done === x.done && y.correct > x.correct)) ? y : x;
+          else if (x || y) out[k] = x || y;
+        });
+        return out;
+      }
+      function saveProgress() {
+        writeLocalProgress();
+        idbWriteProgress();
+      }
+      function hydrateProgress() {
+        var local = readLocalProgress();
+        if (local) progressCache = local;
+        renderProgress();
+        idbReadProgress().then(function (fromIdb) {
+          if (fromIdb) {
+            progressCache = mergeProgress(progressCache, fromIdb);
+            writeLocalProgress();
+          } else {
+            idbWriteProgress();
+          }
+          renderProgress();
+        });
+      }
+      function progressOf(key) {
+        var p = progressCache[key];
+        return p ? p : { done: 0, correct: 0 };
+      }
+      function recordProgress(q, ok) {
+        if (!q) return;
+        var key = weakSubjectOf(q.tag);
+        var p = progressOf(key);
+        p = { done: p.done + 1, correct: p.correct + (ok ? 1 : 0) };
+        progressCache[key] = p;
+        saveProgress();
+        renderProgress();
+      }
+      /* 自己修正で○に直したとき：解いた数は増やさず、正解数だけ1つ増やす */
+      function recordProgressFix(q) {
+        if (!q) return;
+        var key = weakSubjectOf(q.tag);
+        var p = progressOf(key);
+        if (p.correct < p.done) {
+          progressCache[key] = { done: p.done, correct: p.correct + 1 };
+          saveProgress();
+          renderProgress();
         }
-      });
+      }
+      function renderProgress() {
+        PROGRESS_SUBJECTS.forEach(function (key) {
+          var p = progressOf(key);
+          var rate = p.done ? Math.round(p.correct / p.done * 100) : 0;
+          var homeEl = $("prog-home-" + key);
+          if (homeEl) homeEl.textContent = p.done ? "解いた問題 " + p.done + "問 ・ 正答率 " + rate + "%" : "";
+          var scrEl = $("prog-screen-" + key);
+          if (scrEl) scrEl.textContent = p.done ?
+            "進み具合：解いた問題 " + p.done + "問 ・ 正解 " + p.correct + "問 ・ 正答率 " + rate + "%" :
+            "進み具合：まだこの教科の問題を解いていません";
+          var resetBtn = document.querySelector('.prog-reset-btn[data-prog-reset="' + key + '"]');
+          if (resetBtn) resetBtn.style.display = p.done ? "block" : "none";
+        });
+      }
+      /* 教科ごとの進捗リセット（苦手記録には影響しない） */
+      var progResetBtns = document.querySelectorAll(".prog-reset-btn");
+      for (var pri = 0; pri < progResetBtns.length; pri++) {
+        (function (btn) {
+          var armed = false, timer = null;
+          btn.addEventListener("click", function () {
+            if (!armed) {
+              armed = true;
+              btn.classList.add("armed");
+              btn.textContent = "本当に消しますか？ もう一度押すとこの教科の進み具合をリセットします";
+              if (timer) clearTimeout(timer);
+              timer = setTimeout(function () {
+                armed = false;
+                btn.classList.remove("armed");
+                btn.textContent = "この教科の進み具合をリセット";
+              }, 5000);
+              return;
+            }
+            if (timer) clearTimeout(timer);
+            armed = false;
+            btn.classList.remove("armed");
+            btn.textContent = "この教科の進み具合をリセット";
+            progressCache[btn.getAttribute("data-prog-reset")] = { done: 0, correct: 0 };
+            saveProgress();
+            renderProgress();
+          });
+        })(progResetBtns[pri]);
+      }
+
+      /* ===== 今日の10問 =====
+         全セットから記述問題（essay）を除いた問題を集め、日付を種にした
+         乱数で10問選ぶ。その日は同じ10問になり、翌日に変わる。
+         採点・苦手記録・進捗への反映は通常の出題と同じ。 */
+      function dailySeed() {
+        var d = new Date();
+        return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+      }
+      function mulberry32(seed) {
+        var s = seed | 0;
+        return function () {
+          s = s + 0x6D2B79F5 | 0;
+          var t = Math.imul(s ^ s >>> 15, 1 | s);
+          t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        };
+      }
+      function dailyList() {
+        var pool = [];
+        var seen = {};
+        SETS.forEach(function (set) {
+          set.make().forEach(function (q) {
+            if (q.type === "essay") return;
+            var k = mistakeKey(q);
+            if (seen[k]) return;
+            seen[k] = true;
+            pool.push(q);
+          });
+        });
+        var rnd = mulberry32(dailySeed());
+        var idx = pool.map(function (_q, i) { return i; });
+        for (var i = idx.length - 1; i > 0; i--) {
+          var j = Math.floor(rnd() * (i + 1));
+          var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+        }
+        return idx.slice(0, 10).map(function (i) { return pool[i]; });
+      }
+      function startDaily() {
+        session = { setIdx: -2, isDaily: true, list: dailyList(), idx: 0, results: [] };
+        show("quiz");
+        renderQuestion();
+      }
+      $("go-daily").addEventListener("click", function () { startDaily(); });
 
       renderWeak();
       hydrateMistakes();
+      hydrateProgress();
+      renderProgress();
       updateStorageWarn();
     </script>
   </body>
