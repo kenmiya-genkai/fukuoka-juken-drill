@@ -339,7 +339,7 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>教科を選ぶ</h2><span>全873問</span></div>
+          <div class="subject-head"><h2>教科を選ぶ</h2><span>全909問</span></div>
           <div class="chooser">
             <button class="chooser-btn" id="go-kokugo" type="button">
               <span class="chooser-name">国語</span>
@@ -364,7 +364,7 @@
             <button class="chooser-btn" id="go-english" type="button">
               <span class="chooser-name">英語</span>
               <span class="chooser-desc">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現<span class="chooser-prog" id="prog-home-english"></span></span>
-              <span class="chooser-count">全64問</span>
+              <span class="chooser-count">全100問</span>
             </button>
           </div>
         </div>
@@ -602,7 +602,7 @@
       <section id="screen-english" class="screen">
         <button class="back-btn" id="back-from-english" type="button">← 教科選択に戻る</button>
         <h1 class="screen-title">英語</h1>
-        <p class="sub">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現（全64問）</p>
+        <p class="sub">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現（全100問）</p>
         <p class="screen-prog" id="prog-screen-english"></p>
         <button class="reset-btn prog-reset-btn" data-prog-reset="english" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
         <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
@@ -637,12 +637,12 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>文法・単語</h2><span>全40問</span></div>
+          <div class="subject-head"><h2>文法・単語</h2><span>全64問</span></div>
           <div class="set-list" id="eng-base-sets"></div>
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>整序・会話</h2><span>全24問</span></div>
+          <div class="subject-head"><h2>整序・会話</h2><span>全36問</span></div>
           <div class="set-list" id="eng-use-sets"></div>
         </div>
       </section>
@@ -2193,7 +2193,17 @@
         { n: "英文17", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nEnglish is (　) in many countries.", a: "ウ spoken", correct: "ウ", choices: [{ key: "ア", label: "speak" }, { key: "イ", label: "speaks" }, { key: "ウ", label: "spoken" }, { key: "エ", label: "speaking" }], ex: "「英語は多くの国で話されている」という受動態。speak の過去分詞は spoken です。" },
         { n: "英文18", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe ran (　) than anyone else.", a: "エ faster", correct: "エ", choices: [{ key: "ア", label: "fast" }, { key: "イ", label: "fastest" }, { key: "ウ", label: "more fast" }, { key: "エ", label: "faster" }], ex: "than があるので比較級。fast の比較級は faster です。" },
         { n: "英文19", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI have a friend (　) lives in Canada.", a: "ア who", correct: "ア", choices: [{ key: "ア", label: "who" }, { key: "イ", label: "which" }, { key: "ウ", label: "whose" }, { key: "エ", label: "where" }], ex: "先行詞が人（friend）で、主格の関係代名詞は who です。" },
-        { n: "英文20", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis cake was made (　) my mother.", a: "イ by", correct: "イ", choices: [{ key: "ア", label: "of" }, { key: "イ", label: "by" }, { key: "ウ", label: "from" }, { key: "エ", label: "at" }], ex: "受動態で動作主を示すときは by。「母によって作られた」となります。" }
+        { n: "英文20", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis cake was made (　) my mother.", a: "イ by", correct: "イ", choices: [{ key: "ア", label: "of" }, { key: "イ", label: "by" }, { key: "ウ", label: "from" }, { key: "エ", label: "at" }], ex: "受動態で動作主を示すときは by。「母によって作られた」となります。" },
+        { n: "英文21", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nYou (　) come to school tomorrow. It's a holiday.", a: "イ don't have to", correct: "イ", choices: [{ key: "ア", label: "mustn't" }, { key: "イ", label: "don't have to" }, { key: "ウ", label: "can't" }, { key: "エ", label: "won't" }], ex: "休みなので「来なくてよい」は don't have to。mustn't は「〜してはいけない」という禁止で、意味が変わります。" },
+        { n: "英文22", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI have just (　) my homework.", a: "ウ finished", correct: "ウ", choices: [{ key: "ア", label: "finish" }, { key: "イ", label: "finishes" }, { key: "ウ", label: "finished" }, { key: "エ", label: "finishing" }], ex: "現在完了の「ちょうど〜したところ」は have just + 過去分詞。finish の過去分詞は finished です。" },
+        { n: "英文23", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nThis temple (　) about 400 years ago.", a: "エ was built", correct: "エ", choices: [{ key: "ア", label: "built" }, { key: "イ", label: "builds" }, { key: "ウ", label: "building" }, { key: "エ", label: "was built" }], ex: "「約400年前に建てられた」という過去の受動態。was built（建てられた）を使います。" },
+        { n: "英文24", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThis problem is not as (　) as that one.", a: "ア difficult", correct: "ア", choices: [{ key: "ア", label: "difficult" }, { key: "イ", label: "more difficult" }, { key: "ウ", label: "most difficult" }, { key: "エ", label: "difficulty" }], ex: "as 〜 as の間には形容詞・副詞の原級が入ります。「〜ほど…ではない」は not as 〜 as で表します。" },
+        { n: "英文25", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI have a friend (　) mother is a nurse.", a: "ウ whose", correct: "ウ", choices: [{ key: "ア", label: "who" }, { key: "イ", label: "which" }, { key: "ウ", label: "whose" }, { key: "エ", label: "where" }], ex: "「その友達の母親」という所有の関係は whose + 名詞。whose mother で「その人の母親」という意味になります。" },
+        { n: "英文26", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nThe song (　) she sang at the concert was beautiful.", a: "エ that", correct: "エ", choices: [{ key: "ア", label: "who" }, { key: "イ", label: "whose" }, { key: "ウ", label: "where" }, { key: "エ", label: "that" }], ex: "先行詞は物（song）で、目的格の関係代名詞 that が入ります。この that は省略することもできます。" },
+        { n: "英文27", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nDo you know where the library (　)?", a: "ア is", correct: "ア", choices: [{ key: "ア", label: "is" }, { key: "イ", label: "is it" }, { key: "ウ", label: "does" }, { key: "エ", label: "it is" }], ex: "Do you know where 〜? のあとは間接疑問文で、疑問文の語順ではなく「where the library is」という普通の文の語順になります。" },
+        { n: "英文28", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nPlease wait here (　) I come back.", a: "イ until", correct: "イ", choices: [{ key: "ア", label: "because" }, { key: "イ", label: "until" }, { key: "ウ", label: "so" }, { key: "エ", label: "but" }], ex: "「私が戻ってくるまで、ここで待っていてください」は until（〜まで）。until は継続の接続詞です。" },
+        { n: "英文29", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe was born (　) 2011.", a: "ウ in", correct: "ウ", choices: [{ key: "ア", label: "on" }, { key: "イ", label: "at" }, { key: "ウ", label: "in" }, { key: "エ", label: "by" }], ex: "年の前には前置詞 in を使います。月日の前は on、時刻の前は at と使い分けましょう。" },
+        { n: "英文30", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHave you ever (　) to Okinawa?", a: "ア been", correct: "ア", choices: [{ key: "ア", label: "been" }, { key: "イ", label: "go" }, { key: "ウ", label: "went" }, { key: "エ", label: "going" }], ex: "「〜へ行ったことがありますか」は Have you ever been to 〜?。経験を表す現在完了で、go の過去分詞 been を使います。" }
       ];
 
       /* ===== 英語・単語と熟語 =====
@@ -2219,7 +2229,21 @@
         { n: "英単17", type: "statement", q: "次の熟語の意味として正しいものを選べ。『take care of 〜』", a: "ア 〜の世話をする", correct: "ア", choices: [{ key: "ア", label: "〜の世話をする" }, { key: "イ", label: "〜に気をつける" }, { key: "ウ", label: "〜を持ち運ぶ" }, { key: "エ", label: "〜を取り除く" }], ex: "take care of 〜 は「〜の世話をする・面倒を見る」。単独の Take care. は「元気でね」というあいさつにもなります。" },
         { n: "英単18", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be famous for 〜』", a: "エ 〜で有名である", correct: "エ", choices: [{ key: "ア", label: "〜に興味がある" }, { key: "イ", label: "〜が得意である" }, { key: "ウ", label: "〜を楽しみに待つ" }, { key: "エ", label: "〜で有名である" }], ex: "be famous for 〜 は「〜で有名だ」。This town is famous for its fish. のように使います。" },
         { n: "英単19", type: "statement", q: "次の単語の意味として正しいものを選べ。『information』", a: "イ 情報", correct: "イ", choices: [{ key: "ア", label: "招待" }, { key: "イ", label: "情報" }, { key: "ウ", label: "紹介" }, { key: "エ", label: "発明" }], ex: "information は「情報」。a piece of information のように数えます。" },
-        { n: "英単20", type: "statement", q: "次の熟語の意味として正しいものを選べ。『each other』", a: "ウ お互いに", correct: "ウ", choices: [{ key: "ア", label: "それぞれ" }, { key: "イ", label: "もう一方" }, { key: "ウ", label: "お互いに" }, { key: "エ", label: "一緒に" }], ex: "each other は「お互いに」。We help each other. で「私たちは助け合います」となります。" }
+        { n: "英単20", type: "statement", q: "次の熟語の意味として正しいものを選べ。『each other』", a: "ウ お互いに", correct: "ウ", choices: [{ key: "ア", label: "それぞれ" }, { key: "イ", label: "もう一方" }, { key: "ウ", label: "お互いに" }, { key: "エ", label: "一緒に" }], ex: "each other は「お互いに」。We help each other. で「私たちは助け合います」となります。" },
+        { n: "英単21", q: "次の日本語を英語で書け。「自然」", a: "nature", accept: ["nature"], hintText: ENG_HINT_WORD, ex: "nature は「自然」。入試の長文でも頻出で、natural は形容詞で「自然の」です。" },
+        { n: "英単22", q: "次の日本語を英語で書け。「伝統的な」", a: "traditional", accept: ["traditional"], hintText: ENG_HINT_WORD, ex: "traditional は「伝統的な」。名詞の tradition（伝統）からできた形容詞です。" },
+        { n: "英単23", q: "次の日本語を英語で書け。「発明する」", a: "invent", accept: ["invent"], hintText: ENG_HINT_WORD, ex: "invent は「発明する」。名詞は invention（発明）で、inventor は「発明家」です。" },
+        { n: "英単24", q: "次の日本語を英語で書け。「必要な」", a: "necessary", accept: ["necessary"], hintText: ENG_HINT_WORD, ex: "necessary は「必要な」。It is necessary to 〜. で「〜することが必要だ」となります。" },
+        { n: "英単25", q: "次の日本語を英語で書け。「政府」", a: "government", accept: ["government"], hintText: ENG_HINT_WORD, ex: "government は「政府」。govern（統治する）に -ment がついた名詞です。" },
+        { n: "英単26", q: "次の日本語を英語で書け。「機会・チャンス」", a: "chance", accept: ["chance", "opportunity"], hintText: ENG_HINT_WORD, ex: "chance は「機会・チャンス」。a chance to 〜 で「〜する機会」となります。opportunity も正解です。" },
+        { n: "英単27", q: "次の日本語を英語で書け。「増える・増加する」", a: "increase", accept: ["increase"], hintText: ENG_HINT_WORD, ex: "increase は「増える・増加する」。人口や数が増える話でよく使われます。反対は decrease（減る）です。" },
+        { n: "英単28", type: "statement", q: "次の単語の意味として正しいものを選べ。『allow』", a: "イ 許可する", correct: "イ", choices: [{ key: "ア", label: "招待する" }, { key: "イ", label: "許可する" }, { key: "ウ", label: "応援する" }, { key: "エ", label: "集める" }], ex: "allow は「許可する」。be allowed to 〜 で「〜することが許されている」となります。" },
+        { n: "英単29", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be proud of 〜』", a: "ウ 〜を誇りに思う", correct: "ウ", choices: [{ key: "ア", label: "〜が得意である" }, { key: "イ", label: "〜に興味がある" }, { key: "ウ", label: "〜を誇りに思う" }, { key: "エ", label: "〜で有名である" }], ex: "be proud of 〜 は「〜を誇りに思う」。I am proud of my school. のように使います。" },
+        { n: "英単30", type: "statement", q: "次の熟語の意味として正しいものを選べ。『instead of 〜』", a: "ア 〜の代わりに", correct: "ア", choices: [{ key: "ア", label: "〜の代わりに" }, { key: "イ", label: "〜のおかげで" }, { key: "ウ", label: "〜に加えて" }, { key: "エ", label: "〜なしで" }], ex: "instead of 〜 は「〜の代わりに」。I stayed home instead of going out. のように使います。" },
+        { n: "英単31", type: "statement", q: "次の単語の意味として正しいものを選べ。『continue』", a: "エ 続ける・続く", correct: "エ", choices: [{ key: "ア", label: "決める" }, { key: "イ", label: "始める" }, { key: "ウ", label: "やめる" }, { key: "エ", label: "続ける・続く" }], ex: "continue は「続ける・続く」。continue to 〜 / continue 〜ing で「〜し続ける」となります。" },
+        { n: "英単32", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be different from 〜』", a: "イ 〜と違う", correct: "イ", choices: [{ key: "ア", label: "〜と同じである" }, { key: "イ", label: "〜と違う" }, { key: "ウ", label: "〜に似ている" }, { key: "エ", label: "〜からできている" }], ex: "be different from 〜 は「〜と違う」。from とセットで使う点が入試で狙われます。" },
+        { n: "英単33", type: "statement", q: "次の単語の意味として正しいものを選べ。『without』", a: "ウ 〜なしで", correct: "ウ", choices: [{ key: "ア", label: "〜と一緒に" }, { key: "イ", label: "〜の代わりに" }, { key: "ウ", label: "〜なしで" }, { key: "エ", label: "〜を通して" }], ex: "without は「〜なしで」という前置詞。without saying goodbye のように「〜せずに」の意味にもなります。" },
+        { n: "英単34", type: "statement", q: "次の単語の意味として正しいものを選べ。『recently』", a: "ア 最近", correct: "ア", choices: [{ key: "ア", label: "最近" }, { key: "イ", label: "ついに" }, { key: "ウ", label: "特に" }, { key: "エ", label: "おそらく" }], ex: "recently は「最近」。現在完了と一緒によく使われます。recent は形容詞で「最近の」です。" }
       ];
 
       /* ===== 英語・整序 =====
@@ -2236,7 +2260,13 @@
         { n: "英序9", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n母は私にケーキを作ってくれました。", a: "My mother made me a cake.", items: [{ key: "A", label: "me a cake" }, { key: "B", label: "made" }, { key: "C", label: "My mother" }], correct: ["C", "B", "A"], ex: "make + 人 + 物 で「人に物を作ってあげる」。made me a cake となります。" },
         { n: "英序10", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nその猫はテーブルの下で眠っています。", a: "The cat is sleeping under the table.", items: [{ key: "A", label: "is sleeping" }, { key: "B", label: "The cat" }, { key: "C", label: "under the table" }], correct: ["B", "A", "C"], ex: "現在進行形 is sleeping のあとに、場所を表す under the table が来ます。" },
         { n: "英序11", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は泳ぎ方がわかりません。", a: "I don't know how to swim.", items: [{ key: "A", label: "how to swim" }, { key: "B", label: "don't know" }, { key: "C", label: "I" }], correct: ["C", "B", "A"], ex: "how to 〜 で「〜のしかた」。I don't know how to swim. となります。" },
-        { n: "英序12", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこれは私が昨日なくしたペンです。", a: "This is the pen I lost yesterday.", items: [{ key: "A", label: "the pen" }, { key: "B", label: "I lost yesterday" }, { key: "C", label: "This is" }], correct: ["C", "A", "B"], ex: "the pen のあとに I lost yesterday（私が昨日なくした）が続き、ペンを説明します。関係代名詞が省略された文です。" }
+        { n: "英序12", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこれは私が昨日なくしたペンです。", a: "This is the pen I lost yesterday.", items: [{ key: "A", label: "the pen" }, { key: "B", label: "I lost yesterday" }, { key: "C", label: "This is" }], correct: ["C", "A", "B"], ex: "the pen のあとに I lost yesterday（私が昨日なくした）が続き、ペンを説明します。関係代名詞が省略された文です。" },
+        { n: "英序13", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は昨日、図書館で勉強しました。", a: "I studied at the library yesterday.", items: [{ key: "A", label: "yesterday" }, { key: "B", label: "I" }, { key: "C", label: "studied" }, { key: "D", label: "at the library" }], correct: ["B", "C", "D", "A"], ex: "場所（at the library）のあとに、時（yesterday）が来ます。語順は「場所→時」が基本です。" },
+        { n: "英序14", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n彼女は私にプレゼントをくれました。", a: "She gave me a present.", items: [{ key: "A", label: "me a present" }, { key: "B", label: "gave" }, { key: "C", label: "She" }], correct: ["C", "B", "A"], ex: "give + 人 + 物 で「人に物をあげる」。gave me a present となります。" },
+        { n: "英序15", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこれは福岡で一番高い建物です。", a: "This is the tallest building in Fukuoka.", items: [{ key: "A", label: "in Fukuoka" }, { key: "B", label: "the tallest building" }, { key: "C", label: "This is" }], correct: ["C", "B", "A"], ex: "最上級は the tallest building。範囲を示す in Fukuoka は文末に置きます。" },
+        { n: "英序16", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は毎日ピアノを練習しなければなりません。", a: "I have to practice the piano every day.", items: [{ key: "A", label: "practice the piano" }, { key: "B", label: "I" }, { key: "C", label: "every day" }, { key: "D", label: "have to" }], correct: ["B", "D", "A", "C"], ex: "have to 〜 で「〜しなければならない」。頻度を表す every day は文末に置きます。" },
+        { n: "英序17", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n庭にはたくさんの花があります。", a: "There are many flowers in the garden.", items: [{ key: "A", label: "in the garden" }, { key: "B", label: "many flowers" }, { key: "C", label: "There are" }], correct: ["C", "B", "A"], ex: "複数形の flowers なので There are 〜。場所（in the garden）は文末です。" },
+        { n: "英序18", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n駅への行き方を教えてください。", a: "Please tell me how to get to the station.", items: [{ key: "A", label: "how to get" }, { key: "B", label: "Please tell me" }, { key: "C", label: "to the station" }], correct: ["B", "A", "C"], ex: "how to get to 〜 で「〜への行き方」。Please tell me 〜. は道をたずねるときの定番表現です。" }
       ];
 
       /* ===== 英語・会話表現 =====
@@ -2253,7 +2283,13 @@
         { n: "英会9", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Happy birthday!\nB: (　)", a: "ア Thank you.", correct: "ア", choices: [{ key: "ア", label: "Thank you." }, { key: "イ", label: "You're welcome." }, { key: "ウ", label: "Same to you." }, { key: "エ", label: "I'm happy." }], ex: "祝いの言葉には Thank you. と感謝で返します。" },
         { n: "英会10", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How long does it take to the station?\nB: (　)", a: "イ About ten minutes.", correct: "イ", choices: [{ key: "ア", label: "About two kilometers." }, { key: "イ", label: "About ten minutes." }, { key: "ウ", label: "Ten o'clock." }, { key: "エ", label: "By bus." }], ex: "How long does it take? は所要時間を聞く表現。答えは時間（ten minutes）で返します。距離や時刻と取り違えないように。" },
         { n: "英会11", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Whose bag is this?\nB: (　)", a: "ウ It's mine.", correct: "ウ", choices: [{ key: "ア", label: "It's a bag." }, { key: "イ", label: "This is a bag." }, { key: "ウ", label: "It's mine." }, { key: "エ", label: "I have a bag." }], ex: "Whose 〜?（だれの〜ですか）への答えは It's mine.（私のです）のように所有を答えます。" },
-        { n: "英会12", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Let's meet at the station at nine.\nB: (　)", a: "エ OK. See you then.", correct: "エ", choices: [{ key: "ア", label: "Yes, I am." }, { key: "イ", label: "No, I don't." }, { key: "ウ", label: "It's nine o'clock." }, { key: "エ", label: "OK. See you then." }], ex: "待ち合わせの提案には OK. と答え、See you then.（じゃあ、そのときに）で締めます。" }
+        { n: "英会12", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Let's meet at the station at nine.\nB: (　)", a: "エ OK. See you then.", correct: "エ", choices: [{ key: "ア", label: "Yes, I am." }, { key: "イ", label: "No, I don't." }, { key: "ウ", label: "It's nine o'clock." }, { key: "エ", label: "OK. See you then." }], ex: "待ち合わせの提案には OK. と答え、See you then.（じゃあ、そのときに）で締めます。" },
+        { n: "英会13", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Excuse me, could you tell me the way to the hospital?\nB: (　)", a: "イ Go straight and turn left at the corner.", correct: "イ", choices: [{ key: "ア", label: "It's a big hospital." }, { key: "イ", label: "Go straight and turn left at the corner." }, { key: "ウ", label: "I go to the hospital." }, { key: "エ", label: "About ten minutes." }], ex: "道を聞かれたら、Go straight（まっすぐ行って）、turn left（左に曲がって）のように道順を答えます。" },
+        { n: "英会14", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: I won first prize in the speech contest.\nB: (　)", a: "ウ Congratulations!", correct: "ウ", choices: [{ key: "ア", label: "I'm sorry to hear that." }, { key: "イ", label: "You're welcome." }, { key: "ウ", label: "Congratulations!" }, { key: "エ", label: "That's too bad." }], ex: "よい知らせには Congratulations!（おめでとう！）と祝います。残念な知らせへの I'm sorry to hear that. と区別しましょう。" },
+        { n: "英会15", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How often do you play baseball?\nB: (　)", a: "ア Twice a week.", correct: "ア", choices: [{ key: "ア", label: "Twice a week." }, { key: "イ", label: "For two hours." }, { key: "ウ", label: "At three o'clock." }, { key: "エ", label: "With my friends." }], ex: "How often 〜? は頻度を聞く表現。答えは Twice a week.（週に2回）のように回数で返します。For two hours は長さへの答えです。" },
+        { n: "英会16", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Would you mind opening the window?\nB: (　)", a: "エ Not at all.", correct: "エ", choices: [{ key: "ア", label: "Yes, please." }, { key: "イ", label: "Yes, I would." }, { key: "ウ", label: "I opened it yesterday." }, { key: "エ", label: "Not at all." }], ex: "Would you mind 〜?（〜していただけますか）への快諾は Not at all.（もちろん、かまいません）。Yes と答えると「嫌だ」という意味になるので注意です。" },
+        { n: "英会17", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Hello, may I speak to Ken, please?\nB: (　)", a: "イ Just a moment, please.", correct: "イ", choices: [{ key: "ア", label: "Speaking to me." }, { key: "イ", label: "Just a moment, please." }, { key: "ウ", label: "Who speaks?" }, { key: "エ", label: "Yes, I speak." }], ex: "電話で取り次ぐときは Just a moment, please.（少々お待ちください）と言います。本人なら Speaking. と答えます。" },
+        { n: "英会18", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: I feel sick today.\nB: (　)", a: "ウ You should take a rest.", correct: "ウ", choices: [{ key: "ア", label: "Have a nice day." }, { key: "イ", label: "That's good news." }, { key: "ウ", label: "You should take a rest." }, { key: "エ", label: "See you tomorrow morning at nine." }], ex: "体調が悪い相手には、You should take a rest.（休んだほうがいいですよ）と助言します。should は「〜すべきだ・〜したほうがいい」です。" }
       ];
 
       /* ===== セット定義 ===== */
