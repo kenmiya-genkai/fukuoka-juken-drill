@@ -313,6 +313,17 @@
       .chooser-prog { display: block; font-size: 12px; font-weight: 700; color: var(--primary); margin-top: 3px; }
       .chooser-prog:empty { display: none; }
       .screen-prog { font-size: 14.5px; font-weight: 700; color: var(--primary); margin: 10px 0 8px; }
+      .countdown {
+        background: var(--primary-soft); border: 2px solid var(--primary); border-radius: 14px;
+        padding: 16px 18px; margin: 0 0 22px; text-align: center; box-shadow: var(--shadow);
+      }
+      .countdown-label { font-size: 15px; font-weight: 700; color: var(--ink); }
+      .countdown-days {
+        font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+        font-size: 30px; font-weight: 900; color: var(--primary); line-height: 1.35;
+      }
+      .countdown-days .cd-num { font-size: 46px; }
+      .countdown-date { font-size: 13px; color: var(--ink-soft); }
       .back-btn {
         background: none; border: none; font: inherit; font-size: 14.5px; font-weight: 700;
         color: var(--primary); cursor: pointer; padding: 6px 4px 6px 0; text-decoration: underline;
@@ -332,6 +343,12 @@
       <!-- ホーム -->
       <section id="screen-home" class="screen active">
         <h1>福岡受験ドリル</h1>
+
+        <div class="countdown" id="countdown" hidden>
+          <div class="countdown-label" id="countdown-label"></div>
+          <div class="countdown-days" id="countdown-days"></div>
+          <div class="countdown-date" id="countdown-date"></div>
+        </div>
 
         <div style="margin-bottom:22px">
           <button class="btn" id="go-daily" type="button" style="width:100%">今日の10問</button>
@@ -3751,6 +3768,32 @@
         renderQuestion();
       }
       $("go-daily").addEventListener("click", function () { startDaily(); });
+
+      /* ===== 入試までのカウントダウン（福岡県公立高校 一般入学者選抜 学力検査日：2027年3月9日） ===== */
+      function renderCountdown() {
+        var box = $("countdown");
+        if (!box) return;
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var exam = new Date(2027, 2, 9);
+        var diff = Math.round((exam - today) / 86400000);
+        var label = $("countdown-label"), days = $("countdown-days"), date = $("countdown-date");
+        if (diff > 0) {
+          label.textContent = "福岡県公立高校入試まで";
+          days.innerHTML = "あと <span class=\"cd-num\">" + diff + "</span> 日";
+          date.textContent = "（2027年3月9日）";
+        } else if (diff === 0) {
+          label.textContent = "福岡県公立高校入試";
+          days.textContent = "今日は入試当日です！";
+          date.textContent = "（2027年3月9日）落ち着いて、いつもの力を出してね。";
+        } else {
+          label.textContent = "福岡県公立高校入試";
+          days.textContent = "入試おつかれさまでした";
+          date.textContent = "最後までよくがんばったね。";
+        }
+        box.hidden = false;
+      }
+      renderCountdown();
 
       renderWeak();
       hydrateMistakes();
