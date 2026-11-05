@@ -339,12 +339,12 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>教科を選ぶ</h2><span>全909問</span></div>
+          <div class="subject-head"><h2>教科を選ぶ</h2><span>全969問</span></div>
           <div class="chooser">
             <button class="chooser-btn" id="go-kokugo" type="button">
               <span class="chooser-name">国語</span>
               <span class="chooser-desc">漢字 ・ 語彙と慣用句 ・ 文法 ・ 古文単語<span class="chooser-prog" id="prog-home-kokugo"></span></span>
-              <span class="chooser-count">全100問</span>
+              <span class="chooser-count">全140問</span>
             </button>
             <button class="chooser-btn" id="go-math" type="button">
               <span class="chooser-name">数学</span>
@@ -364,7 +364,7 @@
             <button class="chooser-btn" id="go-english" type="button">
               <span class="chooser-name">英語</span>
               <span class="chooser-desc">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現<span class="chooser-prog" id="prog-home-english"></span></span>
-              <span class="chooser-count">全100問</span>
+              <span class="chooser-count">全120問</span>
             </button>
           </div>
         </div>
@@ -504,7 +504,7 @@
       <section id="screen-kokugo" class="screen">
         <button class="back-btn" id="back-from-kokugo" type="button">← 教科選択に戻る</button>
         <h1 class="screen-title">国語</h1>
-        <p class="sub">漢字 ・ 語彙と慣用句 ・ 文法 ・ 古文単語（全100問）</p>
+        <p class="sub">漢字 ・ 語彙と慣用句 ・ 文法 ・ 古文単語（全140問）</p>
         <p class="screen-prog" id="prog-screen-kokugo"></p>
         <button class="reset-btn prog-reset-btn" data-prog-reset="kokugo" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
         <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
@@ -544,7 +544,7 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>語彙・文法・古文</h2><span>全60問</span></div>
+          <div class="subject-head"><h2>語彙・文法・古文</h2><span>全100問</span></div>
           <div class="set-list" id="kokugo-lang-sets"></div>
         </div>
       </section>
@@ -602,7 +602,7 @@
       <section id="screen-english" class="screen">
         <button class="back-btn" id="back-from-english" type="button">← 教科選択に戻る</button>
         <h1 class="screen-title">英語</h1>
-        <p class="sub">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現（全100問）</p>
+        <p class="sub">文法 ・ 単語と熟語 ・ 整序 ・ 会話表現（全120問）</p>
         <p class="screen-prog" id="prog-screen-english"></p>
         <button class="reset-btn prog-reset-btn" data-prog-reset="english" type="button" style="display:none; margin-bottom:14px">この教科の進み具合をリセット</button>
         <p class="note">答えは入力して採点します。ひらがなで書いても、読み方で書いても大丈夫です。2つ答える問題は入力欄が2つに分かれているので、1つずつ書いてください。どちらの欄に書いても正解になります。わからないときは無理に答えず「わからない」ボタンを押してください。答えと解説が出るので、読んで覚えてから次に進みましょう。</p>
@@ -637,12 +637,12 @@
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>文法・単語</h2><span>全64問</span></div>
+          <div class="subject-head"><h2>文法・単語</h2><span>全80問</span></div>
           <div class="set-list" id="eng-base-sets"></div>
         </div>
 
         <div class="subject">
-          <div class="subject-head"><h2>整序・会話</h2><span>全36問</span></div>
+          <div class="subject-head"><h2>整序・会話</h2><span>全40問</span></div>
           <div class="set-list" id="eng-use-sets"></div>
         </div>
       </section>
@@ -1978,7 +1978,27 @@
         { n: "語17", q: "四字熟語の（　）に入る漢字2字を答えよ。「以心（　）（　）」（言葉にしなくても心が通じ合うこと）", a: "伝心", accept: ["伝心", "でんしん"], ex: "「以心伝心」は、言葉を使わなくても心が通じ合うことです。" },
         { n: "語18", q: "四字熟語の（　）に入る漢字2字を答えよ。「一石（　）（　）」（一つのことで二つの利益を得ること）", a: "二鳥", accept: ["二鳥", "にちょう"], ex: "「一石二鳥」は、石を投げて二羽の鳥を一度に仕留めることから生まれた言葉です。" },
         { n: "語19", q: "慣用句の（　）に入る漢字1字を答えよ。「（　）から火が出る」（とても恥ずかしい）", a: "顔", accept: ["顔", "かお"], ex: "「顔から火が出る」は、恥ずかしくて顔が真っ赤になる様子です。" },
-        { n: "語20", q: "ことわざの（　）に入る言葉を答えよ。「（　）も積もれば山となる」（小さなものでも積もれば大きくなる）", a: "塵", accept: ["塵", "ちり"], ex: "「塵も積もれば山となる」は、小さな努力の積み重ねの大切さを説くことわざです。" }
+        { n: "語20", q: "ことわざの（　）に入る言葉を答えよ。「（　）も積もれば山となる」（小さなものでも積もれば大きくなる）", a: "塵", accept: ["塵", "ちり"], ex: "「塵も積もれば山となる」は、小さな努力の積み重ねの大切さを説くことわざです。" },
+        { n: "語21", type: "statement", q: "次の言葉の意味として正しいものを選べ。『耳にたこができる』", a: "イ 何度も同じことを聞かされてうんざりすること", correct: "イ", choices: [{ key: "ア", label: "何度も聞いてよく覚えること" }, { key: "イ", label: "何度も同じことを聞かされてうんざりすること" }, { key: "ウ", label: "耳が聞こえにくくなること" }, { key: "エ", label: "思わず聞き入ってしまうこと" }], ex: "何度も聞かされると耳にたこができる、というたとえ。同じ注意を繰り返し聞かされる場面で使います。" },
+        { n: "語22", type: "statement", q: "次の言葉の意味として正しいものを選べ。『猫の手も借りたい』", a: "ウ とても忙しくて人手が足りないこと", correct: "ウ", choices: [{ key: "ア", label: "猫を飼いたくなること" }, { key: "イ", label: "小さな手助けでもありがたいこと" }, { key: "ウ", label: "とても忙しくて人手が足りないこと" }, { key: "エ", label: "動物が好きでたまらないこと" }], ex: "忙しさのあまり、猫の手でも借りたいほどだという意味の慣用句です。" },
+        { n: "語23", type: "statement", q: "次のことわざの意味として正しいものを選べ。『灯台もと暗し』", a: "ア 身近なことほど、かえって気づきにくいこと", correct: "ア", choices: [{ key: "ア", label: "身近なことほど、かえって気づきにくいこと" }, { key: "イ", label: "灯台の下は暗いということ" }, { key: "ウ", label: "遠くのものほどよく見えること" }, { key: "エ", label: "明かりがあっても安心はできないこと" }], ex: "灯台のすぐ下が暗いように、身近なことはかえって見落としがちだというたとえです。" },
+        { n: "語24", type: "statement", q: "次のことわざの意味として正しいものを選べ。『二兎を追う者は一兎をも得ず』", a: "エ 二つのことを同時にねらうと、どちらも成功しないこと", correct: "エ", choices: [{ key: "ア", label: "準備をすれば二つとも手に入ること" }, { key: "イ", label: "欲張れば両方とも手に入ること" }, { key: "ウ", label: "二兎より一兎のほうが価値があること" }, { key: "エ", label: "二つのことを同時にねらうと、どちらも成功しないこと" }], ex: "うさぎを二兎同時に追うと両方逃げてしまうことから、欲張って両方をねらうと共倒れになるという教えです。" },
+        { n: "語25", type: "statement", q: "次の四字熟語の意味として正しいものを選べ。『我田引水』", a: "イ 自分に都合のよいように物事を取りはからうこと", correct: "イ", choices: [{ key: "ア", label: "自分の田に水を引く工夫をすること" }, { key: "イ", label: "自分に都合のよいように物事を取りはからうこと" }, { key: "ウ", label: "田畑を大切に育てること" }, { key: "エ", label: "人の田にも水を分ける親切心" }], ex: "他人の田を差し置いて自分の田にだけ水を引くことから、自分の利益ばかりを考える態度を表します。" },
+        { n: "語26", type: "statement", q: "次の四字熟語の意味として正しいものを選べ。『切磋琢磨』", a: "ウ 互いに励まし合って向上すること", correct: "ウ", choices: [{ key: "ア", label: "失敗を繰り返すこと" }, { key: "イ", label: "石や玉を磨いて作り上げること" }, { key: "ウ", label: "互いに励まし合って向上すること" }, { key: "エ", label: "力を合わせて敵に立ち向かうこと" }], ex: "もとは玉や石を磨く作業の言葉。転じて、仲間同士で競い合いながら学問や技を磨くことを表します。" },
+        { n: "語27", type: "statement", q: "次の四字熟語の意味として正しいものを選べ。『有名無実』", a: "ア 名前ばかりが知られて、実質が伴わないこと", correct: "ア", choices: [{ key: "ア", label: "名前ばかりが知られて、実質が伴わないこと" }, { key: "イ", label: "有名で、しかも実力も備わっていること" }, { key: "ウ", label: "名前を広く知らせること" }, { key: "エ", label: "実力はないが人気だけはあること" }], ex: "「有名」と「無実（実がない）」という反対の意味を持つ漢字を組み合わせた四字熟語です。" },
+        { n: "語28", type: "statement", q: "次の四字熟語の意味として正しいものを選べ。『東奔西走』", a: "エ あちこち忙しく走り回ること", correct: "エ", choices: [{ key: "ア", label: "東西に分かれて戦うこと" }, { key: "イ", label: "長い旅をすること" }, { key: "ウ", label: "方角を取り違えること" }, { key: "エ", label: "あちこち忙しく走り回ること" }], ex: "「奔走」は走り回ること。東へ西へと用事に駆け回る忙しさを表します。" },
+        { n: "語29", q: "慣用句の（　）に入る言葉を答えよ。「（　）に釘をさす」（念のため、あらかじめ注意しておく）", a: "相手", accept: ["相手", "あいて"], ex: "「相手に釘をさす」は、約束を守らせるために前もって強く注意しておくことです。" },
+        { n: "語30", q: "慣用句の（　）に入る言葉を答えよ。「（　）が上がらない」（負い目があって、相手に対等にふるまえない）", a: "頭", accept: ["頭", "あたま"], ex: "「頭が上がらない」は、借りや恩があって、相手の前で対等な態度がとれない様子です。" },
+        { n: "語31", q: "次の文の（いどう）を、正しい漢字で答えよ。「明日から、別の校舎に（いどう）する。」", a: "移動", accept: ["移動", "いどう"], ex: "場所が移るのは「移動」。同じ読みの「異動」は、会社などで担当や勤務先が変わるときに使います（同音異義語）。" },
+        { n: "語32", q: "次の文の（あける）に当てはまる漢字を使った言葉を答えよ。「朝、窓を（あける）。」", a: "開ける", accept: ["開ける"], ex: "窓や扉は「開ける」。「空ける」は中身をからにすること、「明ける」は夜や梅雨が終わること（同訓異字の使い分け）です。" },
+        { n: "語33", q: "「主観」と反対の意味の言葉（対義語）を答えよ。", a: "客観", accept: ["客観", "きゃっかん"], ex: "主観⇔客観。自分の感じ方（主観）と、離れて事実を見る見方（客観）の対比です。" },
+        { n: "語34", q: "「積極的」と反対の意味の言葉（対義語）を答えよ。", a: "消極的", accept: ["消極的", "消極", "しょうきょくてき", "しょうきょく"], ex: "積極的⇔消極的。自分から進んで行動するか、控えめで引っ込みがちかの対比です。" },
+        { n: "語35", q: "「決心」と似た意味の言葉（類義語）を答えよ。", a: "決意", accept: ["決意", "けつい"], ex: "「決心」と「決意」はどちらも、心に固く思い定めることです。" },
+        { n: "語36", q: "四字熟語の（　）に入る漢字2字を答えよ。「危機（　）（　）」（危ないところで、ほんの少しの差で助かること）", a: "一髪", accept: ["一髪", "いっぱつ"], ex: "「危機一髪」は、髪の毛1本ほどの差で危機を逃れる、という意味です。" },
+        { n: "語37", q: "四字熟語の（　）に入る漢字2字を答えよ。「自業（　）（　）」（自分のした悪い行いの報いを、自分が受けること）", a: "自得", accept: ["自得", "じとく"], ex: "「自業自得」は、自分の行いの結果を自分の身に受けること。「自業自得」の順で書きます。" },
+        { n: "語38", q: "ことわざの（　）に入る言葉を答えよ。「（　）に入っては（　）に従え」（その土地や集団の習慣に従うべきだということ）", a: "郷", accept: ["郷", "ごう"], ex: "「郷に入っては郷に従え」。新しい環境では、まずその土地・集団のやり方に合わせるべきだという教えです。" },
+        { n: "語39", q: "慣用句の（　）に入る漢字1字を答えよ。「借金で（　）が回らない」（借金に追われて、どうにもならない）", a: "首", accept: ["首", "くび"], ex: "「首が回らない」は、お金の工面がつかず身動きがとれない様子を表します。" },
+        { n: "語40", type: "statement", q: "「役不足」の使い方として正しい文を選べ。", a: "ア 優勝経験のある彼には、地区大会の役は役不足だ。", correct: "ア", choices: [{ key: "ア", label: "優勝経験のある彼には、地区大会の役は役不足だ。" }, { key: "イ", label: "彼は経験が浅くて、まだ役不足だ。" }, { key: "ウ", label: "役不足にならないよう、もっと練習しよう。" }, { key: "エ", label: "私のような役不足者には、この仕事は無理です。" }], ex: "「役不足」は「役目に対して本人の力があり余る」という意味。「力不足（力が足りない）」の意味で使うのは誤用で、入試でも問われやすい表現です。" }
       ];
 
       /* ===== 国語・文法 =====
@@ -2028,7 +2048,27 @@
         { n: "古17", q: "次の古語の現代語訳を答えよ。「いたづらなり」", a: "むだだ・役に立たない", kwAny: ["むだ", "無駄", "役に立た", "つまらな"], ex: "「いたづらなり」は「むだだ・役に立たない」という意味。現代語の「いたずら（悪戯）」とは違います。" },
         { n: "古18", type: "statement", q: "係り結びの決まりについて、「なむ」が係助詞として使われるとき、結びの語はどの活用形になるか。", a: "イ 連体形", correct: "イ", choices: [{ key: "ア", label: "終止形" }, { key: "イ", label: "連体形" }, { key: "ウ", label: "已然形" }, { key: "エ", label: "命令形" }], ex: "「ぞ・なむ・や・か」は結びが連体形、「こそ」は結びが已然形になります。" },
         { n: "古19", type: "statement", q: "係り結びの決まりについて、「こそ」が係助詞として使われるとき、結びの語はどの活用形になるか。", a: "ウ 已然形", correct: "ウ", choices: [{ key: "ア", label: "終止形" }, { key: "イ", label: "連体形" }, { key: "ウ", label: "已然形" }, { key: "エ", label: "未然形" }], ex: "「こそ」の結びは已然形。係り結びの中でも特に決まりが独立しているので、よく問われます。" },
-        { n: "古20", type: "statement", q: "「いとあはれなり。」の「なり」は何の助動詞か。", a: "ア 断定", correct: "ア", choices: [{ key: "ア", label: "断定" }, { key: "イ", label: "推量" }, { key: "ウ", label: "過去" }, { key: "エ", label: "完了" }], ex: "体言に付く「なり」は断定の助動詞です（「…である」の意味）。" }
+        { n: "古20", type: "statement", q: "「いとあはれなり。」の「なり」は何の助動詞か。", a: "ア 断定", correct: "ア", choices: [{ key: "ア", label: "断定" }, { key: "イ", label: "推量" }, { key: "ウ", label: "過去" }, { key: "エ", label: "完了" }], ex: "体言に付く「なり」は断定の助動詞です（「…である」の意味）。" },
+        { n: "古21", q: "次の古語の現代語訳を答えよ。「なほ」", a: "さらに・それでも・やはり", accept: ["さらに", "それでも", "やはり", "なお", "依然として"], ex: "「なほ」は「さらに・それでも」の意味。現代語の「なお」とほぼ同じですが、古文では「（予想と違って）やはり」の意味でもよく使われます。" },
+        { n: "古22", q: "次の古語の現代語訳を答えよ。「さらに」", a: "（打消しを伴って）全く〜ない・ますます", kwAny: ["まったく", "全く", "少しも", "ますます", "いっそう"], ex: "古文の「さらに」は、下に打消しの語を伴って「全く〜ない」という意味になることが多いのが特徴。現代語の「さらに（付け加えて）」とは使い方が違います。" },
+        { n: "古23", q: "次の古語の現代語訳を答えよ。「給ふ（たまふ）」", a: "（目上の人が）お与えになる・くださる", kwAny: ["くださ", "下さ", "お与え", "与えにな"], ex: "「給ふ（たまふ）」は尊敬語で、「（目上の人が）お与えになる・〜なさる」の意味。命令形の「たまへ」は「ください」という依頼にもなります。" },
+        { n: "古24", q: "次の古語の現代語訳を答えよ。「申す（まうす）」", a: "言う・申し上げる", kwAny: ["言", "いう", "申し上", "もうしあげ"], ex: "「申す（まうす）」は「言う」の謙譲語。自分の言葉をへりくだって伝える言い方です。" },
+        { n: "古25", q: "次の古語の現代語訳を答えよ。「奉る（たてまつる）」", a: "差し上げる・献上する", kwAny: ["差し上", "さしあげ", "献上", "ささげ", "捧げ"], ex: "「奉る（たてまつる）」は「差し上げる」の謙譲語。神仏や身分の高い人に物を献上するときにも使われます。" },
+        { n: "古26", q: "次の古語の現代語訳を答えよ。「御覧ず（ごらんず）」", a: "ご覧になる・見る", kwAny: ["ご覧", "御覧", "ごらん", "みる", "見る"], ex: "「御覧ず（ごらんず）」は「見る」の尊敬語。現代語の「ご覧になる」と同じ働きで、目上の人の「見る」動作を高めて言います。" },
+        { n: "古27", q: "次の古語の現代語訳を答えよ。「聞こゆ（きこゆ）」", a: "聞こえる・評判である", kwAny: ["聞こえ", "きこえ", "評判", "ひょうばん", "うわさ"], ex: "「聞こゆ（きこゆ）」は「自然と聞こえてくる・うわさになる」の意味。現代語の「聞く（自ら聞く）」ではなく「聞こえる」の側の意味です。" },
+        { n: "古28", q: "次の古語の現代語訳を答えよ。「あらまほし」", a: "理想的だ・こうあってほしい", kwAny: ["理想", "望まし", "あってほしい", "あるべき"], ex: "「あらまほし」は「こうあってほしい、理想的だ」という意味。「あらまほしき」という形でもよく出ます。" },
+        { n: "古29", q: "次の古語の現代語訳を答えよ。「あたらし」", a: "惜しい・もったいない", kwAny: ["惜し", "おし", "もったいな"], ex: "「あたらし」は「惜しい・もったいない」の意味。現代語の「新しい」ではないので要注意です。" },
+        { n: "古30", q: "次の古語の現代語訳を答えよ。「あぢきなし」", a: "つまらない・味気ない", kwAny: ["つまらな", "味気な", "あじきな", "おもしろくな"], ex: "「あぢきなし」は「味気ない・つまらない」の意味。「あぢ（味）きなし」が語源で、物事に満足できない気持ちを表します。" },
+        { n: "古31", q: "次の古語の現代語訳を答えよ。「いとほし」", a: "かわいそうだ・気の毒だ", kwAny: ["かわいそう", "可哀想", "気の毒", "いたわし"], ex: "「いとほし」は「かわいそうだ・いたわしい」の意味。「かわいい」の意味の「いとし」とは別の語なので、取り違えやすい語です。" },
+        { n: "古32", q: "次の古語の現代語訳を答えよ。「おぼつかなし」", a: "はっきりしない・不安だ", kwAny: ["はっきりしな", "不安", "ぼんやり", "あいまい", "心配"], ex: "「おぼつかなし」は、物事がはっきりせず「ぼんやりしている・不安だ」という意味です。" },
+        { n: "古33", q: "次の古語の現代語訳を答えよ。「かしこし」", a: "恐れ多い・かしこい", kwAny: ["恐れ多", "おそれおお", "畏"], ex: "「かしこし」は、身分の高い人を前におそれる気持ちから「恐れ多い」の意味。現代語の「賢（かしこ）い」とは意味がずれます。" },
+        { n: "古34", q: "次の古語の現代語訳を答えよ。「こころにくし」", a: "奥ゆかしい・心が引かれる", kwAny: ["奥ゆかし", "おくゆかし", "気がき", "心がひかれ", "上品"], ex: "「こころにくし」は「奥ゆかしくて心が引かれる」様子。「心が憎い（悪い）」という現代語の感覚で読むと誤訳になります。" },
+        { n: "古35", q: "次の古語の現代語訳を答えよ。「ねんごろなり」", a: "親しい・丁寧だ", kwAny: ["親し", "丁寧", "ていねい", "仲がよ", "親密"], ex: "「ねんごろなり」は「心を込めて丁寧だ・親しい」という意味。人との仲の近さを表します。" },
+        { n: "古36", q: "次の古語の現代語訳を答えよ。「はしたなし」", a: "きまりが悪い・中途半端だ", kwAny: ["きまりが悪", "決まりが悪", "ばつが悪", "中途半端"], ex: "「はしたなし」は、立場が定まらず「ばつが悪い・中途半端だ」という意味です。" },
+        { n: "古37", q: "次の古語の現代語訳を答えよ。「すべなし」", a: "どうしようもない・手立てがない", kwAny: ["どうしようもな", "仕方がな", "しかたがな", "手立てがな", "方法がな"], ex: "「すべなし」は「する手立てがない＝どうしようもない」という意味。「すべ」は「方法・手段」のことです。" },
+        { n: "古38", type: "statement", q: "「昔、男ありけり。」の「けり」は何を表す助動詞か。", a: "イ 過去", correct: "イ", choices: [{ key: "ア", label: "推量" }, { key: "イ", label: "過去" }, { key: "ウ", label: "断定" }, { key: "エ", label: "完了" }], ex: "「けり」は過去の助動詞で、「〜た・〜だった」の意味。物語の書き出しで、伝聞や詠嘆の響きを添えることもあります。" },
+        { n: "古39", type: "statement", q: "係り結びで、「〜こそ。」と文が終わって、結びの語（已然形）が出てこないことがある。この現象を何というか。", a: "ア 結びの省略", correct: "ア", choices: [{ key: "ア", label: "結びの省略" }, { key: "イ", label: "主語の省略" }, { key: "ウ", label: "倒置（とう置）" }, { key: "エ", label: "体言止め" }], ex: "「こそ」の結びは已然形ですが、文が「こそ」で終わって結びが省かれる場合があり、「結びの省略」と言います。" },
+        { n: "古40", type: "statement", q: "「知らず。」の「ず」は何を表す助動詞か。", a: "ウ 打ち消し", correct: "ウ", choices: [{ key: "ア", label: "過去" }, { key: "イ", label: "推量" }, { key: "ウ", label: "打ち消し" }, { key: "エ", label: "尊敬" }], ex: "「ず」は打ち消しの助動詞で、「〜ない」の意味。文の流れに合わせて「ざら・ざり・ず・ざる・ざれ」と活用します。" }
       ];
 
       /* ===== 数学・計算の基礎 =====
@@ -2203,7 +2243,13 @@
         { n: "英文27", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nDo you know where the library (　)?", a: "ア is", correct: "ア", choices: [{ key: "ア", label: "is" }, { key: "イ", label: "is it" }, { key: "ウ", label: "does" }, { key: "エ", label: "it is" }], ex: "Do you know where 〜? のあとは間接疑問文で、疑問文の語順ではなく「where the library is」という普通の文の語順になります。" },
         { n: "英文28", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nPlease wait here (　) I come back.", a: "イ until", correct: "イ", choices: [{ key: "ア", label: "because" }, { key: "イ", label: "until" }, { key: "ウ", label: "so" }, { key: "エ", label: "but" }], ex: "「私が戻ってくるまで、ここで待っていてください」は until（〜まで）。until は継続の接続詞です。" },
         { n: "英文29", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe was born (　) 2011.", a: "ウ in", correct: "ウ", choices: [{ key: "ア", label: "on" }, { key: "イ", label: "at" }, { key: "ウ", label: "in" }, { key: "エ", label: "by" }], ex: "年の前には前置詞 in を使います。月日の前は on、時刻の前は at と使い分けましょう。" },
-        { n: "英文30", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHave you ever (　) to Okinawa?", a: "ア been", correct: "ア", choices: [{ key: "ア", label: "been" }, { key: "イ", label: "go" }, { key: "ウ", label: "went" }, { key: "エ", label: "going" }], ex: "「〜へ行ったことがありますか」は Have you ever been to 〜?。経験を表す現在完了で、go の過去分詞 been を使います。" }
+        { n: "英文30", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHave you ever (　) to Okinawa?", a: "ア been", correct: "ア", choices: [{ key: "ア", label: "been" }, { key: "イ", label: "go" }, { key: "ウ", label: "went" }, { key: "エ", label: "going" }], ex: "「〜へ行ったことがありますか」は Have you ever been to 〜?。経験を表す現在完了で、go の過去分詞 been を使います。" },
+        { n: "英文31", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nThis movie is (　) than that one.", a: "イ more interesting", correct: "イ", choices: [{ key: "ア", label: "interesting" }, { key: "イ", label: "more interesting" }, { key: "ウ", label: "most interesting" }, { key: "エ", label: "very interesting" }], ex: "than があるので比較級。長い形容詞 interesting の比較級は more interesting です。" },
+        { n: "英文32", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nAt eight last night, I (　) TV.", a: "ウ was watching", correct: "ウ", choices: [{ key: "ア", label: "watch" }, { key: "イ", label: "am watching" }, { key: "ウ", label: "was watching" }, { key: "エ", label: "have watched" }], ex: "昨夜8時という過去のある時点で進行中の動作は、過去進行形 was watching で表します。" },
+        { n: "英文33", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nI have something (　) to you.", a: "エ to tell", correct: "エ", choices: [{ key: "ア", label: "tell" }, { key: "イ", label: "telling" }, { key: "ウ", label: "told" }, { key: "エ", label: "to tell" }], ex: "something to tell you で「あなたに話すこと」。名詞のあとに to + 動詞の原形が続いて、その名詞を説明します。" },
+        { n: "英文34", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nHe is too young (　) drive a car.", a: "ア to", correct: "ア", choices: [{ key: "ア", label: "to" }, { key: "イ", label: "for" }, { key: "ウ", label: "that" }, { key: "エ", label: "so" }], ex: "too 〜 to … で「…するには〜すぎる（ので…できない）」。「彼は若すぎて車を運転できない」という意味です。" },
+        { n: "英文35", type: "statement", q: "文の（　）に入る語として正しいものを選べ。\nI have (　) seen a panda.", a: "イ never", correct: "イ", choices: [{ key: "ア", label: "ever" }, { key: "イ", label: "never" }, { key: "ウ", label: "just" }, { key: "エ", label: "ago" }], ex: "「一度も〜したことがない」は have never + 過去分詞。ever は主に疑問文で使います。" },
+        { n: "英文36", type: "statement", q: "文の（　）に入る語句として正しいものを選べ。\nWe (　) play soccer tomorrow if it is sunny.", a: "ウ will", correct: "ウ", choices: [{ key: "ア", label: "played" }, { key: "イ", label: "plays" }, { key: "ウ", label: "will" }, { key: "エ", label: "playing" }], ex: "tomorrow（明日）の予定で、条件の if 節に続く主文は未来を表す will + 動詞の原形が基本です。" }
       ];
 
       /* ===== 英語・単語と熟語 =====
@@ -2243,7 +2289,17 @@
         { n: "英単31", type: "statement", q: "次の単語の意味として正しいものを選べ。『continue』", a: "エ 続ける・続く", correct: "エ", choices: [{ key: "ア", label: "決める" }, { key: "イ", label: "始める" }, { key: "ウ", label: "やめる" }, { key: "エ", label: "続ける・続く" }], ex: "continue は「続ける・続く」。continue to 〜 / continue 〜ing で「〜し続ける」となります。" },
         { n: "英単32", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be different from 〜』", a: "イ 〜と違う", correct: "イ", choices: [{ key: "ア", label: "〜と同じである" }, { key: "イ", label: "〜と違う" }, { key: "ウ", label: "〜に似ている" }, { key: "エ", label: "〜からできている" }], ex: "be different from 〜 は「〜と違う」。from とセットで使う点が入試で狙われます。" },
         { n: "英単33", type: "statement", q: "次の単語の意味として正しいものを選べ。『without』", a: "ウ 〜なしで", correct: "ウ", choices: [{ key: "ア", label: "〜と一緒に" }, { key: "イ", label: "〜の代わりに" }, { key: "ウ", label: "〜なしで" }, { key: "エ", label: "〜を通して" }], ex: "without は「〜なしで」という前置詞。without saying goodbye のように「〜せずに」の意味にもなります。" },
-        { n: "英単34", type: "statement", q: "次の単語の意味として正しいものを選べ。『recently』", a: "ア 最近", correct: "ア", choices: [{ key: "ア", label: "最近" }, { key: "イ", label: "ついに" }, { key: "ウ", label: "特に" }, { key: "エ", label: "おそらく" }], ex: "recently は「最近」。現在完了と一緒によく使われます。recent は形容詞で「最近の」です。" }
+        { n: "英単34", type: "statement", q: "次の単語の意味として正しいものを選べ。『recently』", a: "ア 最近", correct: "ア", choices: [{ key: "ア", label: "最近" }, { key: "イ", label: "ついに" }, { key: "ウ", label: "特に" }, { key: "エ", label: "おそらく" }], ex: "recently は「最近」。現在完了と一緒によく使われます。recent は形容詞で「最近の」です。" },
+        { n: "英単35", q: "次の日本語を英語で書け。「人気のある」", a: "popular", accept: ["popular"], hintText: ENG_HINT_WORD, ex: "popular は「人気のある」。be popular with 〜 で「〜に人気がある」となります。" },
+        { n: "英単36", q: "次の日本語を英語で書け。「言語・〜語」", a: "language", accept: ["language"], hintText: ENG_HINT_WORD, ex: "language は「言語」。the Japanese language で「日本語」という意味にもなります。" },
+        { n: "英単37", q: "次の日本語を英語で書け。「守る・保護する」", a: "protect", accept: ["protect"], hintText: ENG_HINT_WORD, ex: "protect は「守る・保護する」。protect the environment（環境を守る）の形で入試によく出ます。" },
+        { n: "英単38", q: "次の日本語を英語で書け。「世紀」", a: "century", accept: ["century"], hintText: ENG_HINT_WORD, ex: "century は「世紀・100年」。the 21st century で「21世紀」です。" },
+        { n: "英単39", q: "次の日本語を英語で書け。「集める」", a: "collect", accept: ["collect"], hintText: ENG_HINT_WORD, ex: "collect は「集める」。collect information（情報を集める）のように使います。" },
+        { n: "英単40", type: "statement", q: "次の熟語の意味として正しいものを選べ。『be able to 〜』", a: "イ 〜することができる", correct: "イ", choices: [{ key: "ア", label: "〜しなければならない" }, { key: "イ", label: "〜することができる" }, { key: "ウ", label: "〜したことがある" }, { key: "エ", label: "〜するつもりである" }], ex: "be able to 〜 は can と同じ「〜できる」。過去形 was able to 〜 も入試でよく問われます。" },
+        { n: "英単41", type: "statement", q: "次の熟語の意味として正しいものを選べ。『such as 〜』", a: "ウ たとえば〜のような", correct: "ウ", choices: [{ key: "ア", label: "〜のおかげで" }, { key: "イ", label: "〜だけでなく" }, { key: "ウ", label: "たとえば〜のような" }, { key: "エ", label: "〜と同じくらい" }], ex: "such as 〜 は、例を挙げるときの「たとえば〜のような」。fruits such as apples のように使います。" },
+        { n: "英単42", type: "statement", q: "次の熟語の意味として正しいものを選べ。『because of 〜』", a: "ア 〜のせいで・〜のために（理由）", correct: "ア", choices: [{ key: "ア", label: "〜のせいで・〜のために（理由）" }, { key: "イ", label: "〜の代わりに" }, { key: "ウ", label: "〜に加えて" }, { key: "エ", label: "〜にもかかわらず" }], ex: "because of 〜 は「〜のために（理由）」。because と違って、あとには名詞が続きます。" },
+        { n: "英単43", type: "statement", q: "次の熟語の意味として正しいものを選べ。『more and more 〜』", a: "エ ますます多くの〜", correct: "エ", choices: [{ key: "ア", label: "〜以上に" }, { key: "イ", label: "〜かそれ以上" }, { key: "ウ", label: "何度も〜" }, { key: "エ", label: "ますます多くの〜" }], ex: "more and more 〜 で「ますます多くの〜」。more and more people（ますます多くの人々）の形が頻出です。" },
+        { n: "英単44", type: "statement", q: "次の単語の意味として正しいものを選べ。『enough』", a: "イ 十分な", correct: "イ", choices: [{ key: "ア", label: "正確な" }, { key: "イ", label: "十分な" }, { key: "ウ", label: "特別な" }, { key: "エ", label: "急な" }], ex: "enough は「十分な」。形容詞の後ろに置く old enough to 〜（〜するのに十分な年齢だ）の形もよく出ます。" }
       ];
 
       /* ===== 英語・整序 =====
@@ -2266,7 +2322,9 @@
         { n: "英序15", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\nこれは福岡で一番高い建物です。", a: "This is the tallest building in Fukuoka.", items: [{ key: "A", label: "in Fukuoka" }, { key: "B", label: "the tallest building" }, { key: "C", label: "This is" }], correct: ["C", "B", "A"], ex: "最上級は the tallest building。範囲を示す in Fukuoka は文末に置きます。" },
         { n: "英序16", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私は毎日ピアノを練習しなければなりません。", a: "I have to practice the piano every day.", items: [{ key: "A", label: "practice the piano" }, { key: "B", label: "I" }, { key: "C", label: "every day" }, { key: "D", label: "have to" }], correct: ["B", "D", "A", "C"], ex: "have to 〜 で「〜しなければならない」。頻度を表す every day は文末に置きます。" },
         { n: "英序17", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n庭にはたくさんの花があります。", a: "There are many flowers in the garden.", items: [{ key: "A", label: "in the garden" }, { key: "B", label: "many flowers" }, { key: "C", label: "There are" }], correct: ["C", "B", "A"], ex: "複数形の flowers なので There are 〜。場所（in the garden）は文末です。" },
-        { n: "英序18", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n駅への行き方を教えてください。", a: "Please tell me how to get to the station.", items: [{ key: "A", label: "how to get" }, { key: "B", label: "Please tell me" }, { key: "C", label: "to the station" }], correct: ["B", "A", "C"], ex: "how to get to 〜 で「〜への行き方」。Please tell me 〜. は道をたずねるときの定番表現です。" }
+        { n: "英序18", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n駅への行き方を教えてください。", a: "Please tell me how to get to the station.", items: [{ key: "A", label: "how to get" }, { key: "B", label: "Please tell me" }, { key: "C", label: "to the station" }], correct: ["B", "A", "C"], ex: "how to get to 〜 で「〜への行き方」。Please tell me 〜. は道をたずねるときの定番表現です。" },
+        { n: "英序19", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私はあなたに会えてうれしいです。", a: "I'm glad to see you.", items: [{ key: "A", label: "to see you" }, { key: "B", label: "I'm" }, { key: "C", label: "glad" }], correct: ["B", "C", "A"], ex: "I'm glad to 〜. で「〜してうれしい」。再会のあいさつでよく使う表現です。" },
+        { n: "英序20", type: "order", q: "次の日本文に合うように、語句を正しい順に並べ替えよ。\n私の兄は車を運転することができます。", a: "My brother can drive a car.", items: [{ key: "A", label: "can drive" }, { key: "B", label: "My brother" }, { key: "C", label: "a car" }], correct: ["B", "A", "C"], ex: "can のあとは動詞の原形。「〜できる」は My brother can drive 〜. の語順です。" }
       ];
 
       /* ===== 英語・会話表現 =====
@@ -2289,7 +2347,9 @@
         { n: "英会15", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How often do you play baseball?\nB: (　)", a: "ア Twice a week.", correct: "ア", choices: [{ key: "ア", label: "Twice a week." }, { key: "イ", label: "For two hours." }, { key: "ウ", label: "At three o'clock." }, { key: "エ", label: "With my friends." }], ex: "How often 〜? は頻度を聞く表現。答えは Twice a week.（週に2回）のように回数で返します。For two hours は長さへの答えです。" },
         { n: "英会16", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Would you mind opening the window?\nB: (　)", a: "エ Not at all.", correct: "エ", choices: [{ key: "ア", label: "Yes, please." }, { key: "イ", label: "Yes, I would." }, { key: "ウ", label: "I opened it yesterday." }, { key: "エ", label: "Not at all." }], ex: "Would you mind 〜?（〜していただけますか）への快諾は Not at all.（もちろん、かまいません）。Yes と答えると「嫌だ」という意味になるので注意です。" },
         { n: "英会17", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Hello, may I speak to Ken, please?\nB: (　)", a: "イ Just a moment, please.", correct: "イ", choices: [{ key: "ア", label: "Speaking to me." }, { key: "イ", label: "Just a moment, please." }, { key: "ウ", label: "Who speaks?" }, { key: "エ", label: "Yes, I speak." }], ex: "電話で取り次ぐときは Just a moment, please.（少々お待ちください）と言います。本人なら Speaking. と答えます。" },
-        { n: "英会18", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: I feel sick today.\nB: (　)", a: "ウ You should take a rest.", correct: "ウ", choices: [{ key: "ア", label: "Have a nice day." }, { key: "イ", label: "That's good news." }, { key: "ウ", label: "You should take a rest." }, { key: "エ", label: "See you tomorrow morning at nine." }], ex: "体調が悪い相手には、You should take a rest.（休んだほうがいいですよ）と助言します。should は「〜すべきだ・〜したほうがいい」です。" }
+        { n: "英会18", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: I feel sick today.\nB: (　)", a: "ウ You should take a rest.", correct: "ウ", choices: [{ key: "ア", label: "Have a nice day." }, { key: "イ", label: "That's good news." }, { key: "ウ", label: "You should take a rest." }, { key: "エ", label: "See you tomorrow morning at nine." }], ex: "体調が悪い相手には、You should take a rest.（休んだほうがいいですよ）と助言します。should は「〜すべきだ・〜したほうがいい」です。" },
+        { n: "英会19", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: How much is this T-shirt?\nB: (　)", a: "エ It's two thousand yen.", correct: "エ", choices: [{ key: "ア", label: "About ten minutes." }, { key: "イ", label: "Twice a week." }, { key: "ウ", label: "It's mine." }, { key: "エ", label: "It's two thousand yen." }], ex: "How much is 〜? は値段を聞く表現。答えは金額で返します。時間や頻度の答えと取り違えないように。" },
+        { n: "英会20", type: "statement", q: "会話文の（　）に入る表現として正しいものを選べ。\nA: Could you help me?\nB: (　)", a: "ア Of course.", correct: "ア", choices: [{ key: "ア", label: "Of course." }, { key: "イ", label: "You're welcome." }, { key: "ウ", label: "Good luck." }, { key: "エ", label: "That's too bad." }], ex: "Could you 〜?（〜していただけますか）への快諾は Of course.（もちろんです）。手伝いを申し出るときの基本表現です。" }
       ];
 
       /* ===== セット定義 ===== */
